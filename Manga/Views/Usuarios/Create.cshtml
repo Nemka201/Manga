@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
-    //var rutaFoto = "~/media/perfil" + (Model.ImgPerfil ?? "default.jpg");
+    //var rutaFoto = "~/media/perfil" + (Model.rutaFoto ?? "default.jpg");
 }
 
 <h1>Create</h1>
@@ -14,7 +14,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
+                <label asp-for="Email" class="control-label">Correo Electronico</label>
                 <input asp-for="Email" type="email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
@@ -24,10 +24,16 @@
                 <span asp-validation-for="Usuario1" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Clave" class="control-label"></label>
+                <label asp-for="cClave" class="control-label">Contraseña</label>
+                <input asp-for="cClave" type="password" class="form-control" />
+                <span asp-validation-for="cClave" class="text-danger"></span>
+            </div>
+                <div class="form-group">
+                <label asp-for="Clave" class="control-label">Confirmar Contraseña</label>
                 <input asp-for="Clave" type="password" class="form-control" />
                 <span asp-validation-for="Clave" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
@@ -39,9 +45,9 @@
                 <span asp-validation-for="Apellido" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImgPerfil" class="control-label"></label>
-                <input asp-for="ImgPerfil" accept="image/*" type="file" class="form-control custom-file-input"/>
-                <span asp-validation-for="ImgPerfil" class="text-danger"></span>
+                <label asp-for="rutaFoto" class="control-label"></label>
+                <input asp-for="rutaFoto" accept="image/*" type="file" class="form-control custom-file-input"/>
+                <span asp-validation-for="rutaFoto" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">

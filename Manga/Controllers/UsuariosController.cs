@@ -61,14 +61,18 @@ namespace Manga.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (usuario.Clave != usuario.cClave) // Validamos que las claves coincidan
+                {
+
+                }
                 string guidImagen = null;
-                //if (usuario.ImgPerfil!= null)
-                //{
-                //    string ficherosImagenes = Path.Combine(path1: HttpContext.Request.PathBase, path2: "media/perfil");
-                //    guidImagen = usuario.ImgPerfil.ToString() + usuario.ImgPerfil.FileName;
-                //    string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
-                //    usuario.ImgPerfil.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
-                //}
+                if (usuario.rutaFoto!= null)
+                {
+                    string ficherosImagenes = Path.Combine(path1: HttpContext.Request.PathBase, path2: "media/perfil");
+                    guidImagen = usuario.ImgPerfil.ToString() + usuario.rutaFoto.FileName;
+                    string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
+                    usuario.rutaFoto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+                }
                 
                 usuario.Clave = ConvertSha256(usuario.Clave); //Encriptamos la contraseña
                 _context.Add(usuario);
