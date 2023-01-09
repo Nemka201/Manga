@@ -66,12 +66,12 @@ namespace Manga.Controllers
 
                 }
                 string guidImagen = null;
-                if (usuario.rutaFoto!= null)
+                if (usuario.Foto!= null)
                 {
                     string ficherosImagenes = Path.Combine(path1: HttpContext.Request.PathBase, path2: "media/perfil");
-                    guidImagen = usuario.ImgPerfil.ToString() + usuario.rutaFoto.FileName;
+                    guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
                     string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
-                    usuario.rutaFoto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+                    usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
                 }
                 
                 usuario.Clave = ConvertSha256(usuario.Clave); //Encriptamos la contraseña

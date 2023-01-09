@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
-    //var rutaFoto = "~/media/perfil" + (Model.rutaFoto ?? "default.jpg");
+    //var Foto = "~/media/perfil" + (Model.Foto ?? "default.jpeg");
 }
 
 <h1>Create</h1>
@@ -45,9 +45,9 @@
                 <span asp-validation-for="Apellido" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="rutaFoto" class="control-label"></label>
-                <input asp-for="rutaFoto" accept="image/*" type="file" class="form-control custom-file-input"/>
-                <span asp-validation-for="rutaFoto" class="text-danger"></span>
+                <label asp-for="Foto" class="control-label"></label>
+                <input asp-for="Foto" accept="image/*" type="file" class="form-control custom-file-input"/>
+                <span asp-validation-for="Foto" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
