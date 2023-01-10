@@ -8,18 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using Manga.Models;
 using System.Text;
 using System.Security.Cryptography;
-using Microsoft.AspNetCore.Hosting.Server.Features;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 
 namespace Manga.Controllers
 {
     public class UsuariosController : Controller
     {
         private readonly PaginaContext _context;
-
-        public UsuariosController(PaginaContext context)
+        private readonly IWebHostEnvironment _webhost; // Obtener wwwroot
+        public UsuariosController(PaginaContext context, IWebHostEnvironment webhost)
         {
             _context = context;
+            _webhost = webhost;
         }
 
         // GET: Usuarios
@@ -57,24 +56,30 @@ namespace Manga.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Usuario1,Clave,Nombre,Apellido,ImgPerfil,Favoritos,Carrito")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,Email,Usuario1,Clave,cClave,Nombre,Apellido,Foto,Favoritos,Carrito,RutaFoto")] Usuario usuario)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && usuario.Clave==usuario.cClave) //Valida que las contraseñas sean iguales
             {
                 string guidImagen = null;
-                //if (usuario.ImgPerfil!= null)
-                //{
-                //    string ficherosImagenes = Path.Combine(path1: HttpContext.Request.PathBase, path2: "media/perfil");
-                //    guidImagen = usuario.ImgPerfil.ToString() + usuario.ImgPerfil.FileName;
-                //    string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
-                //    usuario.ImgPerfil.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
-                //}
-                
-                usuario.Clave = ConvertSha256(usuario.Clave); //Encriptamos la contraseña
+                if (usuario.Foto == null)
+                {
+                    ModelState.AddModelError("Foto", "ERROR AL CARGAR LA FOTO"); // Mensaje para la vista
+                    return View(usuario);
+                }
+                if (usuario.Foto != null)
+                {
+                    string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath/*HttpContext.Request.PathBase*/, path2: "media/perfil");
+                    guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
+                    string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
+                    usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+                }
+                usuario.Clave=ConvertSha256(usuario.Clave);
+                usuario.RutaFoto = guidImagen;
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ModelState.AddModelError("cClave","Las contraseñas no coinciden"); // Mensaje para la vista
             return View(usuario);
         }
 
@@ -99,7 +104,7 @@ namespace Manga.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Usuario1,Clave,Nombre,Apellido,ImgPerfil,Favoritos,Carrito")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Usuario1,Clave,Nombre,Apellido,Favoritos,Carrito,RutaFoto")] Usuario usuario)
         {
             if (id != usuario.Id)
             {
@@ -170,7 +175,6 @@ namespace Manga.Controllers
         {
           return _context.Usuarios.Any(e => e.Id == id);
         }
-        //SHA256 ENCRYPTER
         static string ConvertSha256(string rawData) // SHA256 ENCRYPTER
         {
             // Create a SHA256   

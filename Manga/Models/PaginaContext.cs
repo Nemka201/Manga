@@ -150,7 +150,9 @@ public partial class PaginaContext : DbContext
             entity.Property<string>(e => e.Favoritos)
                 .IsUnicode(false)
                 .HasColumnName<string>("favoritos");
-            entity.Property<IFormFile>(e => (IFormFile)e.ImgPerfil).HasColumnType<IFormFile>("image");
+            entity.Property<string>(e => e.RutaFoto)
+            .IsUnicode(false)
+            .HasColumnName<string>("rutaFoto");
             entity.Property<string>(e => e.Nombre)
                 .HasMaxLength(50)
                 .IsUnicode(false)
