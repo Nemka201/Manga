@@ -60,12 +60,7 @@ namespace Manga.Controllers
         {
             if (ModelState.IsValid && usuario.Clave==usuario.cClave) //Valida que las contraseñas sean iguales
             {
-                if (usuario.Clave != usuario.cClave) // Validamos que las claves coincidan
-                {
-
-                }
                 string guidImagen = null;
-<<<<<<< HEAD
                 if (usuario.Foto == null)
                 {
                     ModelState.AddModelError("Foto", "ERROR AL CARGAR LA FOTO"); // Mensaje para la vista
@@ -74,22 +69,12 @@ namespace Manga.Controllers
                 if (usuario.Foto != null)
                 {
                     string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath/*HttpContext.Request.PathBase*/, path2: "media/perfil");
-=======
-                if (usuario.Foto!= null)
-                {
-                    string ficherosImagenes = Path.Combine(path1: HttpContext.Request.PathBase, path2: "media/perfil");
->>>>>>> 7085b88b0fd6f55351fd7c05c83be11782c6d467
                     guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
                     string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
                     usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
                 }
-<<<<<<< HEAD
                 usuario.Clave=ConvertSha256(usuario.Clave);
                 usuario.RutaFoto = guidImagen;
-=======
-                
-                usuario.Clave = ConvertSha256(usuario.Clave); //Encriptamos la contraseña
->>>>>>> 7085b88b0fd6f55351fd7c05c83be11782c6d467
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

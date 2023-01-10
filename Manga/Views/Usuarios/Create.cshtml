@@ -2,10 +2,6 @@
 
 @{
     ViewData["Title"] = "Create";
-<<<<<<< HEAD
-=======
-    //var Foto = "~/media/perfil" + (Model.Foto ?? "default.jpeg");
->>>>>>> 7085b88b0fd6f55351fd7c05c83be11782c6d467
 }
 
 <h1>Create</h1>
@@ -17,13 +13,8 @@
         <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-<<<<<<< HEAD
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
-=======
-                <label asp-for="Email" class="control-label">Correo Electronico</label>
-                <input asp-for="Email" type="email" class="form-control" />
->>>>>>> 7085b88b0fd6f55351fd7c05c83be11782c6d467
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -32,20 +23,10 @@
                 <span asp-validation-for="Usuario1" class="text-danger"></span>
             </div>
             <div class="form-group">
-<<<<<<< HEAD
                 <label asp-for="Clave" class="control-label">Contraseña</label>
-=======
-                <label asp-for="cClave" class="control-label">Contraseña</label>
-                <input asp-for="cClave" type="password" class="form-control" />
-                <span asp-validation-for="cClave" class="text-danger"></span>
-            </div>
-                <div class="form-group">
-                <label asp-for="Clave" class="control-label">Confirmar Contraseña</label>
->>>>>>> 7085b88b0fd6f55351fd7c05c83be11782c6d467
                 <input asp-for="Clave" type="password" class="form-control" />
                 <span asp-validation-for="Clave" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="cClave" class="control-label">Confirmacion Contraseña</label>
                 <input asp-for="cClave" type="password" class="form-control" />
@@ -63,16 +44,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Foto" class="control-label"></label>
-<<<<<<< HEAD
                 <div class="custom-file">
                     <input asp-for="Foto" accept="image/*" type="file" class="form-control custom-file-input"/>
                     <span asp-validation-for="Foto" class="text-danger"></span>
                     <label class="custom-file-label">Seleccione una imagen</label>
                 </div>
-=======
-                <input asp-for="Foto" accept="image/*" type="file" class="form-control custom-file-input"/>
-                <span asp-validation-for="Foto" class="text-danger"></span>
->>>>>>> 7085b88b0fd6f55351fd7c05c83be11782c6d467
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
