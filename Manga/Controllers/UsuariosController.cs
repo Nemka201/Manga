@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Manga.Models;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Manga.Controllers
 {
@@ -26,7 +27,11 @@ namespace Manga.Controllers
         {
               return View(await _context.Usuarios.ToListAsync());
         }
-
+        // GET: Login
+        //public IActionResult Login()
+        //{
+        //    return View();
+        //}
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -61,14 +66,9 @@ namespace Manga.Controllers
             if (ModelState.IsValid && usuario.Clave==usuario.cClave) //Valida que las contraseñas sean iguales
             {
                 string guidImagen = null;
-                if (usuario.Foto == null)
-                {
-                    ModelState.AddModelError("Foto", "ERROR AL CARGAR LA FOTO"); // Mensaje para la vista
-                    return View(usuario);
-                }
                 if (usuario.Foto != null)
                 {
-                    string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath/*HttpContext.Request.PathBase*/, path2: "media/perfil");
+                    string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/perfil");
                     guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
                     string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
                     usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
@@ -82,7 +82,13 @@ namespace Manga.Controllers
             ModelState.AddModelError("cClave","Las contraseñas no coinciden"); // Mensaje para la vista
             return View(usuario);
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Login([Bind("Email,Usuario1,Clave")] Usuario usuario)
+        //{
+        //    if (usuario.Email == _context.Usuarios.)
+        //    return RedirectToAction(nameof(Index), "Home");
+        //}
         // GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
