@@ -27,11 +27,11 @@ namespace Manga.Controllers
         {
               return View(await _context.Usuarios.ToListAsync());
         }
-        // GET: Login
-        //public IActionResult Login()
-        //{
-        //    return View();
-        //}
+        //GET: Login
+        public IActionResult Login()
+        {
+            return View();
+        }
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -65,31 +65,42 @@ namespace Manga.Controllers
         {
             if (ModelState.IsValid && usuario.Clave==usuario.cClave) //Valida que las contraseñas sean iguales
             {
-                string guidImagen = null;
-                if (usuario.Foto != null)
+                if (UserOrEmailExists(usuario.Usuario1,usuario.Email)
                 {
-                    string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/perfil");
-                    guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
-                    string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
-                    usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+                    string guidImagen = null;
+                    if (usuario.Foto != null)
+                    {
+                        string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/perfil");
+                        guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
+                        string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
+                        usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+                    }
+                    usuario.Clave = ConvertSha256(usuario.Clave);
+                    usuario.RutaFoto = guidImagen;
+                    _context.Add(usuario);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                    Session["username"] = usuario;
                 }
-                usuario.Clave=ConvertSha256(usuario.Clave);
-                usuario.RutaFoto = guidImagen;
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("Usuario1", "El correo electronico o usuario esta en uso");
+                return View(usuario);
             }
             ModelState.AddModelError("cClave","Las contraseñas no coinciden"); // Mensaje para la vista
             return View(usuario);
         }
+
+        // POST: Usuarios/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Login([Bind("Email,Usuario1,Clave")] Usuario usuario)
-        //{
-        //    if (usuario.Email == _context.Usuarios.)
-        //    return RedirectToAction(nameof(Index), "Home");
-        //}
-        // GET: Usuarios/Edit/5
+        public async Task<IActionResult> Login([Bind("Email,Usuario1,Clave")] Usuario usuario)
+        {
+            if (_context.Usuarios.Where(e=> (e.Usuario1 == usuario.Usuario1 || e.Email == usuario.Email) && e.Clave == usuario.Clave){
+                Session["username"]= usuario;
+                return RedirectToAction(nameof(Index), "Home");
+            }else { ViewData["Message"] = "Usuario no encontrado"; return View(usuario); }
+                
+        }
+        GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Usuarios == null)
@@ -177,7 +188,7 @@ namespace Manga.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsuarioExists(int id)
+        private bool UsuarioExists(int id) // Verify if users exist with id
         {
           return _context.Usuarios.Any(e => e.Id == id);
         }
@@ -197,6 +208,10 @@ namespace Manga.Controllers
                 }
                 return builder.ToString();
             }
+        }
+        private bool UserOrEmailExists(string user, string email) // Verify if users exist with User or Email
+        {
+            return _context.Usuarios.Any(e=> e.Usuario1 == user || e.Email == email);
         }
     }
 }
