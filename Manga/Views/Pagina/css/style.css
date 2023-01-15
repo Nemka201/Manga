@@ -23,8 +23,6 @@ header::before {
   z-index: -2;
   -webkit-filter: blur(5px);
           filter: blur(5px);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#f45804), color-stop(15%, #ec4c04), color-stop(15.5%, #ff6310), to(rgba(255, 88, 0, 0))), url(../media/serie/two_exoscirst.jpg);
-  background-image: linear-gradient(180deg, #f45804 0%, #ec4c04 15%, #ff6310 15.5%, rgba(255, 88, 0, 0) 100%), url(../media/serie/two_exoscirst.jpg);
   background-size: cover;
 }
 

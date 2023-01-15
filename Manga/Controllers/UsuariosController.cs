@@ -67,9 +67,17 @@ namespace Manga.Controllers
             {
                 if (UserOrEmailExists(usuario.Usuario1,usuario.Email)
                 {
+                    
                     string guidImagen = null;
                     if (usuario.Foto != null)
                     {
+                        // ############### Modificancion Isaias #########
+                        if (!(usuario.Foto.FileName.Contains("jpg") || usuario.Foto.FileName.Contains("png"))) 
+                        { 
+                            ModelState.AddModelError("Foto", "El archivo que su subiste no es png o jpg");
+                            return View(usuario);
+                        } // ############### Modificancion Isaias #########
+                        
                         string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/perfil");
                         guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
                         string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);

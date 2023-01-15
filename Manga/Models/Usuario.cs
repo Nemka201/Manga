@@ -28,6 +28,7 @@ public partial class Usuario
     [StringLength(20, ErrorMessage = "No puede superar 20 caracteres")]
     public string? Apellido { get; set; }
 
+    [Required(ErrorMessage = "Obligatorio")] // ############### Modificancion Isaias #########
     [NotMapped]
     public IFormFile? Foto { get; set; }
 
