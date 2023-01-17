@@ -1,10 +1,10 @@
 ﻿using Manga.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Manga.Atributes;
+//using Manga.Atributes;
 namespace Manga.Controllers
 {
-    [ValidateSession]
+    //[ValidateSession]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
