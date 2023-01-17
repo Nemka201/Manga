@@ -27,7 +27,7 @@ namespace Manga.Controllers
         {
               return View(await _context.Usuarios.ToListAsync());
         }
-        //GET: Login
+        // GET: Login
         public IActionResult Login()
         {
             return View();
@@ -65,19 +65,19 @@ namespace Manga.Controllers
         {
             if (ModelState.IsValid && usuario.Clave==usuario.cClave) //Valida que las contraseñas sean iguales
             {
-                if (UserOrEmailExists(usuario.Usuario1,usuario.Email)
+                if (!UserOrEmailExists(usuario.Usuario1,usuario.Email))
                 {
                     
                     string guidImagen = null;
                     if (usuario.Foto != null)
                     {
                         // ############### Modificancion Isaias #########
-                        if (!(usuario.Foto.FileName.Contains("jpg") || usuario.Foto.FileName.Contains("png"))) 
-                        { 
+                        if (!(usuario.Foto.FileName.Contains("jpg") || usuario.Foto.FileName.Contains("png") || usuario.Foto.FileName.Contains("jpeg")))
+                        {
                             ModelState.AddModelError("Foto", "El archivo que su subiste no es png o jpg");
                             return View(usuario);
                         } // ############### Modificancion Isaias #########
-                        
+
                         string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/perfil");
                         guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
                         string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
@@ -86,9 +86,9 @@ namespace Manga.Controllers
                     usuario.Clave = ConvertSha256(usuario.Clave);
                     usuario.RutaFoto = guidImagen;
                     _context.Add(usuario);
+                    HttpContext.Session.SetString("username", usuario.Email);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
-                    Session["username"] = usuario;
                 }
                 ModelState.AddModelError("Usuario1", "El correo electronico o usuario esta en uso");
                 return View(usuario);
@@ -100,15 +100,18 @@ namespace Manga.Controllers
         // POST: Usuarios/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([Bind("Email,Usuario1,Clave")] Usuario usuario)
+        public async Task<IActionResult> Login([Bind("Email,Clave")] Usuario usuario)
         {
-            if (_context.Usuarios.Where(e=> (e.Usuario1 == usuario.Usuario1 || e.Email == usuario.Email) && e.Clave == usuario.Clave){
-                Session["username"]= usuario;
+            if (LoginValidate(usuario.Email, usuario.Clave))
+            {
+                usuario = (Usuario)_context.Usuarios.Where(d => d.Email == usuario.Email);
+                HttpContext.Session.SetString("username", usuario.Email);
                 return RedirectToAction(nameof(Index), "Home");
-            }else { ViewData["Message"] = "Usuario no encontrado"; return View(usuario); }
-                
+            }
+            else { ViewData["Message"] = "Usuario no encontrado"; return View(usuario); }
+            return View(usuario);
         }
-        GET: Usuarios/Edit/5
+        //GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Usuarios == null)
@@ -220,6 +223,17 @@ namespace Manga.Controllers
         private bool UserOrEmailExists(string user, string email) // Verify if users exist with User or Email
         {
             return _context.Usuarios.Any(e=> e.Usuario1 == user || e.Email == email);
+        }
+        private bool LoginValidate(string userOrEmail,string password) // Comprueba contraseña del usuario
+        {
+            Usuario u;
+            if (!string.IsNullOrEmpty(userOrEmail))
+            {
+                u = _context.Usuarios.Where(e => e.Usuario1 == userOrEmail).First(); // Si encuentra el usuario en la DB
+                u = _context.Usuarios.Where(e => e.Email == userOrEmail).First(); // Si encuentra el email en la DB
+                return (u.Clave == ConvertSha256(password)); // Encripta contraseña
+            }
+            return false;
         }
     }
 }
