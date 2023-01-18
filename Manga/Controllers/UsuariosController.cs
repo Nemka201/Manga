@@ -72,7 +72,7 @@ namespace Manga.Controllers
                     if (usuario.Foto != null)
                     {
                         // ############### Modificancion Isaias #########
-                        if (!(usuario.Foto.FileName.Contains("jpg") || usuario.Foto.FileName.Contains("png") || usuario.Foto.FileName.Contains("jpeg")))
+                        if (!ImageValidate(usuario.Foto)) // #### Modificacion Benjamin ####
                         {
                             ModelState.AddModelError("Foto", "El archivo que su subiste no es png o jpg");
                             return View(usuario);
@@ -83,7 +83,7 @@ namespace Manga.Controllers
                         string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
                         usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
                     }
-                    usuario.Clave = ConvertSha256(usuario.Clave);
+                    usuario.Clave = ConvertSha256(usuario.Clave); // Encripta password
                     usuario.RutaFoto = guidImagen;
                     _context.Add(usuario);
                     HttpContext.Session.SetString("username", usuario.Email);
@@ -231,9 +231,13 @@ namespace Manga.Controllers
             {
                 u = _context.Usuarios.Where(e => e.Usuario1 == userOrEmail).First(); // Si encuentra el usuario en la DB
                 u = _context.Usuarios.Where(e => e.Email == userOrEmail).First(); // Si encuentra el email en la DB
-                return (u.Clave == ConvertSha256(password)); // Encripta contraseña
+                return (u.Clave == ConvertSha256(password)); // Compara contraseña y devuelve booleano
             }
             return false;
+        }
+        private bool ImageValidate (IFormFile image)
+        {
+            return (image.FileName.Contains("jpg") || image.FileName.Contains("png") || image.FileName.Contains("jpeg"));
         }
     }
 }
