@@ -14,6 +14,7 @@ namespace Manga.Controllers
 {
     public class UsuariosController : Controller
     {
+        private readonly long _fileSizeLimit = 5 * 1024 * 1024; // 5MB
         private readonly PaginaContext _context;
         private readonly IWebHostEnvironment _webhost; // Obtener wwwroot
         public UsuariosController(PaginaContext context, IWebHostEnvironment webhost)
@@ -72,7 +73,7 @@ namespace Manga.Controllers
                     if (usuario.Foto != null)
                     {
                         // ############### Modificancion Isaias #########
-                        if (!(usuario.Foto.FileName.Contains("jpg") || usuario.Foto.FileName.Contains("png") || usuario.Foto.FileName.Contains("jpeg")))
+                        if (!ImageValidateFormat(usuario.Foto) && !ImageValidateSize(usuario.Foto)) // #### Modificacion Benjamin ####
                         {
                             ModelState.AddModelError("Foto", "El archivo que su subiste no es png o jpg");
                             return View(usuario);
@@ -83,10 +84,10 @@ namespace Manga.Controllers
                         string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
                         usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
                     }
-                    usuario.Clave = ConvertSha256(usuario.Clave);
+                    usuario.Clave = ConvertSha256(usuario.Clave); // Encripta password
                     usuario.RutaFoto = guidImagen;
                     _context.Add(usuario);
-                    HttpContext.Session.SetString("username", usuario.Email);
+                    HttpContext.Session.SetString("username", usuario.Usuario1);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -100,16 +101,19 @@ namespace Manga.Controllers
         // POST: Usuarios/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([Bind("Email,Clave")] Usuario usuario)
+        public IActionResult Login([Bind("Usuario1,Clave")] Usuario usuario)
         {
-            if (LoginValidate(usuario.Email, usuario.Clave))
+            if (LoginValidate(usuario.Usuario1, usuario.Clave))
             {
-                usuario = (Usuario)_context.Usuarios.Where(d => d.Email == usuario.Email);
-                HttpContext.Session.SetString("username", usuario.Email);
+                usuario = (Usuario)_context.Usuarios.Where(d => d.Usuario1 == usuario.Usuario1).First();
+                HttpContext.Session.SetString("username", usuario.Usuario1);
                 return RedirectToAction(nameof(Index), "Home");
             }
-            else { ViewData["Message"] = "Usuario no encontrado"; return View(usuario); }
-            return View(usuario);
+            else 
+            { 
+                ViewData["Message"] = "Usuario no encontrado"; 
+                return View(usuario); 
+            }
         }
         //GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -226,14 +230,32 @@ namespace Manga.Controllers
         }
         private bool LoginValidate(string userOrEmail,string password) // Comprueba contraseña del usuario
         {
-            Usuario u;
+            Usuario u=null;
             if (!string.IsNullOrEmpty(userOrEmail))
             {
-                u = _context.Usuarios.Where(e => e.Usuario1 == userOrEmail).First(); // Si encuentra el usuario en la DB
-                u = _context.Usuarios.Where(e => e.Email == userOrEmail).First(); // Si encuentra el email en la DB
-                return (u.Clave == ConvertSha256(password)); // Encripta contraseña
+                if (_context.Usuarios.Where(e=> e.Usuario1 == userOrEmail).Any())
+                {
+                    u = _context.Usuarios.Where(e => e.Usuario1 == userOrEmail).First(); // Si encuentra el usuario en la DB
+                }
+                if (_context.Usuarios.Where(e => e.Email == userOrEmail).Any())
+                {
+                    u = _context.Usuarios.Where(e => e.Email == userOrEmail).First(); // Si encuentra el email en la DB
+                }
+                if(u.Clave == ConvertSha256(password))
+                {
+                    return true;
+                }
+                return false;
             }
             return false;
+        }
+        private bool ImageValidateFormat (IFormFile image) 
+        {
+            return (image.FileName.Contains("jpg") || image.FileName.Contains("png") || image.FileName.Contains("jpeg") || image.Length > _fileSizeLimit); 
+        }
+        private bool ImageValidateSize(IFormFile image) 
+        {
+            return (image.Length > _fileSizeLimit);
         }
     }
 }

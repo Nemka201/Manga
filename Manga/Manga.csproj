@@ -7,6 +7,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\style.css" />
+    <Content Remove="wwwroot\css\style.css.map" />
+    <Content Remove="wwwroot\css\style.scss" />
+    <Content Remove="wwwroot\css\_base.scss" />
+    <Content Remove="wwwroot\css\_detailChapter.scss" />
+    <Content Remove="wwwroot\css\_detailManga.scss" />
+    <Content Remove="wwwroot\css\_index.scss" />
+    <Content Remove="wwwroot\js\inicio.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\style.css" />
+    <None Include="wwwroot\css\style.css.map" />
+    <None Include="wwwroot\css\style.scss" />
+    <None Include="wwwroot\css\_base.scss" />
+    <None Include="wwwroot\css\_detailChapter.scss" />
+    <None Include="wwwroot\css\_detailManga.scss" />
+    <None Include="wwwroot\css\_index.scss" />
+    <None Include="wwwroot\js\inicio.js" />
+    <None Include="wwwroot\media\svg\logo.svg" />
+    <None Include="wwwroot\media\svg\mini logo.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.13">
       <PrivateAssets>all</PrivateAssets>

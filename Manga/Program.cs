@@ -1,4 +1,5 @@
 using Manga.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -10,7 +11,16 @@ builder.Services.AddControllersWithViews();
     builder.Services.AddDbContext<PaginaContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
 
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>{
+    options.LoginPath = "/Usuarios/Login";
+});
 var app = builder.Build();
+
 
 
 // Configure the HTTP request pipeline.
@@ -23,6 +33,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSession();
 
 app.UseRouting();
 
