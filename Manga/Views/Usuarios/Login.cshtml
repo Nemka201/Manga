@@ -9,14 +9,18 @@
         <form asp-action="Login" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label">Usuario o Correo</label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Usuario1" class="control-label">Usuario o Correo</label>
+                <input asp-for="Usuario1" class="form-control" />
+                <span asp-validation-for="Usuario1" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Clave" class="control-label">Contraseña</label>
                 <input asp-for="Clave" type="password" class="form-control" />
                 <span asp-validation-for="Clave" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
             </div>
         </form>
     </div>
