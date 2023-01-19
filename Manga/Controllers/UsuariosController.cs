@@ -73,7 +73,7 @@ namespace Manga.Controllers
                     if (usuario.Foto != null)
                     {
                         // ############### Modificancion Isaias #########
-                        if (!ImageValidateFormat(usuario.Foto) && !ImageValidateSize(usuario.Foto)) // #### Modificacion Benjamin ####
+                        if (!(usuario.Foto.FileName.Contains("jpg") || usuario.Foto.FileName.Contains("png") || usuario.Foto.FileName.Contains("jpeg")))
                         {
                             ModelState.AddModelError("Foto", "El archivo que su subiste no es png o jpg");
                             return View(usuario);
@@ -233,29 +233,11 @@ namespace Manga.Controllers
             Usuario u=null;
             if (!string.IsNullOrEmpty(userOrEmail))
             {
-                if (_context.Usuarios.Where(e=> e.Usuario1 == userOrEmail).Any())
-                {
-                    u = _context.Usuarios.Where(e => e.Usuario1 == userOrEmail).First(); // Si encuentra el usuario en la DB
-                }
-                if (_context.Usuarios.Where(e => e.Email == userOrEmail).Any())
-                {
-                    u = _context.Usuarios.Where(e => e.Email == userOrEmail).First(); // Si encuentra el email en la DB
-                }
-                if(u.Clave == ConvertSha256(password))
-                {
-                    return true;
-                }
-                return false;
+                u = _context.Usuarios.Where(e => e.Usuario1 == userOrEmail).First(); // Si encuentra el usuario en la DB
+                u = _context.Usuarios.Where(e => e.Email == userOrEmail).First(); // Si encuentra el email en la DB
+                return (u.Clave == ConvertSha256(password)); // Encripta contraseña
             }
             return false;
-        }
-        private bool ImageValidateFormat (IFormFile image) 
-        {
-            return (image.FileName.Contains("jpg") || image.FileName.Contains("png") || image.FileName.Contains("jpeg") || image.Length > _fileSizeLimit); 
-        }
-        private bool ImageValidateSize(IFormFile image) 
-        {
-            return (image.Length > _fileSizeLimit);
         }
     }
 }
