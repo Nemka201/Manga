@@ -3,11 +3,9 @@
 @using Microsoft.AspNetCore.Http;
 @using Microsoft.EntityFrameworkCore;
 
-
 @{
-
     var rutaFoto = "~/media/perfil/default.jpeg";
-    if (Context.Session.GetString("username") != null)
+    if (!string.IsNullOrEmpty(Context.Session.GetString("username")))
     {
         rutaFoto = "~/media/perfil/" + (Context.Session.GetString("rutaFoto") ?? "default.jpeg");
     }
@@ -18,7 +16,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@ViewData["Title"] - Manga</title>
+    <title>@ViewData["Title"] -Wonster Manga</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Manga.styles.css" asp-append-version="true" />
@@ -36,6 +34,7 @@
 
             <div class="d-flex Encabezado">
                 <div class="logoHeader">
+                <a asp-area="" asp-controller="Home" asp-action="Index">
                     <svg width="35" height="48" viewBox="0 0 35 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M3.46552 47.9742L8.27586 18.7759H8.66379L17.3534 33.7759L25.5517 18.7759H25.9655L30.7759 48L25.5517 42.569L23.6121 32.0431L17.3276 43.3966L10.4224 31.8879L8.40517 42.569L3.46552 47.9742Z"
                               fill="white" />
@@ -76,6 +75,7 @@
                         <path d="M75.3452 31.7892V38.6293C75.3452 39.4794 75.3649 40.2109 75.3847 40.7842C75.4242 41.3575 75.4638 41.8715 75.5231 42.2867L71.9844 43.2554L71.6483 42.2076C71.1738 42.5634 70.6994 42.8205 70.2447 42.9984C69.79 43.1763 69.3155 43.2554 68.8015 43.2554C67.3979 43.2554 66.2117 42.6821 65.243 41.575C64.2743 40.4481 63.7999 39.0445 63.7999 37.3641C63.7999 35.6046 64.3336 34.1417 65.421 32.9951C66.4885 31.8485 67.8526 31.2751 69.4934 31.2751C69.8691 31.2751 70.2644 31.3345 70.6796 31.4333C71.0948 31.5321 71.5495 31.7101 72.0437 31.9275L75.3452 31.7892ZM71.5297 34.5569C71.3122 34.4185 71.0948 34.3394 70.8773 34.2801C70.6796 34.2208 70.4621 34.201 70.2644 34.201C69.5528 34.201 68.9399 34.4976 68.4457 35.1104C67.9514 35.7035 67.7142 36.4745 67.6944 37.3839C67.6944 38.234 67.9119 38.9654 68.3468 39.519C68.7817 40.0923 69.3155 40.3691 69.9284 40.3691C70.1854 40.3691 70.4424 40.3097 70.6994 40.1714C70.9564 40.033 71.2331 39.8353 71.5099 39.5585L71.5297 34.5569Z"
                               fill="white" />
                     </svg>
+                </a>
                 </div>
 
                 <div class="Navegador d-flex">
@@ -101,11 +101,10 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Series" asp-action="Index">Series</a>
+                                <a  asp-area="" asp-controller="Series" asp-action="Index">
+                                <img src="~/media/svg/Sell Stock.png" alt="">
+                                    Series
+                                 </a>
                             </li>
 
                         </ul>
@@ -120,7 +119,7 @@
 
                 </div>
             </div>
-        @if (Context.Session.GetString("username") != null)
+        @if (!string.IsNullOrEmpty(Context.Session.GetString("username"))) // Muesta usuario logeado
         {
             <div class="Perfil">
                 <div class="dropdown">
@@ -128,29 +127,22 @@
                         <img src="@rutaFoto" alt="" asp-append-version="true">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">@Context.Session.GetString("username")</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Usuarios" asp-action="Details" asp-route-id="@Context.Session.GetInt32("id")">Detalles</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Usuarios" asp-action="Details" asp-route-id="@Context.Session.GetInt32("id")">@Context.Session.GetString("username")</a></li>
                         <li><a class="dropdown-item" href="#">Favoritos</a></li>
                         <li><a class="dropdown-item" href="#">Carrito</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Usuarios" asp-action="Logout">Cerrar Sesión</a></li>
                     </ul>
                 </div>
             
 
             </div>
-        }
-
-            
-        @if (Context.Session.GetString("username") == null)
+        }           
+        @if (string.IsNullOrEmpty(Context.Session.GetString("username"))) // Muestra botones en caso de que no haya usuario logeado
         {
-            <div class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Create">Registrarse</a>
-            </div>
-            <div class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Login">Logearse</a>
-            </div>
+            <a type="button" class="btn btn-outline-warning" style="height:20%; margin-top: 1.25%; " asp-area="" asp-controller="Usuarios" asp-action="Login">Logearse</a>
+            <a type="button" class="btn btn btn-danger" style="height:20%; margin-top: 1.25%; margin-left: 0.3%;" asp-area="" asp-controller="Usuarios" asp-action="Create">Registrarse</a>
         }
         </header>
-
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

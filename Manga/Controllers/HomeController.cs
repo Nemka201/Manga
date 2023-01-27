@@ -15,10 +15,6 @@ namespace Manga.Controllers
         }
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetString("username") == null)
-            {
-                return RedirectToAction("Login", "Usuarios");
-            }
             return View();
         }
         public IActionResult Privacy()

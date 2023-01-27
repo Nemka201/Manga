@@ -66,7 +66,6 @@ namespace Manga.Controllers
         {
             return View();
         }
-
         // POST: Usuarios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -128,6 +127,14 @@ namespace Manga.Controllers
                 ViewData["Message"] = "Usuario no encontrado";
                 return View(usuario);
             }
+        }
+        public IActionResult Logout()
+        {   // ELIMINO DATOS DEL SESSION
+            _httpContextAccessor.HttpContext.Session.Remove("username");
+            _httpContextAccessor.HttpContext.Session.Remove("rutaFoto");
+            _httpContextAccessor.HttpContext.Session.Remove("id");
+            _httpContextAccessor.HttpContext.Session.Clear();
+            return RedirectToAction(nameof(Index), "Home");
         }
         //GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -263,30 +270,6 @@ namespace Manga.Controllers
             }
             return false;
         }
-        public string GetRutaFoto(string user)
-        {
-            Usuario u = null;
-            if (_context.Usuarios.Any(e => e.Usuario1 == user))
-            {
-                u = _context.Usuarios.Where(e => e.Usuario1 == user).First(); // Si encuentra el usuario en la DB
-            }
-            return u.RutaFoto;
-
-        }
-        //public static class HtmlExtesions
-        //{
-        //    public static string ValidateSession(this ISession session)
-        //    {
-        //        if (session.GetString("username") != null)
-        //        {
-        //            string storedData = JsonConvert.DeserializeObject<string>(session.GetString("username"));
-        //            return storedData;
-        //        }
-        //        return null;
-        //    }
-
-        //}
-
     }
 }
 
