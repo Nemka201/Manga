@@ -10,6 +10,7 @@ builder.Services.AddControllersWithViews();
 
     builder.Services.AddDbContext<PaginaContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSession(options =>
 {
@@ -18,6 +19,7 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>{
     options.LoginPath = "/Usuarios/Login";
+    options.LogoutPath= "/Home/Index";
 });
 var app = builder.Build();
 

@@ -1,10 +1,16 @@
 ﻿@model Manga.Models.Usuario;
+@using Manga.Controllers;
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.EntityFrameworkCore;
+
+
 @{
+
     var rutaFoto = "~/media/perfil/default.jpeg";
-    //if (HttpContext.Session.GetString != null)
-    //{
-    //    rutaFoto= "~/media/perfil/" + (Model.RutaFoto ?? "default.jpeg");
-    //}
+    if (Context.Session.GetString("username") != null)
+    {
+        rutaFoto = "~/media/perfil/" + (Context.Session.GetString("rutaFoto") ?? "default.jpeg");
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -114,18 +120,35 @@
 
                 </div>
             </div>
-
+        @if (Context.Session.GetString("username") != null)
+        {
             <div class="Perfil">
-            <img src=@rutaFoto alt="">
-            </div>
+                <div class="dropdown">
+                    <a class="btn btn-warning dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="@rutaFoto" alt="" asp-append-version="true">
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="#">@Context.Session.GetString("username")</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Usuarios" asp-action="Details" asp-route-id="@Context.Session.GetInt32("id")">Detalles</a></li>
+                        <li><a class="dropdown-item" href="#">Favoritos</a></li>
+                        <li><a class="dropdown-item" href="#">Carrito</a></li>
+                    </ul>
+                </div>
+            
 
+            </div>
+        }
+
+            
+        @if (Context.Session.GetString("username") == null)
+        {
             <div class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Create">Registrarse</a>
-             </div>
+            </div>
             <div class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Login">Logearse</a>
             </div>
-
+        }
         </header>
 
     <div class="container">

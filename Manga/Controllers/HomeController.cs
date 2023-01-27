@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-//using Manga.Atributes;
+using Manga.Attributes;
 namespace Manga.Controllers
 {
-    //[ValidateSession]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -14,17 +13,14 @@ namespace Manga.Controllers
         {
             _logger = logger;
         }
-        //[Authorize]
         public IActionResult Index()
         {
             if (HttpContext.Session.GetString("username") == null)
             {
                 return RedirectToAction("Login", "Usuarios");
             }
-
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();

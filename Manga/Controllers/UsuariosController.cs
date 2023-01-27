@@ -9,6 +9,9 @@ using Manga.Models;
 using System.Text;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.AspNetCore.Http;
 
 namespace Manga.Controllers
 {
@@ -16,17 +19,20 @@ namespace Manga.Controllers
     {
         private readonly long _fileSizeLimit = 5 * 1024 * 1024; // 5MB
         private readonly PaginaContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWebHostEnvironment _webhost; // Obtener wwwroot
-        public UsuariosController(PaginaContext context, IWebHostEnvironment webhost)
+        public UsuariosController(PaginaContext context, IWebHostEnvironment webhost, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _webhost = webhost;
+            _httpContextAccessor = httpContextAccessor;
+
         }
 
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Usuarios.ToListAsync());
+            return View(await _context.Usuarios.ToListAsync());
         }
         // GET: Login
         public IActionResult Login()
@@ -36,6 +42,10 @@ namespace Manga.Controllers
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (HttpContext.Session.GetString("username") == null)
+            {
+                return RedirectToAction("Login", "Usuarios");
+            }
             if (id == null || _context.Usuarios == null)
             {
                 return NotFound();
@@ -64,11 +74,11 @@ namespace Manga.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Email,Usuario1,Clave,cClave,Nombre,Apellido,Foto,Favoritos,Carrito,RutaFoto")] Usuario usuario)
         {
-            if (ModelState.IsValid && usuario.Clave==usuario.cClave) //Valida que las contraseñas sean iguales
+            if (ModelState.IsValid && usuario.Clave == usuario.cClave) //Valida que las contraseñas sean iguales
             {
-                if (!UserOrEmailExists(usuario.Usuario1,usuario.Email))
+                if (!UserOrEmailExists(usuario.Usuario1, usuario.Email))
                 {
-                    
+
                     string guidImagen = null;
                     if (usuario.Foto != null)
                     {
@@ -87,14 +97,16 @@ namespace Manga.Controllers
                     usuario.Clave = ConvertSha256(usuario.Clave); // Encripta password
                     usuario.RutaFoto = guidImagen;
                     _context.Add(usuario);
-                    HttpContext.Session.SetString("username", usuario.Usuario1);
+                    _httpContextAccessor.HttpContext.Session.SetString("username", usuario.Usuario1);
+                    _httpContextAccessor.HttpContext.Session.SetString("rutaFoto", usuario.RutaFoto);
+                    _httpContextAccessor.HttpContext.Session.SetInt32("id", usuario.Id);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 ModelState.AddModelError("Usuario1", "El correo electronico o usuario esta en uso");
                 return View(usuario);
             }
-            ModelState.AddModelError("cClave","Las contraseñas no coinciden"); // Mensaje para la vista
+            ModelState.AddModelError("cClave", "Las contraseñas no coinciden"); // Mensaje para la vista
             return View(usuario);
         }
 
@@ -106,13 +118,15 @@ namespace Manga.Controllers
             if (LoginValidate(usuario.Usuario1, usuario.Clave))
             {
                 usuario = (Usuario)_context.Usuarios.Where(d => d.Usuario1 == usuario.Usuario1).First();
-                HttpContext.Session.SetString("username", usuario.Usuario1);
+                _httpContextAccessor.HttpContext.Session.SetString("username", usuario.Usuario1);
+                _httpContextAccessor.HttpContext.Session.SetString("rutaFoto", usuario.RutaFoto);
+                _httpContextAccessor.HttpContext.Session.SetInt32("id", usuario.Id);
                 return RedirectToAction(nameof(Index), "Home");
             }
-            else 
-            { 
-                ViewData["Message"] = "Usuario no encontrado"; 
-                return View(usuario); 
+            else
+            {
+                ViewData["Message"] = "Usuario no encontrado";
+                return View(usuario);
             }
         }
         //GET: Usuarios/Edit/5
@@ -138,6 +152,10 @@ namespace Manga.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Usuario1,Clave,Nombre,Apellido,Favoritos,Carrito,RutaFoto")] Usuario usuario)
         {
+            if (HttpContext.Session.GetString("username") == null)
+            {
+                return RedirectToAction("Login", "Usuarios");
+            }
             if (id != usuario.Id)
             {
                 return NotFound();
@@ -198,14 +216,14 @@ namespace Manga.Controllers
             {
                 _context.Usuarios.Remove(usuario);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UsuarioExists(int id) // Verify if users exist with id
         {
-          return _context.Usuarios.Any(e => e.Id == id);
+            return _context.Usuarios.Any(e => e.Id == id);
         }
         static string ConvertSha256(string rawData) // SHA256 ENCRYPTER
         {
@@ -226,18 +244,49 @@ namespace Manga.Controllers
         }
         private bool UserOrEmailExists(string user, string email) // Verify if users exist with User or Email
         {
-            return _context.Usuarios.Any(e=> e.Usuario1 == user || e.Email == email);
+            return _context.Usuarios.Any(e => e.Usuario1 == user || e.Email == email);
         }
-        private bool LoginValidate(string userOrEmail,string password) // Comprueba contraseña del usuario
+        private bool LoginValidate(string userOrEmail, string password) // Comprueba contraseña del usuario
         {
-            Usuario u=null;
+            Usuario u = null;
             if (!string.IsNullOrEmpty(userOrEmail))
             {
-                u = _context.Usuarios.Where(e => e.Usuario1 == userOrEmail).First(); // Si encuentra el usuario en la DB
-                u = _context.Usuarios.Where(e => e.Email == userOrEmail).First(); // Si encuentra el email en la DB
+                if (_context.Usuarios.Any(e => e.Usuario1 == userOrEmail))
+                {
+                    u = _context.Usuarios.Where(e => e.Usuario1 == userOrEmail).First(); // Si encuentra el usuario en la DB
+                }
+                if (_context.Usuarios.Any(e => e.Email == userOrEmail))
+                {
+                    u = _context.Usuarios.Where(e => e.Email == userOrEmail).First(); // Si encuentra el email en la DB
+                }
                 return (u.Clave == ConvertSha256(password)); // Encripta contraseña
             }
             return false;
         }
+        public string GetRutaFoto(string user)
+        {
+            Usuario u = null;
+            if (_context.Usuarios.Any(e => e.Usuario1 == user))
+            {
+                u = _context.Usuarios.Where(e => e.Usuario1 == user).First(); // Si encuentra el usuario en la DB
+            }
+            return u.RutaFoto;
+
+        }
+        //public static class HtmlExtesions
+        //{
+        //    public static string ValidateSession(this ISession session)
+        //    {
+        //        if (session.GetString("username") != null)
+        //        {
+        //            string storedData = JsonConvert.DeserializeObject<string>(session.GetString("username"));
+        //            return storedData;
+        //        }
+        //        return null;
+        //    }
+
+        //}
+
     }
 }
+

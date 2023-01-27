@@ -30,7 +30,61 @@
             </div>
         </div>
 </div>
+<h1>Edit</h1>
+
+<h4>Usuario</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Usuario1" class="control-label"></label>
+                <input asp-for="Usuario1" class="form-control" />
+                <span asp-validation-for="Usuario1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clave" class="control-label"></label>
+                <input asp-for="Clave" class="form-control" />
+                <span asp-validation-for="Clave" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apellido" class="control-label"></label>
+                <input asp-for="Apellido" class="form-control" />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Favoritos" class="control-label"></label>
+                <input asp-for="Favoritos" class="form-control" />
+                <span asp-validation-for="Favoritos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Carrito" class="control-label"></label>
+                <input asp-for="Carrito" class="form-control" />
+                <span asp-validation-for="Carrito" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RutaFoto" class="control-label"></label>
+                <input asp-for="RutaFoto" class="form-control" />
+                <span asp-validation-for="RutaFoto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>
