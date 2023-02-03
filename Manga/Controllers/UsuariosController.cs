@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.AspNetCore.Http;
+using Manga.Attributes;
 
 namespace Manga.Controllers
 {
@@ -26,7 +27,6 @@ namespace Manga.Controllers
             _context = context;
             _webhost = webhost;
             _httpContextAccessor = httpContextAccessor;
-
         }
 
         // GET: Usuarios
@@ -77,8 +77,6 @@ namespace Manga.Controllers
             {
                 if (!UserOrEmailExists(usuario.Usuario1, usuario.Email))
                 {
-
-                    string guidImagen = null;
                     if (usuario.Foto != null)
                     {
                         // ############### Modificancion Isaias #########
@@ -87,18 +85,11 @@ namespace Manga.Controllers
                             ModelState.AddModelError("Foto", "El archivo que su subiste no es png o jpg");
                             return View(usuario);
                         } // ############### Modificancion Isaias #########
-
-                        string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/perfil");
-                        guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
-                        string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
-                        usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+                        GetRutaFoto(usuario);
                     }
                     usuario.Clave = ConvertSha256(usuario.Clave); // Encripta password
-                    usuario.RutaFoto = guidImagen;
                     _context.Add(usuario);
-                    _httpContextAccessor.HttpContext.Session.SetString("username", usuario.Usuario1);
-                    _httpContextAccessor.HttpContext.Session.SetString("rutaFoto", usuario.RutaFoto);
-                    _httpContextAccessor.HttpContext.Session.SetInt32("id", usuario.Id);
+                    SetSession(usuario);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -117,9 +108,7 @@ namespace Manga.Controllers
             if (LoginValidate(usuario.Usuario1, usuario.Clave))
             {
                 usuario = (Usuario)_context.Usuarios.Where(d => d.Usuario1 == usuario.Usuario1).First();
-                _httpContextAccessor.HttpContext.Session.SetString("username", usuario.Usuario1);
-                _httpContextAccessor.HttpContext.Session.SetString("rutaFoto", usuario.RutaFoto);
-                _httpContextAccessor.HttpContext.Session.SetInt32("id", usuario.Id);
+                SetSession(usuario);
                 return RedirectToAction(nameof(Index), "Home");
             }
             else
@@ -157,21 +146,28 @@ namespace Manga.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Usuario1,Clave,Nombre,Apellido,Favoritos,Carrito,RutaFoto")] Usuario usuario)
+        [SessionCheck]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Usuario1,Clave,cClave,Nombre,Apellido,Favoritos,Carrito,RutaFoto")] Usuario usuario)
         {
-            if (HttpContext.Session.GetString("username") == null)
-            {
-                return RedirectToAction("Login", "Usuarios");
-            }
             if (id != usuario.Id)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && usuario.Clave == usuario.cClave)
             {
                 try
                 {
+                    if (usuario.Foto != null)
+                    {
+                        // ############### Modificancion Isaias #########
+                        if (!(usuario.Foto.FileName.Contains("jpg") || usuario.Foto.FileName.Contains("png") || usuario.Foto.FileName.Contains("jpeg")))
+                        {
+                            ModelState.AddModelError("Foto", "El archivo que su subiste no es png o jpg");
+                            return View(usuario);
+                        } // ############### Modificancion Isaias #########
+                        GetRutaFoto(usuario);
+                    }
+                    usuario.Clave = ConvertSha256(usuario.Clave);
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
                 }
@@ -188,6 +184,11 @@ namespace Manga.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            else
+            {
+                ModelState.AddModelError("cClave", "Las contraseñas no coinciden");
+            }
+
             return View(usuario);
         }
 
@@ -228,6 +229,10 @@ namespace Manga.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Metodos
+        /// </summary>
+
         private bool UsuarioExists(int id) // Verify if users exist with id
         {
             return _context.Usuarios.Any(e => e.Id == id);
@@ -266,10 +271,24 @@ namespace Manga.Controllers
                 {
                     u = _context.Usuarios.Where(e => e.Email == userOrEmail).First(); // Si encuentra el email en la DB
                 }
-                return (u.Clave == ConvertSha256(password)); // Encripta contraseña
+                return (u.Clave == ConvertSha256(password));
             }
             return false;
         }
+        private void GetRutaFoto(Usuario usuario)
+        {
+            string guidImagen = null;
+            string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/perfil");
+            guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
+            string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
+            usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+            usuario.RutaFoto = guidImagen;
+        }
+        private void SetSession(Usuario usuario)
+        {
+            _httpContextAccessor.HttpContext.Session.SetString("username", usuario.Usuario1);
+            _httpContextAccessor.HttpContext.Session.SetString("rutaFoto", usuario.RutaFoto);
+            _httpContextAccessor.HttpContext.Session.SetInt32("id", usuario.Id);
+        }
     }
 }
-

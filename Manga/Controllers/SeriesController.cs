@@ -12,16 +12,18 @@ namespace Manga.Controllers
     public class SeriesController : Controller
     {
         private readonly PaginaContext _context;
+        private readonly IWebHostEnvironment _webhost; // Obtener wwwroot
 
-        public SeriesController(PaginaContext context)
+        public SeriesController(PaginaContext context, IWebHostEnvironment webhost)
         {
             _context = context;
+            _webhost = webhost;
         }
 
         // GET: Series
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Series.ToListAsync());
+            return View(await _context.Series.ToListAsync());
         }
 
         // GET: Series/Details/5
@@ -53,10 +55,24 @@ namespace Manga.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Idserie,Nombre,Descripcion,Capitulos,Volumenes,Categoria,Autor,Serializacion,Favoritos,Estado")] Serie serie)
+        public async Task<IActionResult> Create([Bind("Idserie,Nombre,Descripcion,Capitulos,Volumenes,Categoria,Autor,Serializacion,Favoritos,Estado,RutaFoto,Id")] Serie serie)
         {
             if (ModelState.IsValid)
             {
+                if (serie.Portada != null)
+                {
+                    if (!(serie.Portada.FileName.Contains("jpg") || serie.Portada.FileName.Contains("png") || serie.Portada.FileName.Contains("jpeg")))
+                    {
+                        ModelState.AddModelError("Foto", "El archivo que su subiste no es png o jpg");
+                        return View(serie);
+                    }
+                    GetRutaFoto(serie);
+                }
+                serie.Capitulos = 0;
+                serie.Volumenes = 0;
+                serie.Categoria = "4";
+                serie.Estado = true;
+                serie.Id = (int)HttpContext.Session.GetInt32("id");
                 _context.Add(serie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -147,14 +163,26 @@ namespace Manga.Controllers
             {
                 _context.Series.Remove(serie);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        /// <summary>
+        /// Métodos
+        /// </summary>
 
         private bool SerieExists(int id)
         {
-          return _context.Series.Any(e => e.Idserie == id);
+            return _context.Series.Any(e => e.Idserie == id);
+        }
+        private void GetRutaFoto(Serie serie)
+        {
+            string guidImagen = null;
+            string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/serie");
+            guidImagen = serie.Portada.ToString() + serie.Portada.FileName;
+            string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
+            serie.Portada.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+            serie.RutaFoto = guidImagen;
         }
     }
 }

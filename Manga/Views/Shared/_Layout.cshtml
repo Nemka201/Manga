@@ -1,4 +1,4 @@
-﻿@model Manga.Models.Usuario;
+﻿
 @using Manga.Controllers;
 @using Microsoft.AspNetCore.Http;
 @using Microsoft.EntityFrameworkCore;
@@ -143,11 +143,9 @@
             <a type="button" class="btn btn btn-danger" style="height:20%; margin-top: 1.25%; margin-left: 0.3%;" asp-area="" asp-controller="Usuarios" asp-action="Create">Registrarse</a>
         }
         </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+
+        @RenderBody()
+    </body>
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -162,5 +160,4 @@
             integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
     </script>
     @await RenderSectionAsync("Scripts", required: false)
-</body>
 </html>

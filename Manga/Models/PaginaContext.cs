@@ -126,6 +126,8 @@ public partial class PaginaContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("serializacion");
             entity.Property(e => e.Volumenes).HasColumnName("volumenes");
+            entity.Property(e => e.RutaFoto).HasColumnName("portada");
+
         });
 
         modelBuilder.Entity<Usuario>((Action<Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Usuario>>)(entity =>

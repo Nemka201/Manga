@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Xunit.Sdk;
 
 namespace Manga.Models;
@@ -31,4 +32,9 @@ public partial class Serie
     public int Favoritos { get; set; }
 
     public bool Estado { get; set; }
+    public string? RutaFoto { get; set; }
+    [NotMapped]
+    public IFormFile? Portada { get; set; }
+    [NotMapped]
+    public int Id { get; set; } // ID usuario
 }

@@ -1,5 +1,14 @@
-﻿@{
+﻿@model Manga.Models.PaginaContext
+@{
     ViewData["Title"] = "Home";
+
+}
+@{
+    //var rutaFoto = "~/media/serie/default.jpeg";
+    //if (!string.IsNullOrEmpty(Context.Session.GetString("username")))
+    //{
+    //    rutaFoto = "~/media/serie/" + (Context.Session.GetString("rutaFoto") ?? "default.jpeg");
+    //}
 }
 
 <main>
@@ -10,25 +19,46 @@
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="contenedorTendencia d-flex flex-column">
+                        
+                    
+                        @foreach (var item in Model.Series) {
 
-                    <h2>Tendencia</h2>
+                            <h2>Tendencia</h2>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                        }
 
+                        @foreach (var item in Model.Usuarios)
+                        {
+
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        }
                     <div class="serieTendencia d-flex">
-
+                            @foreach (var item in Model.Usuarios)
+                            {
+                                <div class="imagenTendencia">
+                                    <img src="@Html.DisplayFor(modelItem => item.RutaFoto)" alt="">
+                                </div>
+                                
+                            }
                         <div class="imagenTendencia">
                             <img src="~/media/serie/two_exoscirst.jpg" alt="">
                         </div>
 
                         <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
-                            <h3>Titulo</h3>
 
-                            <p class="descripcion">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum
-                                corporis consequatur, similique itaque ipsum corrupti recusandae magni error
-                                tempora dicta illo quas aspernatur tempore saepe? Maxime saepe ex mollitia eum?
-                            </p>
+                                @foreach (var item in Model.Series)
+                                {
 
-                            <p class="tipoManga">Manga</p>
+                                    <h3> @Html.DisplayFor(modelItem => item.Nombre)</h3>
+
+                                   <p class="descripcion">
+                                        @Html.DisplayFor(modelItem => item.Descripcion)
+                                   </p>
+
+                                    <p class="tipoManga">Manga</p>
+
+                                   
+                                }
 
                             <ul class="generos d-flex">
                                 <li>Genero</li>
@@ -38,7 +68,7 @@
                                 <li>Genero</li>
                                 <li>Genero</li>
                             </ul>
-
+                            }
                         </div>
 
                     </div>
@@ -108,7 +138,7 @@
 
 
 </section>
-
+@Model Capitulo
 <section class="UltimosAgregados">
 
     <div id="carouselUltimosAgregados" class="carousel slide" data-bs-ride="carousel">
