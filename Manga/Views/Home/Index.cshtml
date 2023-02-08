@@ -1,84 +1,58 @@
-﻿@model Manga.Models.PaginaContext
+﻿@model Manga.Models.PaginaSerieContext
 @{
     ViewData["Title"] = "Home";
 
 }
-@{
-    //var rutaFoto = "~/media/serie/default.jpeg";
-    //if (!string.IsNullOrEmpty(Context.Session.GetString("username")))
-    //{
-    //    rutaFoto = "~/media/serie/" + (Context.Session.GetString("rutaFoto") ?? "default.jpeg");
-    //}
-}
+
 
 <main>
 
 <section class="Tendencia d-flex justify-content-center">
-
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="contenedorTendencia d-flex flex-column">
-                        
-                    
-                        @foreach (var item in Model.Series) {
-
+            <div class="carousel-item active"></div>
+                @foreach (var serie in Model.Series)
+                {
+                    var rutaFoto = "~/media/serie/" + serie.RutaFoto;
+                    <div class="carousel-item">
+                        <div class="contenedorTendencia d-flex flex-column">
                             <h2>Tendencia</h2>
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                        }
-
-                        @foreach (var item in Model.Usuarios)
-                        {
-
-                            @Html.DisplayFor(modelItem => item.Nombre)
-                        }
-                    <div class="serieTendencia d-flex">
-                            @foreach (var item in Model.Usuarios)
-                            {
+                            <div class="serieTendencia d-flex">
                                 <div class="imagenTendencia">
-                                    <img src="@Html.DisplayFor(modelItem => item.RutaFoto)" alt="">
+                                    <img src="@rutaFoto" alt="" asp-append-version="true">
                                 </div>
-                                
-                            }
-                        <div class="imagenTendencia">
-                            <img src="~/media/serie/two_exoscirst.jpg" alt="">
+                                <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
+                                        <h3> @Html.DisplayFor(modelItem => serie.Nombre)</h3>
+
+                                        <p class="descripcion">
+                                            @Html.DisplayFor(modelItem => serie.Descripcion)
+                                        </p>
+
+                                        <p class="tipoManga">Manga</p>
+
+                                        <br>
+                                        
+                                    <ul class="generos d-flex">
+                                        <li>@serie.Categoria</li>
+                                        
+                                        <li>Genero</li>
+                                        <li>Genero</li>
+                                        <li>Genero</li>
+                                        <li>Genero</li>
+                                        <li>Genero</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div>
+                            </div>
+
                         </div>
-
-                        <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
-
-                                @foreach (var item in Model.Series)
-                                {
-
-                                    <h3> @Html.DisplayFor(modelItem => item.Nombre)</h3>
-
-                                   <p class="descripcion">
-                                        @Html.DisplayFor(modelItem => item.Descripcion)
-                                   </p>
-
-                                    <p class="tipoManga">Manga</p>
-
-                                   
-                                }
-
-                            <ul class="generos d-flex">
-                                <li>Genero</li>
-                                <li>Genero</li>
-                                <li>Genero</li>
-                                <li>Genero</li>
-                                <li>Genero</li>
-                                <li>Genero</li>
-                            </ul>
-                            }
-                        </div>
-
                     </div>
-
-                    <div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="carousel-item">
+                }
+           
+           @* <div class="carousel-item">
                 <div class="contenedorTendencia d-flex flex-column">
 
                     <h2>AAAAAAAAAAAAAAAAAAAAAA</h2>
@@ -117,7 +91,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div>*@
         </div>
 
         <div class="carouselTendeciaButtons">
@@ -138,7 +112,6 @@
 
 
 </section>
-@Model Capitulo
 <section class="UltimosAgregados">
 
     <div id="carouselUltimosAgregados" class="carousel slide" data-bs-ride="carousel">

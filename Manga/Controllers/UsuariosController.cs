@@ -279,7 +279,7 @@ namespace Manga.Controllers
         {
             string guidImagen = null;
             string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/perfil");
-            guidImagen = usuario.Foto.ToString() + usuario.Foto.FileName;
+            guidImagen = Guid.NewGuid().ToString() + usuario.Foto.FileName;
             string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
             usuario.Foto.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
             usuario.RutaFoto = guidImagen;
