@@ -239,7 +239,80 @@ header::before {
 }
 
 .contenedorMangaDetail {
-  margin: 80px 10% 70px 48px;
+  margin: 0px 10% 0px 48px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contNotas {
+  width: 205px;
+  margin-right: 20px;
+  height: 455px;
+  background-color: rgba(53, 1, 1, 0.5);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contNotas p {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+}
+
+.contNotaText1 {
+  padding-left: 20px;
+}
+
+.contNotaText2 {
+  margin-bottom: 20px;
+}
+
+.contNotaMyAL, .contNotaFan {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contNotaMyAL p, .contNotaFan p {
+  position: absolute;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+}
+
+.contNotaFan p {
+  padding-bottom: 20px;
+}
+
+.MangaDetail {
+  height: 292px;
+  width: 75%;
+}
+
+.MangaDetail li {
+  margin-bottom: 14px;
+}
+
+.MangaDetail h3 {
+  margin-bottom: 20px;
+}
+
+.MangaDetail .descripcion {
+  width: 80%;
 }
 
 .capitulosManga {
