@@ -10,6 +10,8 @@ builder.Services.AddControllersWithViews();
 
     builder.Services.AddDbContext<PaginaContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
+    builder.Services.AddDbContext<PaginaSerieContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSession(options =>

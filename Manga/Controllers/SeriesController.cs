@@ -179,7 +179,7 @@ namespace Manga.Controllers
         {
             string guidImagen = null;
             string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/serie");
-            guidImagen = serie.Portada.ToString() + serie.Portada.FileName;
+            guidImagen = Guid.NewGuid().ToString() + serie.Portada.FileName;
             string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
             serie.Portada.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
             serie.RutaFoto = guidImagen;

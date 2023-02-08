@@ -8,9 +8,9 @@ namespace Manga.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly PaginaContext _context;
+        private readonly PaginaSerieContext _context;
 
-        public HomeController(ILogger<HomeController> logger, PaginaContext context)
+        public HomeController(ILogger<HomeController> logger, PaginaSerieContext context)
         {
             _logger = logger;
             _context = context;
