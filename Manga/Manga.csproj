@@ -42,4 +42,8 @@
     <PackageReference Include="xunit.extensibility.execution" Version="2.4.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\media\serie\Naruto\capitulo1\" />
+  </ItemGroup>
+
 </Project>

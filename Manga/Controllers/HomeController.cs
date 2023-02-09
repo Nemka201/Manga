@@ -17,8 +17,12 @@ namespace Manga.Controllers
         }
         public IActionResult Index()
         {
-            
-            return View(_context);
+            Tendencia tendencia = new Tendencia();
+
+            tendencia.seriales = _context.Series.ToList();
+            tendencia.capitulos = _context.Capitulos.ToList();
+
+            return View(tendencia);
         }
         public IActionResult Privacy()
         {

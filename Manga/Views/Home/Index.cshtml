@@ -1,7 +1,6 @@
-﻿@model Manga.Models.PaginaSerieContext
+﻿@model Manga.Models.Tendencia
 @{
     ViewData["Title"] = "Home";
-
 }
 
 
@@ -10,15 +9,15 @@
 <section class="Tendencia d-flex justify-content-center">
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active"></div>
-                @foreach (var serie in Model.Series)
+                <div class="carousel-item active"> @Model.seriales.First().Nombre</div>
+                @foreach (var serie in Model.seriales)
                 {
-                    var rutaFoto = "~/media/serie/" + serie.RutaFoto;
+                                        var rutaFoto = "~/media/serie/" + serie.RutaFoto;
                     <div class="carousel-item">
                         <div class="contenedorTendencia d-flex flex-column">
                             <h2>Tendencia</h2>
-                            <div class="serieTendencia d-flex">
-                                <div class="imagenTendencia">
+                            <div class="imagenTendencia">
+                                <div class="serieTendencia d-flex">
                                     <img src="@rutaFoto" alt="" asp-append-version="true">
                                 </div>
                                 <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
@@ -30,8 +29,7 @@
 
                                         <p class="tipoManga">Manga</p>
 
-                                        <br>
-                                        
+                                        <br>   
                                     <ul class="generos d-flex">
                                         <li>@serie.Categoria</li>
                                         
@@ -42,7 +40,6 @@
                                         <li>Genero</li>
                                     </ul>
                                 </div>
-
                             </div>
 
                             <div>
