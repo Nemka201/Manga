@@ -9,7 +9,48 @@
 <section class="Tendencia d-flex justify-content-center">
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-                <div class="carousel-item active"> @Model.seriales.First().Nombre</div>
+                <div class="carousel-item active">
+                    <div class="contenedorTendencia d-flex flex-column">
+
+                        <h2>Tendencia</h2>
+
+                        <div class="serieTendencia d-flex">
+
+                            <div class="imagenTendencia">
+                                <img src="~/media/serie/two_exoscirst.jpg" alt="">
+                            </div>
+
+                            <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
+                                <h3>@Model.seriales.First().Nombre</h3>
+
+                                <p class="descripcion">
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum
+                                    corporis consequatur, similique itaque ipsum corrupti recusandae magni error
+                                    tempora dicta illo quas aspernatur tempore saepe? Maxime saepe ex mollitia eum?
+                                </p>
+
+                                <p class="tipoManga">Manga</p>
+
+                                <ul class="generos d-flex">
+                                    <li>Genero</li>
+                                    <li>Genero</li>
+                                    <li>Genero</li>
+                                    <li>Genero</li>
+                                    <li>Genero</li>
+                                    <li>Genero</li>
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+                        </div>
+
+                    </div>
+                </div>
+
+
                 @foreach (var serie in Model.seriales)
                 {
                                         var rutaFoto = "~/media/serie/" + serie.RutaFoto;
