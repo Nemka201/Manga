@@ -1,6 +1,7 @@
 ﻿@model Manga.Models.Tendencia
 @{
     ViewData["Title"] = "Home";
+    var rutaFoto1 = "~/media/serie/" + PrimerItemS.RutaFoto;
 }
 
 
@@ -9,8 +10,41 @@
 <section class="Tendencia d-flex justify-content-center">
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-                <div class="carousel-item active"> @Model.seriales.First().Nombre</div>
-                @foreach (var serie in Model.seriales)
+                <div class="carousel-item active">
+
+                    @Model.seriesList.First().Nombre;
+                    <div class="contenedorTendencia d-flex flex-column">
+                        <h2>Tendencia</h2>
+                        <div class="imagenTendencia">
+                            <div class="serieTendencia d-flex">
+                                <img src="@rutaFoto1" alt="" asp-append-version="true">
+                            </div>
+                            <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
+                                <h3> @Html.DisplayFor(modelItem => PrimerItemS.Nombre)</h3>
+
+                                <p class="descripcion">
+                                    @Html.DisplayFor(modelItem => PrimerItemS.Descripcion)
+                                </p>
+
+                                <p class="tipoManga">Manga</p>
+
+                                <br>   
+                                <ul class="generos d-flex">
+                                    <li>@PrimerItemS.Categoria</li>
+                                        
+                                    <li>Genero</li>
+                                    <li>Genero</li>
+                                    <li>Genero</li>
+                                    <li>Genero</li>
+                                    <li>Genero</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                @foreach (var serie in Model.seriesList)
                 {
                     var rutaFoto = "~/media/serie/" + serie.RutaFoto;
                     <div class="carousel-item">
