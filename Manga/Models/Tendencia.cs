@@ -1,8 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Text;
 
 namespace Manga.Models
 {
+
+    public partial class IndexContent
+    {
+        public Tendencia tend { get; set; }
+        public UltimosAgregados ultA { get; set; }
+
+        public IndexContent(List<Serie> sL, List<Capitulo> cL)
+        {
+            tend = new Tendencia(sL);
+            ultA = new UltimosAgregados(sL, cL);
+        }
+    }
+
     public partial class Tendencia
     {
         public List<Serie> seriesList { get; set; }
@@ -27,7 +43,7 @@ namespace Manga.Models
         public UltimosAgregados(List<Serie> sL, List<Capitulo> cL )
         {
             seriesList = sL.OrderByDescending(x => x.Favoritos)
-                .ThenByDescending(x => x.Idserie).ToList().GetRange(0, 3);
+                .ThenByDescending(x => x.Idserie).ToList().GetRange(0, 1);
 
             //foreach (var item in seriesList)
             //{

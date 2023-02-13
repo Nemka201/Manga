@@ -1,7 +1,7 @@
 ﻿@model Manga.Models.Tendencia
 @{
     ViewData["Title"] = "Home";
-    var rutaFoto1 = "~/media/serie/" + Model.PrimerItemS.RutaFoto;
+    var rutaFoto1 = "~/media/serie/" + Model.tend.PrimerItemS.RutaFoto;
 }
 
 
@@ -18,17 +18,17 @@
                                 <img src="@rutaFoto1" alt="" asp-append-version="true">
                             </div>
                             <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
-                                <h3> @Html.DisplayFor(modelItem => Model.PrimerItemS.Nombre)</h3>
+                                <h3> @Html.DisplayFor(modelItem => Model.tend.PrimerItemS.Nombre)</h3>
 
                                 <p class="descripcion">
-                                    @Html.DisplayFor(modelItem => Model.PrimerItemS.Descripcion)
+                                    @Html.DisplayFor(modelItem => Model.tend.PrimerItemS.Descripcion)
                                 </p>
 
                                 <p class="tipoManga">Manga</p>
 
                                 <br>   
                                 <ul class="generos d-flex">
-                                    <li>@Model.PrimerItemS.Categoria</li>
+                                    <li>@Model.tend.PrimerItemS.Categoria</li>
                                         
                                     <li>Genero</li>
                                     <li>Genero</li>
@@ -42,7 +42,7 @@
                     </div>
 
                 </div>
-                @foreach (var serie in Model.seriesList)
+                @foreach (var serie in Model.tend.seriesList)
                 {
                     var rutaFoto = "~/media/serie/" + serie.RutaFoto;
                     <div class="carousel-item">
