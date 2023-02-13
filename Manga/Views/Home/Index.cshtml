@@ -1,7 +1,7 @@
 ﻿@model Manga.Models.Tendencia
 @{
     ViewData["Title"] = "Home";
-    var rutaFoto1 = "~/media/serie/" + PrimerItemS.RutaFoto;
+    var rutaFoto1 = "~/media/serie/" + Model.PrimerItemS.RutaFoto;
 }
 
 
@@ -12,68 +12,23 @@
         <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="contenedorTendencia d-flex flex-column">
-
                         <h2>Tendencia</h2>
-
-                        <div class="serieTendencia d-flex">
-
-                            <div class="imagenTendencia">
-                                <img src="~/media/serie/two_exoscirst.jpg" alt="">
-                            </div>
-
-                            <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
-                                <h3>@Model.seriales.First().Nombre</h3>
-
-                                <p class="descripcion">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum
-                                    corporis consequatur, similique itaque ipsum corrupti recusandae magni error
-                                    tempora dicta illo quas aspernatur tempore saepe? Maxime saepe ex mollitia eum?
-                                </p>
-
-                                <p class="tipoManga">Manga</p>
-
-                                <ul class="generos d-flex">
-                                    <li>Genero</li>
-                                    <li>Genero</li>
-                                    <li>Genero</li>
-                                    <li>Genero</li>
-                                    <li>Genero</li>
-                                    <li>Genero</li>
-                                </ul>
-
-                            </div>
-
-                        </div>
-
-                        <div>
-                        </div>
-
-                    </div>
-                </div>
-
-
-                @foreach (var serie in Model.seriales)
-                <div class="carousel-item active">
-
-                    @Model.seriesList.First().Nombre;
-                    <div class="contenedorTendencia d-flex flex-column">
-                        <h2>Tendencia</h2>
-                        <div class="imagenTendencia">
+                        <div class="imagenTendencia d-flex ">
                             <div class="serieTendencia d-flex">
                                 <img src="@rutaFoto1" alt="" asp-append-version="true">
                             </div>
                             <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
-                                <h3> @Html.DisplayFor(modelItem => PrimerItemS.Nombre)</h3>
+                                <h3> @Html.DisplayFor(modelItem => Model.PrimerItemS.Nombre)</h3>
 
                                 <p class="descripcion">
-                                    @Html.DisplayFor(modelItem => PrimerItemS.Descripcion)
+                                    @Html.DisplayFor(modelItem => Model.PrimerItemS.Descripcion)
                                 </p>
 
                                 <p class="tipoManga">Manga</p>
 
                                 <br>   
                                 <ul class="generos d-flex">
-                                    <li>@PrimerItemS.Categoria</li>
+                                    <li>@Model.PrimerItemS.Categoria</li>
                                         
                                     <li>Genero</li>
                                     <li>Genero</li>
@@ -93,7 +48,7 @@
                     <div class="carousel-item">
                         <div class="contenedorTendencia d-flex flex-column">
                             <h2>Tendencia</h2>
-                            <div class="imagenTendencia">
+                            <div class="imagenTendencia d-flex  ">
                                 <div class="serieTendencia d-flex">
                                     <img src="@rutaFoto" alt="" asp-append-version="true">
                                 </div>
