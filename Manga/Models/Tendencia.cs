@@ -27,7 +27,7 @@ namespace Manga.Models
         public Tendencia(List<Serie> sL)
         {
             seriesList = sL.OrderByDescending(x => x.Favoritos)
-                .ThenByDescending(x => x.Idserie).ToList().GetRange(0, 2);
+                .ThenByDescending(x => x.Idserie).ToList().GetRange(0, 1);
 
             PrimerItemS = seriesList.First();
             seriesList.RemoveAt(0);
@@ -35,7 +35,7 @@ namespace Manga.Models
         }
     }
 
-        public partial class UltimosAgregados
+    public partial class UltimosAgregados
     {
         public List<Serie> seriesList { get; set; }
         public List<Capitulo> capList { get; set; } = new List<Capitulo>();
