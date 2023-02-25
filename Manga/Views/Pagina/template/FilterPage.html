@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>header::before {background-image: linear-gradient(180deg, #f45804 0%, #ec4c04 15%, transparent 15.5%, transparent 100%); filter: blur(0px);}</style>
+    <header class="d-flex justify-content-center">
+
+        <div class="d-flex Encabezado">
+            <div class="logoHeader">
+                <a href="../template/index.html">
+                    <svg width="35" height="48" viewBox="0 0 35 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M3.46552 47.9742L8.27586 18.7759H8.66379L17.3534 33.7759L25.5517 18.7759H25.9655L30.7759 48L25.5517 42.569L23.6121 32.0431L17.3276 43.3966L10.4224 31.8879L8.40517 42.569L3.46552 47.9742Z"
+                            fill="white" />
+                        <path
+                            d="M30.7759 18.7759L25.9914 48H25.6034L16.9138 33L8.71552 48H8.27586L3.46552 18.7759L8.68965 24.2069L10.6293 34.7328L16.9138 23.3793L23.819 34.8879L25.8362 24.2069L30.7759 18.7759Z"
+                            fill="white" />
+                        <path
+                            d="M0 0C0 0 8.27586 5.68965 10.0862 10.3448C11.8966 15 10.3448 14.7414 10.3448 14.7414C10.3448 14.7414 3.62069 11.8966 2.58621 10.3448C2.58621 10.3448 5.43103 11.8966 6.72414 12.1552C6.72414 12.1552 4.13793 9.31034 6.2069 8.27586C6.2069 8.27586 5.94828 5.17241 0 0Z"
+                            fill="white" />
+                        <path
+                            d="M34.2414 0C34.2414 0 25.9655 5.68965 24.1552 10.3448C22.3448 15 23.8966 14.7414 23.8966 14.7414C23.8966 14.7414 30.6207 11.8966 31.6552 10.3448C31.6552 10.3448 28.8104 11.8966 27.5172 12.1552C27.5172 12.1552 30.1035 9.31034 28.0345 8.27586C28.0345 8.27586 28.2931 5.17241 34.2414 0Z"
+                            fill="white" />
+                        <path
+                            d="M15.931 16.8103C15.931 16.8103 16.4483 14.4828 13.8621 12.931C13.8621 12.931 13.8621 14.2241 14.6379 14.7414C15.4138 15.2586 15.6724 15.7759 15.931 16.8103Z"
+                            fill="white" />
+                        <path
+                            d="M18.3104 16.8103C18.3104 16.8103 17.7931 14.4828 20.3793 12.931C20.3793 12.931 20.3793 14.2241 19.6035 14.7414C18.8276 15.2586 18.569 15.7759 18.3104 16.8103Z"
+                            fill="white" />
+                    </svg>
+                    <svg width="91" height="48" viewBox="0 0 91 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M22.4226 15.6969C22.4226 13.9572 22.9959 12.514 24.1228 11.407C25.2694 10.2801 26.6928 9.72656 28.4325 9.72656C30.1722 9.72656 31.6351 10.2999 32.762 11.407C33.9086 12.5338 34.4819 13.9572 34.4819 15.7167C34.4819 17.4564 33.9086 18.8995 32.762 20.0264C31.6154 21.1533 30.1722 21.7266 28.4325 21.7266C26.6928 21.7266 25.2694 21.1533 24.1228 20.0264C22.9762 18.8995 22.4226 17.4366 22.4226 15.6969ZM26.3172 15.6969C26.3172 16.6261 26.5149 17.3773 26.9103 17.9506C27.3056 18.5239 27.8196 18.8007 28.4523 18.8007C29.0849 18.8007 29.5791 18.5042 29.9943 17.9308C30.3897 17.3575 30.5874 16.6063 30.5874 15.6771C30.5874 14.7677 30.3897 14.0165 29.9943 13.4432C29.5989 12.8699 29.0849 12.5733 28.4523 12.5733C27.8196 12.5733 27.3254 12.8699 26.9103 13.4432C26.5149 14.0363 26.3172 14.7875 26.3172 15.6969Z"
+                            fill="white" />
+                        <path
+                            d="M40.5313 21.1927H36.7356V10.2603H40.2545V12.0988C40.8476 11.3871 41.4605 10.8336 42.1129 10.4975C42.7652 10.1417 43.4769 9.96375 44.248 9.96375C45.4143 9.96375 46.2842 10.2998 46.8773 10.9522C47.4704 11.6244 47.7669 12.5931 47.7669 13.8583V21.1927H43.9909V14.9259C43.9909 14.3525 43.8723 13.9176 43.6351 13.6211C43.3979 13.3245 43.0618 13.1861 42.5873 13.1861C41.9152 13.1861 41.4209 13.4036 41.0651 13.8583C40.7092 14.313 40.5313 14.9456 40.5313 15.7957V21.1927Z"
+                            fill="white" />
+                        <path
+                            d="M50.5149 20.6986V17.6936C51.4836 18.3065 52.2348 18.7216 52.7686 18.9391C53.3024 19.1566 53.7966 19.2554 54.2513 19.2554C54.6467 19.2554 54.963 19.1763 55.22 18.9984C55.477 18.8205 55.5758 18.603 55.5758 18.3065C55.5758 18.0692 55.4968 17.8518 55.3188 17.6936C55.1409 17.5355 54.8641 17.3773 54.449 17.2389L53.0454 16.7447C52.1162 16.4284 51.4243 15.9935 50.9498 15.4201C50.4753 14.8468 50.2381 14.1747 50.2381 13.4037C50.2381 12.2966 50.6137 11.4267 51.3847 10.7546C52.1557 10.0824 53.1837 9.74634 54.449 9.74634C55.0421 9.74634 55.6747 9.82542 56.3271 10.0033C56.9795 10.1615 57.7307 10.4185 58.5215 10.7743L58.047 13.4432C57.5528 13.0281 57.0388 12.7117 56.4654 12.4745C55.8921 12.2373 55.3584 12.1187 54.8444 12.1187C54.4687 12.1187 54.1722 12.1977 53.935 12.3757C53.6977 12.5536 53.5791 12.771 53.5791 13.0281C53.5791 13.2455 53.6384 13.4432 53.7768 13.5618C53.9152 13.7002 54.2117 13.8386 54.6664 13.9968L55.9712 14.4712C56.9992 14.8271 57.7307 15.2818 58.1656 15.7958C58.6005 16.3098 58.818 16.9819 58.818 17.832C58.818 19.0379 58.4226 19.9869 57.6318 20.6986C56.8411 21.3905 55.7538 21.7463 54.3897 21.7463C53.7175 21.7463 53.0651 21.6673 52.4325 21.4893C51.7999 21.2916 51.1673 21.0346 50.5149 20.6986Z"
+                            fill="white" />
+                        <path
+                            d="M61.7241 17.5157V13.1269H60.1426V10.2405H61.7241V6.95883L65.6187 6.44482V10.2405H68.2085V13.1269H65.6187V17.7727C65.6187 18.7611 65.7571 19.4728 66.0141 19.9078C66.2909 20.3427 66.7851 20.7578 67.5165 21.1335L63.1871 21.43C62.6533 21.173 62.2579 20.7776 62.0404 20.2636C61.8427 19.7694 61.7241 18.8402 61.7241 17.5157Z"
+                            fill="white" />
+                        <path
+                            d="M80.1096 17.2982L79.6747 20.659C78.9234 21.0149 78.192 21.2719 77.4803 21.4498C76.7686 21.6277 76.0371 21.7068 75.2859 21.7068C73.4671 21.7068 72.0041 21.173 70.8773 20.1253C69.7702 19.0775 69.1969 17.7134 69.1969 16.033C69.1969 14.2735 69.8098 12.7908 71.0355 11.5849C72.2612 10.379 73.7439 9.76611 75.4836 9.76611C76.986 9.76611 78.2117 10.201 79.1607 11.0907C80.1294 11.9803 80.6038 13.1269 80.6038 14.5305C80.6038 14.748 80.584 15.1038 80.5643 15.5783L80.5445 15.6574L80.2084 16.1516L72.7356 16.3493C72.7949 17.0808 73.0915 17.6739 73.6648 18.1483C74.2183 18.603 74.93 18.8402 75.7801 18.8402C76.3732 18.8402 77.0453 18.7019 77.7768 18.4449C78.528 18.1879 79.299 17.7925 80.1096 17.2982ZM72.8542 14.7085L77.5989 14.5701V14.3921C77.5989 13.8188 77.4012 13.3444 76.986 12.9687C76.5906 12.5931 76.0766 12.4152 75.4638 12.4152C74.7719 12.4152 74.1985 12.6129 73.7439 13.0083C73.2892 13.4037 72.9728 13.977 72.8542 14.7085Z"
+                            fill="white" />
+                        <path
+                            d="M86.6532 21.1927H82.818V10.2603H86.3765L86.4556 12.1779C86.8905 11.4069 87.4045 10.8534 87.9976 10.4975C88.5906 10.1417 89.3221 9.98352 90.192 9.98352H90.4885V14.056H90.0931H89.678C88.4918 14.056 87.6813 14.1944 87.2859 14.4712C86.8707 14.7479 86.673 15.4003 86.673 16.4283L86.6532 21.1927Z"
+                            fill="white" />
+                        <path
+                            d="M0.241394 46.8534L3.89873 24.514H4.19527L10.8378 35.9803L17.1047 24.514H17.4407L21.1178 46.8534L17.1244 42.7018L15.6417 34.6557L10.8378 43.3345L5.55935 34.5371L3.99757 42.7018L0.241394 46.8534Z"
+                            fill="white" />
+                        <path
+                            d="M21.0981 0L17.4407 22.3394H17.1442L10.5017 10.8731L4.2348 22.3394H3.91849L0.241394 0L4.2348 4.15157L5.71751 12.1977L10.5215 3.51895L15.7999 12.3163L17.3617 4.15157L21.0981 0Z"
+                            fill="white" />
+                        <path
+                            d="M33.9877 31.7694V38.6096C33.9877 39.4597 34.0075 40.1911 34.0272 40.7644C34.0668 41.3377 34.1063 41.8517 34.1656 42.2669L30.6269 43.2356L30.2908 42.1878C29.8164 42.5437 29.3419 42.8007 28.8872 42.9786C28.4325 43.1565 27.958 43.2356 27.444 43.2356C26.0404 43.2356 24.8542 42.6623 23.8855 41.5552C22.9168 40.4284 22.4424 39.0247 22.4424 37.3443C22.4424 35.5849 22.9762 34.1219 24.0635 32.9753C25.131 31.8287 26.4951 31.2554 28.136 31.2554C28.5116 31.2554 28.907 31.3147 29.3221 31.4135C29.7373 31.5124 30.192 31.6903 30.6862 31.9078L33.9877 31.7694ZM30.1722 34.5371C29.9547 34.3987 29.7373 34.3196 29.5198 34.2603C29.3221 34.201 29.1047 34.1812 28.907 34.1812C28.1953 34.1812 27.5824 34.4778 27.0882 35.0906C26.5939 35.6837 26.3567 36.4547 26.3369 37.3641C26.3369 38.2142 26.5544 38.9457 26.9893 39.4992C27.4243 40.0725 27.958 40.3493 28.5709 40.3493C28.8279 40.3493 29.0849 40.29 29.3419 40.1516C29.5989 40.0132 29.8757 39.8155 30.1524 39.5387L30.1722 34.5371Z"
+                            fill="white" />
+                        <path
+                            d="M40.7093 42.7018H36.9136V31.7693H40.4325V33.6079C41.0256 32.8962 41.6385 32.3426 42.2908 32.0066C42.9432 31.6705 43.6549 31.4728 44.4259 31.4728C45.5923 31.4728 46.4622 31.8089 47.0553 32.4612C47.6483 33.1334 47.9449 34.1021 47.9449 35.3673V42.7018H44.1689V36.4349C44.1689 35.8616 44.0503 35.4267 43.8131 35.1301C43.5758 34.8336 43.2398 34.6952 42.7653 34.6952C42.0931 34.6952 41.5989 34.9126 41.2431 35.3673C40.8872 35.822 40.7093 36.4547 40.7093 37.3047V42.7018Z"
+                            fill="white" />
+                        <path
+                            d="M61.5857 31.7694V41.6936C61.5857 42.7018 61.5462 43.4531 61.4473 43.9671C61.3485 44.4811 61.1903 44.9358 60.9729 45.3509C60.5182 46.2208 59.8658 46.8929 58.996 47.3279C58.1261 47.7825 57.0783 48 55.8526 48C55.1212 48 54.3699 47.9209 53.6187 47.7628C52.8674 47.6046 52.0569 47.3476 51.2068 47.0115L51.1673 43.9671C51.9778 44.402 52.7093 44.7183 53.3814 44.9358C54.0536 45.1335 54.6665 45.2521 55.2595 45.2521C56.1096 45.2521 56.762 45.0544 57.2365 44.6392C57.7109 44.2438 57.9482 43.6705 57.9482 42.9193V42.1878C57.5132 42.4646 57.0783 42.6623 56.6434 42.8007C56.2085 42.9391 55.7538 42.9984 55.2793 42.9984C53.7373 42.9984 52.4918 42.4844 51.5429 41.4366C50.594 40.4086 50.1195 39.0445 50.1195 37.3443C50.1195 35.5849 50.6533 34.1417 51.7406 32.9753C52.8081 31.8287 54.1722 31.2554 55.8131 31.2554C56.1887 31.2554 56.5841 31.3147 56.9992 31.4135C57.4144 31.5124 57.8691 31.6903 58.3633 31.9078L61.5857 31.7694ZM57.7702 34.5569C57.5528 34.4185 57.3353 34.3394 57.1179 34.2801C56.9202 34.2208 56.7027 34.201 56.505 34.201C55.7933 34.201 55.1805 34.4975 54.6862 35.1104C54.192 35.7035 53.9548 36.4745 53.935 37.3839C53.935 38.234 54.1525 38.9654 54.5874 39.519C55.0223 40.0923 55.5561 40.369 56.1689 40.369C56.4062 40.369 56.6632 40.3097 56.9399 40.1713C57.2167 40.033 57.4935 39.8353 57.7505 39.5585L57.7702 34.5569Z"
+                            fill="white" />
+                        <path
+                            d="M75.3452 31.7892V38.6293C75.3452 39.4794 75.3649 40.2109 75.3847 40.7842C75.4242 41.3575 75.4638 41.8715 75.5231 42.2867L71.9844 43.2554L71.6483 42.2076C71.1738 42.5634 70.6994 42.8205 70.2447 42.9984C69.79 43.1763 69.3155 43.2554 68.8015 43.2554C67.3979 43.2554 66.2117 42.6821 65.243 41.575C64.2743 40.4481 63.7999 39.0445 63.7999 37.3641C63.7999 35.6046 64.3336 34.1417 65.421 32.9951C66.4885 31.8485 67.8526 31.2751 69.4934 31.2751C69.8691 31.2751 70.2644 31.3345 70.6796 31.4333C71.0948 31.5321 71.5495 31.7101 72.0437 31.9275L75.3452 31.7892ZM71.5297 34.5569C71.3122 34.4185 71.0948 34.3394 70.8773 34.2801C70.6796 34.2208 70.4621 34.201 70.2644 34.201C69.5528 34.201 68.9399 34.4976 68.4457 35.1104C67.9514 35.7035 67.7142 36.4745 67.6944 37.3839C67.6944 38.234 67.9119 38.9654 68.3468 39.519C68.7817 40.0923 69.3155 40.3691 69.9284 40.3691C70.1854 40.3691 70.4424 40.3097 70.6994 40.1714C70.9564 40.033 71.2331 39.8353 71.5099 39.5585L71.5297 34.5569Z"
+                            fill="white" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="Navegador d-flex">
+
+                <nav>
+                    <ul class="d-flex">
+                        <li>
+                            <a href="">
+                                <img src="../media/svg/Filter.png" alt="">
+                                Filtros
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../media/svg/Star.png" alt="">
+                                Favoritos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../media/svg/Sell Stock.png" alt="">
+                                Carrito
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <form class="FormularioBusqueda" action="">
+
+                    <img src="" alt="">
+                    <input type="text" name="busqueda" id="">
+
+                </form>
+
+            </div>
+        </div>
+
+        <div class="Perfil">
+            <img src="../media/perfil/descarga.jpeg" alt="">
+        </div>
+
+
+    </header>
+
+    <main>
+
+
+        <section class="TiposDeFiltrado">
+            <div class="filtro-category d-flex">
+                <div class="boton-category d-flex align-items-center">
+                    <p>Categorias</p>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </div>
+                <form class="form-category activoLista">
+
+                    <div class="category-cont">
+                        <div class="group-checkbox d-flex">
+                            <p>Lolis</p>
+                            <div></div>
+                        </div>
+                    </div>
+
+
+                    <input type="submit" value="Perron">
+
+                </form>
+            </div>
+            <div class="filtro-category d-flex">
+                <div class="boton-category d-flex align-items-center">
+                    <p>Idiomas</p>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="filtro-category d-flex">
+                <div class="boton-category d-flex align-items-center">
+                    <p>Capitulos</p>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="filtro-category d-flex">
+                <div class="boton-category d-flex align-items-center">
+                    <p>Disponibilidad</p>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="UltimosAgregados">
+
+            <div id="carouselUltimosAgregados" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="listaAgregados d-flex flex-column">
+
+                            <div class="row justify-content-between">
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <a class="w-100 h-100" href="../template/DetailManga.html">
+                                            <img src="../media/svg/Star.png" alt="">
+                                        </a>
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+                                        <a href="../template/DetailManga.html"><h3>Titulo</h3></a>
+                                        
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="listaAgregados d-flex flex-column">
+
+                            <div class="row justify-content-between">
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="serieAgregada d-flex col-4">
+
+                                    <div class="serieAgregadaImg d-flex">
+                                        <img src="../media/svg/Star.png" alt="">
+                                    </div>
+
+                                    <div class="serieAgregadaDatos d-flex flex-column">
+
+                                        <h3>Titulo</h3>
+
+                                        <div class="serieAgregadaDescpricion">
+                                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum tenetur
+                                                nesciunt modi hic eveniet? Nam, quis atque. Quas iste nam, unde quo
+                                                minus laborum possimus beatae et aperiam, laboriosam placeat!
+                                            </p> <span>...</span>
+
+                                        </div>
+
+                                        <d class="serieAgregadaCapitulo">Ch. 39</d>
+
+                                        <p class="serieAgregadaNota"><img src="../media/svg/Star.png" alt=""> 4.8</p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carouselTendeciaButtons">
+
+                    <button class="" type="button" data-bs-target="#carouselUltimosAgregados" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="" type="button" data-bs-target="#carouselUltimosAgregados" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <script src="../javascript/filterPage.js"></script>
+    </main>
+</body>
