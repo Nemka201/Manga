@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Manga.Models.Capitulo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Idserie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCarga)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Visto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagenes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Volumen)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idserie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCarga)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Visto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imagenes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volumen)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Idcapitulo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Idcapitulo">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Idcapitulo">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
