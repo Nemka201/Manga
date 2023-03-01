@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css - Copia\style.css" />
+    <Content Remove="wwwroot\css - Copia\style.css.map" />
+    <Content Remove="wwwroot\css - Copia\style.scss" />
+    <Content Remove="wwwroot\css - Copia\_base.scss" />
+    <Content Remove="wwwroot\css - Copia\_detailChapter.scss" />
+    <Content Remove="wwwroot\css - Copia\_detailManga.scss" />
+    <Content Remove="wwwroot\css - Copia\_index.scss" />
     <Content Remove="wwwroot\css\style.css" />
     <Content Remove="wwwroot\css\style.css.map" />
     <Content Remove="wwwroot\css\style.scss" />
@@ -14,10 +21,21 @@
     <Content Remove="wwwroot\css\_detailChapter.scss" />
     <Content Remove="wwwroot\css\_detailManga.scss" />
     <Content Remove="wwwroot\css\_index.scss" />
+    <Content Remove="wwwroot\js\cambioDeCapitulo.js" />
+    <Content Remove="wwwroot\js\cargadorCapitulos.js" />
     <Content Remove="wwwroot\js\inicio.js" />
+    <Content Remove="wwwroot\media\icons\HearthOrange.png" />
+    <Content Remove="wwwroot\media\icons\StarOrange.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css - Copia\style.css" />
+    <None Include="wwwroot\css - Copia\style.css.map" />
+    <None Include="wwwroot\css - Copia\style.scss" />
+    <None Include="wwwroot\css - Copia\_base.scss" />
+    <None Include="wwwroot\css - Copia\_detailChapter.scss" />
+    <None Include="wwwroot\css - Copia\_detailManga.scss" />
+    <None Include="wwwroot\css - Copia\_index.scss" />
     <None Include="wwwroot\css\style.css" />
     <None Include="wwwroot\css\style.css.map" />
     <None Include="wwwroot\css\style.scss" />
@@ -25,7 +43,11 @@
     <None Include="wwwroot\css\_detailChapter.scss" />
     <None Include="wwwroot\css\_detailManga.scss" />
     <None Include="wwwroot\css\_index.scss" />
+    <None Include="wwwroot\js\cambioDeCapitulo.js" />
+    <None Include="wwwroot\js\cargadorCapitulos.js" />
     <None Include="wwwroot\js\inicio.js" />
+    <None Include="wwwroot\media\icons\HearthOrange.png" />
+    <None Include="wwwroot\media\icons\StarOrange.png" />
     <None Include="wwwroot\media\svg\logo.svg" />
     <None Include="wwwroot\media\svg\mini logo.svg" />
   </ItemGroup>

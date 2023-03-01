@@ -40,7 +40,7 @@ namespace Manga.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.BackgroundImage = "../../../media/serie/" + serie.RutaFoto;
             return View(serie);
         }
 
