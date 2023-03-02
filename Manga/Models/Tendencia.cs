@@ -27,7 +27,7 @@ namespace Manga.Models
         public Tendencia(List<Serie> sL)
         {
             seriesList = sL.OrderByDescending(x => x.Favoritos)
-                .ThenByDescending(x => x.Idserie).ToList().GetRange(0, 1);
+                .ThenByDescending(x => x.Idserie).ToList().GetRange(0, 3);
 
             PrimerItemS = seriesList.First();
             seriesList.RemoveAt(0);

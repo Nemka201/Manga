@@ -21,6 +21,7 @@
     <Content Remove="wwwroot\css\_detailChapter.scss" />
     <Content Remove="wwwroot\css\_detailManga.scss" />
     <Content Remove="wwwroot\css\_index.scss" />
+    <Content Remove="wwwroot\js\agregarCategoria.js" />
     <Content Remove="wwwroot\js\cambioDeCapitulo.js" />
     <Content Remove="wwwroot\js\cargadorCapitulos.js" />
     <Content Remove="wwwroot\js\inicio.js" />
@@ -43,6 +44,7 @@
     <None Include="wwwroot\css\_detailChapter.scss" />
     <None Include="wwwroot\css\_detailManga.scss" />
     <None Include="wwwroot\css\_index.scss" />
+    <None Include="wwwroot\js\agregarCategoria.js" />
     <None Include="wwwroot\js\cambioDeCapitulo.js" />
     <None Include="wwwroot\js\cargadorCapitulos.js" />
     <None Include="wwwroot\js\inicio.js" />
