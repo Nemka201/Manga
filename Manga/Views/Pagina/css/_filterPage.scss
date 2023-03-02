@@ -21,7 +21,7 @@
 .cbtnFiltrar {
     transition: all 0.5s;
     color: $color4;
-    i {transform:  scale(1.2, 1.2);}
+    i {transform:  scale(1.6, 1.6);}
 }
 
 .form-category {
@@ -63,8 +63,8 @@
     div {
         border-radius: 50%;
         background-color: white;
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
         margin-right: 52px;
         cursor: pointer;
         box-shadow: inset 5px 4px 10px rgba(0, 0, 0, 0.25);

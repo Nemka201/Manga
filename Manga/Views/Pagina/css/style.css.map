@@ -7,7 +7,8 @@
         "_index.scss",
         "_detailManga.scss",
         "_detailChapter.scss",
-        "_filterPage.scss"
+        "_filterPage.scss",
+        "_busqueda.scss"
     ],
     "names": [],
     "file": "style.css"

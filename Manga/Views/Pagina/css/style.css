@@ -718,8 +718,8 @@ header::before {
 }
 
 .cbtnFiltrar i {
-  -webkit-transform: scale(1.2, 1.2);
-          transform: scale(1.2, 1.2);
+  -webkit-transform: scale(1.6, 1.6);
+          transform: scale(1.6, 1.6);
 }
 
 .form-category {
@@ -789,8 +789,8 @@ header::before {
 .group-checkbox div {
   border-radius: 50%;
   background-color: white;
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   margin-right: 52px;
   cursor: pointer;
   -webkit-box-shadow: inset 5px 4px 10px rgba(0, 0, 0, 0.25);

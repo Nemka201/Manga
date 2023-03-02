@@ -29,13 +29,22 @@
                 <input asp-for="Capitulos" class="form-control" />
                 <span asp-validation-for="Capitulos" class="text-danger"></span>
             </div>
-                <select asp-for="Categoria">
-                <option value="">--Seleccione una opción--</option>
-                @foreach (var categoria in categorias){
-                
-                <option value="@categoria.Idcategoria">@categoria.Nombre</option>
-                }
-                </select>            
+            <div class="aCategorias">
+                <div class="contSelectCategorias">
+                    <select asp-for="Categoria">
+                    <option value="">--Seleccione una opción--</option>
+                    @foreach (var categoria in categorias){
+                    <option value="@categoria.Idcategoria">@categoria.Nombre</option>
+                    }
+                    </select> 
+                </div>
+ 
+                <div>
+                    <button class="botonEntCategoria">
+                        <p>agregar Categoria</p>
+                    </button>
+                </div>
+            </div>          
             <div class="form-group">
                 <label asp-for="Autor" class="control-label"></label>
                 <input asp-for="Autor" class="form-control" />
@@ -56,6 +65,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
