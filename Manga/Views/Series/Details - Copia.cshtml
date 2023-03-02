@@ -4,11 +4,6 @@
     var rutaFoto = "~/media/serie/" + Model.RutaFoto;
 
 }
-<style>
-    header::before {
-
-        background-image: linear-gradient(180deg, #f45804 0%, #ec4c04 15%, #ff6310 15.5%, rgba(255, 88, 0, 0) 100%), url('@ViewBag.BackgroundImage');
-    }</style>
     <main>
         <section>
             <div class="contenedorMangaDetail d-flex">
@@ -137,7 +132,7 @@
 
                             <div class="TomoContManga col-3">
 
-                                <img class="w-100" src=@rutaFoto alt="" asp-append-version="true">
+                                <img class="w-100" src=@rutaFoto alt="">
 
                                 <div class="infoPrinc d-flex justify-content-between">
                                     <p>Tomo 1</p>
@@ -168,7 +163,7 @@
                     </button>
 
                 </div>
-                </div>
+
             </div>
         </section>
 

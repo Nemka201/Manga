@@ -23,7 +23,8 @@ header::before {
   z-index: -2;
   -webkit-filter: blur(5px);
           filter: blur(5px);
-  background-size: cover;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .Encabezado {
@@ -235,5 +236,451 @@ header::before {
 .serieAgregadaDescpricion p {
   overflow: hidden;
   max-height: 140px;
+}
+
+.contenedorMangaDetail {
+  margin: 0px 10% 0px 48px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contNotas {
+  width: 205px;
+  margin-right: 20px;
+  height: 455px;
+  background-color: rgba(53, 1, 1, 0.5);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contNotas p {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+}
+
+.contNotaText1 {
+  padding-left: 20px;
+}
+
+.contNotaText2 {
+  margin-bottom: 20px;
+}
+
+.contNotaMyAL, .contNotaFan {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contNotaMyAL p, .contNotaFan p {
+  position: absolute;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+}
+
+.contNotaFan p {
+  padding-bottom: 20px;
+}
+
+.MangaDetail {
+  height: 292px;
+  width: 75%;
+}
+
+.MangaDetail li {
+  margin-bottom: 14px;
+}
+
+.MangaDetail h3 {
+  margin-bottom: 20px;
+}
+
+.MangaDetail .descripcion {
+  width: 80%;
+}
+
+.capitulosManga {
+  background-color: #350101;
+  padding: 40px 10% 55px 48px;
+}
+
+.IdiomasManga {
+  width: 200px;
+  margin-top: 6px;
+  margin-right: 28px;
+}
+
+.IdiomasManga h2 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 39px;
+  padding-left: 10px;
+  margin-bottom: 29px;
+}
+
+.IdiomasManga button {
+  height: 48px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: linear-gradient(100.35deg, #FF5800 21.56%, #350101 82.98%);
+  opacity: 0.35;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  color: white;
+  border: 0;
+}
+
+.IdiomasManga button img {
+  height: 32px;
+  width: 42.6px;
+  margin: 0 16px;
+}
+
+.IdiomasManga button p {
+  font-size: 20px;
+}
+
+.IdiomasManga button:hover, .IdiomasManga button:focus {
+  opacity: 1;
+}
+
+.volverCapContenedor {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 23px;
+}
+
+.volverCapContenedor h2 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 39px;
+  margin-bottom: 0;
+  margin-right: 32px;
+}
+
+.volverButton, .PaginationCapitulos button, .TomoContManga .botonesTomoContManga button, .TomoContManga .botonesTomoContManga a {
+  border-radius: 8px;
+  background-color: transparent;
+  color: white;
+  border: 3px solid #ff5800;
+  font-size: 20px;
+  padding: 8px 15px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.volverButton:hover, .PaginationCapitulos button:hover, .TomoContManga .botonesTomoContManga button:hover, .TomoContManga .botonesTomoContManga a:hover {
+  background-color: #ff5800;
+}
+
+.listaCapitulos {
+  height: 338px;
+  width: 88%;
+  padding: 20px 38px;
+  border: 3px solid #ff5800;
+  border-radius: 16px;
+  overflow-y: scroll;
+}
+
+.listaCapitulos::-webkit-scrollbar-button {
+  background-color: #FFFFFF33;
+  width: 32px;
+  height: 48px;
+}
+
+.listaCapitulos::-webkit-scrollbar-button:vertical {
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.listaCapitulos::-webkit-scrollbar-button:vertical:start {
+  border-radius: 40px 40px 0 0;
+  background-image: -webkit-gradient(linear, left top, right top, from(#350101), color-stop(17%, #350101), color-stop(17.1%, #ffffff12), color-stop(83%, #FFFFFF12), color-stop(83.1%, #350101), to(#350101)), url(../media/scroll/flechaUp.png);
+  background-image: linear-gradient(90deg, #350101 0%, #350101 17%, #ffffff12 17.1%, #FFFFFF12 83%, #350101 83.1%, #350101 100%), url(../media/scroll/flechaUp.png);
+}
+
+.listaCapitulos::-webkit-scrollbar-button:vertical:end {
+  border-radius: 0 0 40px 40px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#350101), color-stop(17%, #350101), color-stop(17.1%, #FFFFFF12), color-stop(83%, #FFFFFF12), color-stop(83.1%, #350101), to(#350101)), url(../media/scroll/flechaDown.png);
+  background-image: linear-gradient(90deg, #350101 0%, #350101 17%, #FFFFFF12 17.1%, #FFFFFF12 83%, #350101 83.1%, #350101 100%), url(../media/scroll/flechaDown.png);
+}
+
+.listaCapitulos::-webkit-scrollbar {
+  width: 48px;
+}
+
+.listaCapitulos::-webkit-scrollbar-track {
+  background: -webkit-gradient(linear, left top, right top, from(#350101), color-stop(17%, #350101), color-stop(17.1%, #FFFFFF33), color-stop(83%, #FFFFFF33), color-stop(83.1%, #350101), to(#350101));
+  background: linear-gradient(90deg, #350101 0%, #350101 17%, #FFFFFF33 17.1%, #FFFFFF33 83%, #350101 83.1%, #350101 100%);
+}
+
+.listaCapitulos::-webkit-scrollbar-thumb {
+  background: -webkit-gradient(linear, left top, right top, from(#00000000), color-stop(30%, #00000000), color-stop(30.1%, #ff5800), color-stop(70%, #ff5800), color-stop(70.1%, #00000000), to(#00000000));
+  background: linear-gradient(90deg, #00000000 0%, #00000000 30%, #ff5800 30.1%, #ff5800 70%, #00000000 70.1%, #00000000 100%);
+  border-radius: 40%;
+}
+
+.listaCapitulos div {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 20px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid #ff5800;
+  margin-bottom: 16px;
+}
+
+.PaginationCapitulos {
+  margin-top: 31px;
+}
+
+.PaginationCapitulos button {
+  margin-right: 10px;
+  font-weight: 600;
+  padding: 5px 8px;
+}
+
+.TomosManga {
+  width: 67%;
+  margin: auto;
+}
+
+.TomosManga h3 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 39px;
+  color: #04CC00;
+  margin-bottom: 31px;
+}
+
+.TomoContManga .infoPrinc {
+  margin: 18px 12px 0 12px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+}
+
+.TomoContManga .infoDesc {
+  font-size: 16px;
+  line-height: 19px;
+  margin: 19px 12px 25px 12px;
+}
+
+.TomoContManga .botonesTomoContManga {
+  margin: 0 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 20px;
+}
+
+.TomoContManga .botonesTomoContManga button:focus, .TomoContManga .botonesTomoContManga a:focus {
+  background-color: #ff5800;
+}
+
+.carouselTomosMangaButtons button {
+  background-color: white;
+  color: #ff5800;
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+}
+
+.carouselTomosMangaButtons button img {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.carousel-control-prev {
+  left: -60px;
+  top: 160px;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+}
+
+.carousel-control-next {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  top: 160px;
+  right: -60px;
+}
+
+.MangaChapterDetail {
+  width: 69.6%;
+  margin: 48px 0 48px 20%;
+}
+
+.ChapDetails {
+  max-width: 40%;
+}
+
+.ChapDetails p {
+  margin-top: 16px;
+}
+
+.ChapSellsTomeIn {
+  width: 318px;
+  border: 6px solid #ff5800;
+  border-radius: 16px;
+  padding: 2% 5%;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.ChapSellsTomeIn button {
+  border-radius: 8px;
+  margin-top: 20px;
+  padding: 6px 12px;
+  background-color: #ff5800;
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.paginasDeMangaMenu select {
+  padding: 20px;
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+}
+
+.MenuSelect {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.selectBoton {
+  width: 90px;
+  text-align: center;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+}
+
+.selectBoton:hover {
+  background-color: #120d0d;
+}
+
+.selectBoton:hover i {
+  color: red;
+}
+
+.selectBoton:active {
+  background-color: black;
+}
+
+.selectBoton:active i {
+  color: #ff5800;
+}
+
+.selectBoton i {
+  font-size: 30px;
+  color: #ff5800;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.activoLista {
+  display: none !important;
+}
+
+.options {
+  border-radius: 0px 16px;
+  width: 90px;
+  max-height: 300px;
+  overflow-y: scroll;
+  text-align: center;
+  margin-top: -160px;
+  margin-left: 4px;
+  -webkit-transform: scaleY(0.1);
+          transform: scaleY(0.1);
+  -webkit-animation: DesplegarLista 0.3s normal forwards 0s 1;
+          animation: DesplegarLista 0.3s normal forwards 0s 1;
+  position: absolute;
+}
+
+.options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.options::-webkit-scrollbar-track {
+  background: -webkit-gradient(linear, left top, right top, from(#350101), color-stop(17%, #350101), color-stop(17.1%, #FFFFFF33), color-stop(83%, #FFFFFF33), color-stop(83.1%, #350101), to(#350101));
+  background: linear-gradient(90deg, #350101 0%, #350101 17%, #FFFFFF33 17.1%, #FFFFFF33 83%, #350101 83.1%, #350101 100%);
+}
+
+.options::-webkit-scrollbar-thumb {
+  background: -webkit-gradient(linear, left top, right top, from(#00000000), color-stop(30%, #00000000), color-stop(30.1%, #ff5800), color-stop(70%, #ff5800), color-stop(70.1%, #00000000), to(#00000000));
+  background: linear-gradient(90deg, #00000000 0%, #00000000 30%, #ff5800 30.1%, #ff5800 70%, #00000000 70.1%, #00000000 100%);
+}
+
+.options li {
+  list-style: none;
+  padding: 10px 0;
+  background-color: black;
+  cursor: pointer;
+}
+
+.options li:hover {
+  background-color: #202020;
+}
+
+.options li:active {
+  background-color: black;
+}
+
+@-webkit-keyframes DesplegarLista {
+  from {
+    margin-top: -160px;
+    -webkit-transform: scaleY(0.1);
+            transform: scaleY(0.1);
+  }
+  to {
+    margin-top: -22px;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
+}
+
+@keyframes DesplegarLista {
+  from {
+    margin-top: -160px;
+    -webkit-transform: scaleY(0.1);
+            transform: scaleY(0.1);
+  }
+  to {
+    margin-top: -22px;
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
 }
 /*# sourceMappingURL=style.css.map */
