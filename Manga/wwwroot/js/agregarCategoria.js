@@ -17,8 +17,6 @@ botonEntCategoria.addEventListener("click", () => {
     entradas++;
     contSelectCategorias.innerHTML = "";
     for (let index = 1; index <= entradas; index++) {
-
-        console.log("sasa");
         contSelectCategorias.innerHTML += `${select.outerHTML}`;
     }
 });

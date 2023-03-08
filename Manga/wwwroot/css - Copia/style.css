@@ -23,7 +23,8 @@ header::before {
   z-index: -2;
   -webkit-filter: blur(5px);
           filter: blur(5px);
-  background-size: cover;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .Encabezado {
