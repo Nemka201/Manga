@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\css - Copia\style.css" />
-    <Content Remove="wwwroot\css - Copia\style.css.map" />
-    <Content Remove="wwwroot\css - Copia\style.scss" />
-    <Content Remove="wwwroot\css - Copia\_base.scss" />
-    <Content Remove="wwwroot\css - Copia\_detailChapter.scss" />
-    <Content Remove="wwwroot\css - Copia\_detailManga.scss" />
-    <Content Remove="wwwroot\css - Copia\_index.scss" />
     <Content Remove="wwwroot\css\style.css" />
     <Content Remove="wwwroot\css\style.css.map" />
     <Content Remove="wwwroot\css\style.scss" />
@@ -30,13 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\css - Copia\style.css" />
-    <None Include="wwwroot\css - Copia\style.css.map" />
-    <None Include="wwwroot\css - Copia\style.scss" />
-    <None Include="wwwroot\css - Copia\_base.scss" />
-    <None Include="wwwroot\css - Copia\_detailChapter.scss" />
-    <None Include="wwwroot\css - Copia\_detailManga.scss" />
-    <None Include="wwwroot\css - Copia\_index.scss" />
     <None Include="wwwroot\css\style.css" />
     <None Include="wwwroot\css\style.css.map" />
     <None Include="wwwroot\css\style.scss" />
