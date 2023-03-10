@@ -610,7 +610,7 @@ header::before {
   transition: all 0.2s;
 }
 
-.activoLista {
+.displayNone {
   display: none !important;
 }
 
@@ -811,5 +811,28 @@ header::before {
   width: -moz-fit-content;
   width: fit-content;
   margin-bottom: 20px;
+}
+
+.contBuscador {
+  border: 5px solid #ff5800;
+  border-radius: 16px;
+  margin: 50px 0 50px 5%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.contBuscador i {
+  font-size: 20px;
+  margin: 5px;
+}
+
+.contBuscador input {
+  background-color: transparent;
+  border: 0;
+  color: white;
+  outline: none;
+  width: 300px;
+  height: 42px;
 }
 /*# sourceMappingURL=style.css.map */

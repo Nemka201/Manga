@@ -6,7 +6,7 @@ let btTexto = Menu.querySelector(".sbTexto");
 let opciones = Menu.querySelector(".options");
 let opcLista = opciones.querySelectorAll(".option");
 
- let toggleOpciones = () => {opciones.classList.toggle("activoLista")}
+ let toggleOpciones = () => {opciones.classList.toggle("displayNone")}
 
 btnSelect.addEventListener("click", toggleOpciones);
 
