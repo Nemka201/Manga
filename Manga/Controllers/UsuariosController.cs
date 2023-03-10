@@ -71,7 +71,7 @@ namespace Manga.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Usuario1,Clave,cClave,Nombre,Apellido,Foto,Favoritos,Carrito,RutaFoto")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,Email,Usuario1,Clave,cClave,Nombre,Apellido,Foto,Favoritos,Carrito,RutaPortada")] Usuario usuario)
         {
             if (ModelState.IsValid && usuario.Clave == usuario.cClave) //Valida que las contraseñas sean iguales
             {
@@ -147,7 +147,7 @@ namespace Manga.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SessionCheck]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Usuario1,Clave,cClave,Nombre,Apellido,Favoritos,Carrito,RutaFoto")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Usuario1,Clave,cClave,Nombre,Apellido,Favoritos,Carrito,RutaPortada")] Usuario usuario)
         {
             if (id != usuario.Id)
             {

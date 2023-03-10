@@ -126,7 +126,7 @@ public partial class PaginaContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("serializacion");
             entity.Property(e => e.Volumenes).HasColumnName("volumenes");
-            entity.Property(e => e.RutaFoto).HasColumnName("portada");
+            entity.Property(e => e.RutaPortada).HasColumnName("portada");
 
         });
 

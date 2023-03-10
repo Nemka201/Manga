@@ -40,7 +40,7 @@ namespace Manga.Controllers
             {
                 return NotFound();
             }
-            ViewBag.BackgroundImage = "../../../media/serie/" + serie.RutaFoto;
+            ViewBag.BackgroundImage = "../../../media/serie/" + serie.RutaPortada;
             return View(serie);
         }
 
@@ -55,7 +55,7 @@ namespace Manga.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Idserie,Nombre,Descripcion,Capitulos,Volumenes,Categoria,Autor,Serializacion,Favoritos,Estado,RutaFoto,Id")] Serie serie)
+        public async Task<IActionResult> Create([Bind("Idserie,Nombre,Descripcion,Capitulos,Volumenes,Categoria,Autor,Serializacion,Favoritos,Estado,RutaPortada,Id")] Serie serie)
         {
             if (ModelState.IsValid)
             {
@@ -182,7 +182,7 @@ namespace Manga.Controllers
             guidImagen = Guid.NewGuid().ToString() + serie.Portada.FileName;
             string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
             serie.Portada.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
-            serie.RutaFoto = guidImagen;
+            serie.RutaPortada = guidImagen;
         }
     }
 }

@@ -255,7 +255,7 @@ namespace Manga.Migrations
                         .HasColumnType("varchar(50)")
                         .HasColumnName("nombre");
 
-                    b.Property<string>("RutaFoto")
+                    b.Property<string>("RutaPortada")
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)")
                         .HasColumnName("rutaFoto");

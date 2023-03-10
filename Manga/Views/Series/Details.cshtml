@@ -1,8 +1,9 @@
 ﻿@model Manga.Models.Serie
 @{
     ViewData["Title"] = Model.Nombre;
-    var rutaFoto = "~/media/serie/" + Model.RutaFoto;
-
+    var rutaFoto = "~/media/serie/" + Model.RutaPortada;
+    PaginaSerieContext _context = new();
+    Model.CatList = Model.Categoria.Split("-").ToList();
 }
 <style>
     header::before {
@@ -45,7 +46,13 @@
                         </div>
 
                         <ul class="generos d-flex">
-                            <li>@Html.DisplayFor(model => model.Categoria)</li>
+                            @foreach (var cat in Model.CatList)
+                                {
+                                    Categoria c = @_context.Categorias.Where(e => e.Idcategoria == Convert.ToInt32(cat)).First();
+                                    <a asp-area="" asp-controller="Categorias" asp-action="Details" asp-route-id="@c.Idcategoria">
+                                    <li>@c.Nombre</li>
+                                    </a>
+                                }
                         </ul>
 
                     </div>
