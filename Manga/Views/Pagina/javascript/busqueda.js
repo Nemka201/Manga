@@ -10,7 +10,9 @@ inpBusqueda.addEventListener("input", () => {
 
             if (!item.querySelector("h3").innerHTML
             .toLocaleLowerCase().includes(inpBusqueda.value)) {
-                item.classList +=  " displayNone";
+                if (!item.classList.contains("displayNone")) {
+                    item.classList +=  " displayNone";
+                }
             }
             else {
                 item.classList.remove("displayNone")
