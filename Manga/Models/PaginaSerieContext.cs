@@ -126,6 +126,9 @@ public partial class PaginaSerieContext : DbContext
                 .HasColumnName("serializacion");
             entity.Property(e => e.Volumenes).HasColumnName("volumenes");
             entity.Property(e => e.RutaPortada).HasColumnName("portada");
+            entity.Property(e => e.IdUser).HasColumnName("IDUser");
+            entity.Property(e => e.RutaBanner)
+                .HasColumnName("banner");
 
         });
 

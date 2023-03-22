@@ -32,15 +32,15 @@ public partial class Serie
     public int Favoritos { get; set; }
 
     public bool Estado { get; set; }
+    public int IdUser { get; set; } // ID usuario
     public string? RutaPortada { get; set; } // Ruta de portada que se guarda en la DB
-    [NotMapped]
-    public IFormFile? Portada { get; set; } // IFormFile para cargar portada
-    [NotMapped]
     public string? RutaBanner { get; set; } // Ruta del banner que se guarda en la DB
+
+    // ATRIBUTOS NOT MAPPED  //
     [NotMapped]
-    public IFormFile? Banner { get; set; } // IFormFile para cargar Banner
+    public IFormFile? Portada { get; set; } // IFormFile para cargar portada  
     [NotMapped]
-    public int Id { get; set; } // ID usuario
+    public IFormFile? Banner { get; set; } // IFormFile para cargar Banner  
     [NotMapped]
     public List<String> CatList { get; set; } = null!; // Lista de categorias
 }

@@ -124,12 +124,12 @@ namespace Manga.Migrations
 
             modelBuilder.Entity("Manga.Models.Imagene", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdUser")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUser"));
 
                     b.Property<int>("Idcap")
                         .HasColumnType("int")
@@ -140,7 +140,7 @@ namespace Manga.Migrations
                         .HasColumnType("image")
                         .HasColumnName("imagen");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdUser");
 
                     b.ToTable("Imagenes");
                 });
@@ -210,12 +210,12 @@ namespace Manga.Migrations
 
             modelBuilder.Entity("Manga.Models.Usuario", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdUser")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUser"));
 
                     b.Property<string>("Apellido")
                         .HasMaxLength(50)
@@ -264,7 +264,7 @@ namespace Manga.Migrations
                         .HasColumnType("varchar(50)")
                         .HasColumnName("usuario");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdUser");
 
                     b.ToTable("Usuario", (string)null);
                 });

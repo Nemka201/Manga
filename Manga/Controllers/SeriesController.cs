@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Manga.Models;
+using Manga.Attributes;
 
 namespace Manga.Controllers
 {
@@ -45,6 +46,7 @@ namespace Manga.Controllers
         }
 
         // GET: Series/Create
+        [SessionCheck]
         public IActionResult Create()
         {
             return View();
@@ -55,24 +57,25 @@ namespace Manga.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Idserie,Nombre,Descripcion,Capitulos,Volumenes,Categoria,Autor,Serializacion,Favoritos,Estado,RutaPortada,Id")] Serie serie)
+        public async Task<IActionResult> Create([Bind("Idserie,Nombre,Descripcion,Capitulos,Volumenes,Categoria,Autor,Serializacion,Favoritos,Estado,RutaPortada,IdUser")] Serie serie)
         {
             if (ModelState.IsValid)
             {
                 if (serie.Portada != null)
                 {
-                    if (!(serie.Portada.FileName.Contains("jpg") || serie.Portada.FileName.Contains("png") || serie.Portada.FileName.Contains("jpeg")))
+                    if (ImageValidator(serie))
                     {
                         ModelState.AddModelError("Foto", "El archivo que su subiste no es png o jpg");
                         return View(serie);
                     }
-                    GetRutaFoto(serie);
+                    SetRutaImagen(serie);
                 }
+
                 serie.Capitulos = 0;
                 serie.Volumenes = 0;
-                serie.Categoria = "4";
                 serie.Estado = true;
-                serie.Id = (int)HttpContext.Session.GetInt32("id");
+                serie.Categoria = "4";
+                serie.IdUser = (int)HttpContext.Session.GetInt32("id");
                 _context.Add(serie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -175,14 +178,28 @@ namespace Manga.Controllers
         {
             return _context.Series.Any(e => e.Idserie == id);
         }
-        private void GetRutaFoto(Serie serie)
+        private void SetRutaImagen(Serie serie)
+        {
+            serie.RutaPortada = GuidImagen(serie.Portada);
+            serie.RutaBanner = GuidImagen(serie.Banner);
+        }
+        private string GuidImagen(IFormFile image)
         {
             string guidImagen = null;
             string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/serie");
-            guidImagen = Guid.NewGuid().ToString() + serie.Portada.FileName;
+            guidImagen = Guid.NewGuid().ToString() + image.FileName;
             string rutaDefinitiva = Path.Combine(path1: ficherosImagenes, path2: guidImagen);
-            serie.Portada.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
-            serie.RutaPortada = guidImagen;
+            image.CopyTo(new FileStream(rutaDefinitiva, FileMode.Create));
+            return guidImagen;
+        }
+        private bool ImageValidator(Serie serie)
+        {
+            return !(serie.Portada.FileName.Contains("jpg")
+                  || serie.Portada.FileName.Contains("png")
+                  || serie.Portada.FileName.Contains("jpeg")
+                  || serie.Banner.FileName.Contains("jpg")
+                  || serie.Banner.FileName.Contains("png")
+                  || serie.Banner.FileName.Contains("jpeg"));
         }
     }
 }

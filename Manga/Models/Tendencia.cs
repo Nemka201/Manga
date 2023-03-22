@@ -6,10 +6,10 @@ using System.Text;
 using System.Collections;
 using System.Diagnostics;
 using System.Drawing.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace Manga.Models
 {
-
     public partial class IndexContent
     {
         public Tendencia tend { get; set; }
