@@ -16,6 +16,8 @@ namespace Manga.Attributes
             if (filterContext.HttpContext.Session.GetString("username") == null)
             {
                 filterContext.Result = new RedirectResult("~/Usuarios/Login");
+                // Guardamos path para el redirect
+                filterContext.HttpContext.Session.SetString("redirect",filterContext.HttpContext.Request.Path);
             }
             base.OnActionExecuting(filterContext);
         }

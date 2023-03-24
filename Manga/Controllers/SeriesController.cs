@@ -7,15 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Manga.Models;
 using Manga.Attributes;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Manga.Controllers
 {
     public class SeriesController : Controller
     {
-        private readonly PaginaContext _context;
+        private readonly PaginaSerieContext _context;
         private readonly IWebHostEnvironment _webhost; // Obtener wwwroot
 
-        public SeriesController(PaginaContext context, IWebHostEnvironment webhost)
+        public SeriesController(PaginaSerieContext context, IWebHostEnvironment webhost)
         {
             _context = context;
             _webhost = webhost;
@@ -57,9 +58,10 @@ namespace Manga.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Idserie,Nombre,Descripcion,Capitulos,Volumenes,Categoria,Autor,Serializacion,Favoritos,Estado,RutaPortada,IdUser")] Serie serie)
+        public async Task<IActionResult> Create([Bind("Idserie,Nombre,Descripcion,Capitulos,Volumenes,Categoria,Autor,Serializacion,Favoritos,Estado,IdUser,RutaBanner,RutaPortada")] Serie serie)
         {
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
                 if (serie.Portada != null)
                 {
@@ -70,11 +72,11 @@ namespace Manga.Controllers
                     }
                     SetRutaImagen(serie);
                 }
-
                 serie.Capitulos = 0;
                 serie.Volumenes = 0;
                 serie.Estado = true;
                 serie.Categoria = "4";
+                serie.Favoritos = 0;
                 serie.IdUser = (int)HttpContext.Session.GetInt32("id");
                 _context.Add(serie);
                 await _context.SaveChangesAsync();

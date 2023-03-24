@@ -16,7 +16,6 @@ public partial class Serie
     [Required(ErrorMessage = "La descripción es obligatoria")]
     [StringLength(1000, ErrorMessage = "No puede superar los 1000 caracteres")]
     public string Descripcion { get; set; } = null!;
-
     public int? Capitulos { get; set; }
 
     public int? Volumenes { get; set; }
@@ -29,12 +28,12 @@ public partial class Serie
 
     public string? Serializacion { get; set; }
 
-    public int Favoritos { get; set; }
+    public int? Favoritos { get; set; }
 
-    public bool Estado { get; set; }
-    public int IdUser { get; set; } // ID usuario
-    public string? RutaPortada { get; set; } // Ruta de portada que se guarda en la DB
-    public string? RutaBanner { get; set; } // Ruta del banner que se guarda en la DB
+    public bool? Estado { get; set; }
+    public int? IdUser { get; set; }
+    public string? RutaPortada { get; set; }
+    public string? RutaBanner { get; set; }
 
     // ATRIBUTOS NOT MAPPED  //
     [NotMapped]

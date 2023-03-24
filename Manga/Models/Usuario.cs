@@ -19,8 +19,6 @@ public partial class Usuario
     public string Clave { get; set; } = null!;  
 
     [Required(ErrorMessage = "Obligatorio")]
-    [NotMapped]
-    public string cClave { get; set; } = null!; // Confirmacion Contraseña
 
     [StringLength(50, ErrorMessage = "No puede superar 50 caracteres")]
     public string? Nombre { get; set; }
@@ -35,5 +33,7 @@ public partial class Usuario
 
     [NotMapped]
     public IFormFile? Foto { get; set; }
+    [NotMapped]
+    public string cClave { get; set; } = null!; // Confirmacion Contraseña
 }
 

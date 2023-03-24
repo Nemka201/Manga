@@ -3,13 +3,9 @@
 @{
     var db = new PaginaSerieContext();
     var categorias = db.Categorias.ToList();
-    ViewData["Title"] = "Nueva Serie";
-    string select=null;
+    ViewData["Title"] = " Nueva Serie";
 }
-
-<h1>Create</h1>
-
-<h4>Serie</h4>
+<h1>Nueva Serie</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -29,6 +25,11 @@
                 <label asp-for="Autor" class="control-label"></label>
                 <input asp-for="Autor" class="form-control" />
                 <span asp-validation-for="Autor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Categoria" class="control-label"></label>
+                <input asp-for="Categoria" class="form-control" />
+                <span asp-validation-for="Categoria" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Serializacion" class="control-label"></label>
@@ -52,6 +53,11 @@
                 </div>
             </div>
             <div class="form-group">
+                <input asp-for="RutaPortada" value="a" type="hidden"/>      @*ERROR MODELISVALID RutaPortada,RutaBanner,Serializacion toma string no string?*@
+                <input asp-for="RutaBanner" value="a" type="hidden"/>
+                <input asp-for="Serializacion" value="a" type="hidden"/>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -60,5 +66,13 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function ()) {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+                alert(fileName);
+            });
+        });
+    </script>
 }

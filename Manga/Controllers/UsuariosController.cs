@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.AspNetCore.Http;
 using Manga.Attributes;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Manga.Controllers
 {
@@ -109,6 +110,11 @@ namespace Manga.Controllers
             {
                 usuario = (Usuario)_context.Usuarios.Where(d => d.Usuario1 == usuario.Usuario1).First();
                 SetSession(usuario);
+                // Verifica si el usuario hizo login desde un path distinto al home
+                if (_httpContextAccessor.HttpContext.Session.GetString("redirect") != null)
+                {
+                    return Redirect(_httpContextAccessor.HttpContext.Session.GetString("redirect"));
+                }
                 return RedirectToAction(nameof(Index), "Home");
             }
             else
@@ -121,6 +127,7 @@ namespace Manga.Controllers
         {   // ELIMINO DATOS DEL SESSION
             _httpContextAccessor.HttpContext.Session.Remove("username");
             _httpContextAccessor.HttpContext.Session.Remove("rutaFoto");
+            _httpContextAccessor.HttpContext.Session.Remove("redirect");
             _httpContextAccessor.HttpContext.Session.Remove("id");
             _httpContextAccessor.HttpContext.Session.Clear();
             return RedirectToAction(nameof(Index), "Home");
