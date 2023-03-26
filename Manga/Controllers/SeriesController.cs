@@ -42,7 +42,7 @@ namespace Manga.Controllers
             {
                 return NotFound();
             }
-            ViewBag.BackgroundImage = "../../../media/serie/" + serie.RutaPortada;
+            ViewBag.BackgroundImage = "../../../media/serie/" + (serie.RutaBanner ?? serie.RutaPortada);
             return View(serie);
         }
 
@@ -70,7 +70,7 @@ namespace Manga.Controllers
                         ModelState.AddModelError("Foto", "El archivo que su subiste no es png o jpg");
                         return View(serie);
                     }
-                    SetRutaImagen(serie);
+                    serie = SetRutaImagen(serie);
                 }
                 serie.Capitulos = 0;
                 serie.Volumenes = 0;
@@ -161,7 +161,7 @@ namespace Manga.Controllers
         {
             if (_context.Series == null)
             {
-                return Problem("Entity set 'PaginaContext.Series'  is null.");
+                return Problem("Entity set 'PaginaSerieContext.Series'  is null.");
             }
             var serie = await _context.Series.FindAsync(id);
             if (serie != null)
@@ -180,10 +180,11 @@ namespace Manga.Controllers
         {
             return _context.Series.Any(e => e.Idserie == id);
         }
-        private void SetRutaImagen(Serie serie)
+        private Serie SetRutaImagen(Serie serie)
         {
             serie.RutaPortada = GuidImagen(serie.Portada);
             serie.RutaBanner = GuidImagen(serie.Banner);
+            return serie;
         }
         private string GuidImagen(IFormFile image)
         {

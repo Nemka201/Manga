@@ -4,6 +4,8 @@
     var db = new PaginaSerieContext();
     var categorias = db.Categorias.ToList();
     ViewData["Title"] = " Nueva Serie";
+    
+
 }
 <h1>Nueva Serie</h1>
 <hr />
@@ -31,11 +33,11 @@
                 <input asp-for="Categoria" class="form-control" />
                 <span asp-validation-for="Categoria" class="text-danger"></span>
             </div>
-            <div class="form-group">
+@*            <div class="form-group">
                 <label asp-for="Serializacion" class="control-label"></label>
                 <input asp-for="Serializacion" class="form-control" />
                 <span asp-validation-for="Serializacion" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Portada" class="control-label"></label>
                 <div class="custom-file">

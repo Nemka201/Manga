@@ -1,9 +1,12 @@
 ﻿@model Manga.Models.Serie
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @{
     ViewData["Title"] = Model.Nombre;
-    var rutaFoto = "~/media/serie/" + Model.RutaPortada;
+    var rutaPortada = "~/media/serie/" + Model.RutaPortada;
     PaginaSerieContext _context = new();
     Model.CatList = Model.Categoria.Split("-").ToList();
+    HttpContextAccessor.HttpContext.Session.SetInt32("IdSerie", Model.Idserie);
 }
 <style>
     header::before {
@@ -35,7 +38,7 @@
                 <div class="MangaDetail d-flex">
 
                     <div class="imagenTendencia">
-                        <img src="@rutaFoto" alt="" asp-append-version="true">
+                        <img src="@rutaPortada" alt="" asp-append-version="true">
                     </div>
 
                     <div class="serieTendenciaDescripcion  d-flex flex-column justify-content-between">
@@ -54,9 +57,13 @@
                                     </a>
                                 }
                         </ul>
+                    @if (Model.IdUser == HttpContextAccessor.HttpContext.Session.GetInt32("id") || HttpContextAccessor.HttpContext.Session.GetString("admin") !=null)
+                    {
+                        <a type="button" class="btn btn btn-danger" style="height:20%; margin-top: 1.25%; margin-left: 0.3%;" asp-area="" asp-controller="Capitulos" asp-action="Create">Nuevo Capitulo</a>
 
+                    }
                     </div>
-
+                    <a></a>
                 </div>
 
             </div>
@@ -123,7 +130,7 @@
 
                             <div class="TomoContManga col-3">
 
-                                <img class="w-100" src=@rutaFoto alt="" asp-append-version="true">
+                                <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
 
                                 <div class="infoPrinc d-flex justify-content-between">
                                     <p>Tomo 1</p>
@@ -144,7 +151,7 @@
 
                             <div class="TomoContManga col-3">
 
-                                <img class="w-100" src=@rutaFoto alt="" asp-append-version="true">
+                                <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
 
                                 <div class="infoPrinc d-flex justify-content-between">
                                     <p>Tomo 1</p>

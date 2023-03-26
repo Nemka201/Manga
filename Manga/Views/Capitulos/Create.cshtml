@@ -1,56 +1,51 @@
 ﻿@model Manga.Models.Capitulo
+@using Microsoft.AspNetCore.Components
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nuevo Capitulo";
+    int IdSerie = 0;
 }
+
 
 <h1>Create</h1>
 
 <h4>Capitulo</h4>
 <hr />
+@if (!HttpContextAccessor.HttpContext.Session.GetInt32("IdSerie").HasValue || HttpContextAccessor.HttpContext.Session.GetInt32("IdSerie") == 0)
+{
+    <h1>Error al Agregar Capitulo Intente Ingresando desde la página de la Serie</h1>
+    await Task.Delay(5000); // Espera 5 segundos
+    HttpContextAccessor.HttpContext.Response.Redirect("../../"); // Realizar pagina de error
+
+}
+else
+{
+    IdSerie = (int)HttpContextAccessor.HttpContext.Session.GetInt32("IdSerie");
+}
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Idserie" class="control-label"></label>
-                <input asp-for="Idserie" class="form-control" />
-                <span asp-validation-for="Idserie" class="text-danger"></span>
+                <input asp-for="Idserie" value=@IdSerie class="form-control" type="hidden" />
             </div>
             <div class="form-group">
                 <label asp-for="Titulo" class="control-label"></label>
                 <input asp-for="Titulo" class="form-control" />
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaCarga" class="control-label"></label>
-                <input asp-for="FechaCarga" class="form-control" />
-                <span asp-validation-for="FechaCarga" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Visto" /> @Html.DisplayNameFor(model => model.Visto)
-                </label>
-            </div>
+            <input asp-for="FechaCarga" value=@DateTime.Now class ="form-control" type="hidden" />
             <div class="form-group">
                 <label asp-for="Imagenes" class="control-label"></label>
                 <input asp-for="Imagenes" class="form-control" />
                 <span asp-validation-for="Imagenes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Volumen" class="control-label"></label>
-                <input asp-for="Volumen" class="form-control" />
-                <span asp-validation-for="Volumen" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
