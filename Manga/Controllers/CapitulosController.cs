@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Manga.Models;
+using System.Net;
 
 namespace Manga.Controllers
 {
@@ -57,6 +58,7 @@ namespace Manga.Controllers
         {
             if (ModelState.IsValid)
             {
+                capitulo.FechaCarga = DateTime.Now;
                 _context.Add(capitulo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -150,6 +152,27 @@ namespace Manga.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadFiles()
+        {
+            var files = Request.Form.Files;
+            string nombreSerie = HttpContext.Session.GetString("nombreSerie");
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads",nombreSerie, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                }
+            }
+            HttpContext.Session.SetInt32("fileUpload", 1);
+            return Ok();
         }
 
         private bool CapituloExists(int id)

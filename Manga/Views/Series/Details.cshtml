@@ -7,6 +7,8 @@
     PaginaSerieContext _context = new();
     Model.CatList = Model.Categoria.Split("-").ToList();
     HttpContextAccessor.HttpContext.Session.SetInt32("IdSerie", Model.Idserie);
+    HttpContextAccessor.HttpContext.Session.SetString("nombreSerie", Model.Nombre);
+
 }
 <style>
     header::before {

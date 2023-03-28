@@ -5,13 +5,13 @@
 @{
     ViewData["Title"] = "Nuevo Capitulo";
     int IdSerie = 0;
+    bool cargar = true;
+    HttpContextAccessor.HttpContext.Session.SetInt32("fileUpload", 0);
 }
 
-
-<h1>Create</h1>
-
-<h4>Capitulo</h4>
+<h2 class="align-content-center">Nuevo Capitulo</h2>
 <hr />
+        @*      VALIDA SI EL ID DE LA SERIE FUE CARGADO CORRECTAMENTE     *@
 @if (!HttpContextAccessor.HttpContext.Session.GetInt32("IdSerie").HasValue || HttpContextAccessor.HttpContext.Session.GetInt32("IdSerie") == 0)
 {
     <h1>Error al Agregar Capitulo Intente Ingresando desde la página de la Serie</h1>
@@ -25,7 +25,7 @@ else
 }
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input asp-for="Idserie" value=@IdSerie class="form-control" type="hidden" />
@@ -41,12 +41,45 @@ else
                 <input asp-for="Imagenes" class="form-control" />
                 <span asp-validation-for="Imagenes" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                        @*  VALIDA SI LOS ARCHIVOS SE SUBIERON    *@
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("fileUpload")==1)
+            {
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            }
+            
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h4>Arrastre la carpeta del capitulo</h4>
+        <form asp-action="Create" method="post" enctype="multipart/form-data" class="dropzone">
+            <div id="my-dropzone" class="dropzone" data-url="@Url.Action("UploadFiles", "Capitulos")">
+                <div class="dz-message">
+                    <p style="color:black">Arrastra y suelta archivos aquí</p>
+                </div>
             </div>
+            @if (cargar == true)
+            {
+                <button id="btnUpload" type="button" class="btn btn-primary" onclick=@cargar=false;>Cargar</button>
+            }
         </form>
     </div>
 </div>
+<div class="row">
+    <p>Para cargar el capitulo correctamente, primero arrastre la carpeta del capitulo, con las imagenes ordenadas. 
+        Luego complete los campos del capitulo, especificando la cantidad de imagenes total del capitulo. Introducir un valor incorrecto
+        podría afectar la vista del mismo.</p>
+</div>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script>
+$(function () {
+    $("#btnUpload").click(function () {
+        var myDropzone = Dropzone.forElement("#my-dropzone");
+        myDropzone.processQueue();
+    });
+});
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

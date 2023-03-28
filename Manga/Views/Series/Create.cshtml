@@ -55,9 +55,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <input asp-for="RutaPortada" value="a" type="hidden"/>      @*ERROR MODELISVALID RutaPortada,RutaBanner,Serializacion toma string no string?*@
-                <input asp-for="RutaBanner" value="a" type="hidden"/>
-                <input asp-for="Serializacion" value="a" type="hidden"/>
+                <input asp-for="RutaPortada" value=@null type="hidden"/>      @*ERROR MODELISVALID RutaPortada,RutaBanner,Serializacion toma string no string?*@
+                <input asp-for="RutaBanner" value=@null type="hidden"/>
+                <input asp-for="Serializacion" value=@null type="hidden"/>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -68,6 +68,7 @@
 
 
 @section Scripts {
+
     <script>
         $(document).ready(function ()) {
             $('.custom-file-input').on("change", function () {
