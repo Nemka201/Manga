@@ -1,7 +1,10 @@
 ﻿@model Manga.Models.Capitulo
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = Model.Titulo;
+    HttpContextAccessor.HttpContext.Session.SetInt32("numeroCapitulo", Model.NumeroCapitulo);
+
 }
 
 <h1>Edit</h1>
@@ -14,46 +17,49 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Idcapitulo" />
             <div class="form-group">
-                <label asp-for="Idserie" class="control-label"></label>
-                <input asp-for="Idserie" class="form-control" />
-                <span asp-validation-for="Idserie" class="text-danger"></span>
+                <input asp-for="Idserie" value=@Model.Idserie class="form-control" type="hidden" />
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroCapitulo" class="control-label"></label>
+                <input asp-for="NumeroCapitulo" class="form-control" />
+                <span asp-validation-for="NumeroCapitulo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Titulo" class="control-label"></label>
                 <input asp-for="Titulo" class="form-control" />
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaCarga" class="control-label"></label>
-                <input asp-for="FechaCarga" class="form-control" />
-                <span asp-validation-for="FechaCarga" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Visto" /> @Html.DisplayNameFor(model => model.Visto)
-                </label>
-            </div>
+            <input asp-for="FechaCarga" value=@DateTime.Now class="form-control" type="hidden" />
             <div class="form-group">
                 <label asp-for="Imagenes" class="control-label"></label>
                 <input asp-for="Imagenes" class="form-control" />
                 <span asp-validation-for="Imagenes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Volumen" class="control-label"></label>
-                <input asp-for="Volumen" class="form-control" />
-                <span asp-validation-for="Volumen" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+<div class="col-md-4">
+        <h4>Arrastre la carpeta del capitulo</h4>
+        <form asp-action="UploadFiles" method="post" enctype="multipart/form-data" class="dropzone">
+            <div id="my-dropzone" class="dropzone" data-url="@Url.Action("UploadFiles", "Capitulos")">
+                <div class="dz-message">
+                    <p style="color:black">Arrastra y suelta archivos aquí</p>
+                </div>
+            </div>
+                <button id="btnUpload" type="button" class="btn btn-primary";>Cargar</button>
+        </form>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script>
+        $(function () {
+            $("#btnUpload").click(function () {
+                var myDropzone = Dropzone.forElement("#my-dropzone");
+                myDropzone.processQueue();
+            });
+        });
+</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

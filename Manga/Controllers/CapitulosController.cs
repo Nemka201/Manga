@@ -13,10 +13,13 @@ namespace Manga.Controllers
     public class CapitulosController : Controller
     {
         private readonly PaginaSerieContext _context;
+        private readonly IWebHostEnvironment _webhost; // Obtener wwwroot
 
-        public CapitulosController(PaginaSerieContext context)
+
+        public CapitulosController(PaginaSerieContext context, IWebHostEnvironment webhost)
         {
             _context = context;
+            _webhost = webhost;
         }
 
         // GET: Capitulos
@@ -49,6 +52,30 @@ namespace Manga.Controllers
             return View();
         }
 
+        // GET: Capitulos/View
+        public async Task<IActionResult> Chapter(int? id)
+        {
+            if (id == null || _context.Capitulos == null)
+            {
+                return NotFound();
+            }
+
+            Capitulo capitulo = await _context.Capitulos
+                .FirstOrDefaultAsync(m => m.Idcapitulo == id);
+            Serie serie = _context.Series.Where(s => s.Idserie == capitulo.Idserie).First();
+            string uploadsFolder = Path.Combine(path1: _webhost.WebRootPath, path2: $"media/capitulos/{serie.Nombre}/{capitulo.NumeroCapitulo}");
+            capitulo.files = Directory.GetFiles(uploadsFolder);
+
+            if (capitulo == null)
+            {
+                return NotFound();
+            }
+
+            return View(capitulo);
+        }
+
+
+
         // POST: Capitulos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -59,9 +86,10 @@ namespace Manga.Controllers
             if (ModelState.IsValid)
             {
                 capitulo.FechaCarga = DateTime.Now;
+                capitulo.NumeroCapitulo = 0;
                 _context.Add(capitulo);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", new { id = capitulo.Idcapitulo });
             }
             return View(capitulo);
         }
@@ -93,11 +121,18 @@ namespace Manga.Controllers
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
+                string nombreSerie = HttpContext.Session.GetString("nombreSerie");
+                string capituloSerie = HttpContext.Session.GetString("capituloSerie");
+                string uploadsFolder = Path.Combine(path1: _webhost.WebRootPath, path2: $"media/capitulos/{nombreSerie}/{capituloSerie}");
+                ViewBag.urlFolder = uploadsFolder;
                 try
                 {
+                    foreach(string archivoPath in Directory.GetFiles(uploadsFolder))
+                    {
+                        capitulo.NumeroCapitulo++;
+                    }
                     _context.Update(capitulo);
                     await _context.SaveChangesAsync();
                 }
@@ -156,14 +191,26 @@ namespace Manga.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadFiles()
         {
+
             var files = Request.Form.Files;
             string nombreSerie = HttpContext.Session.GetString("nombreSerie");
+            string capituloSerie = HttpContext.Session.GetString("capituloSerie");
+            string uploadsFolder = Path.Combine(path1: _webhost.WebRootPath, path2: $"media/capitulos/{nombreSerie}");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+                uploadsFolder = Path.Combine(path1:uploadsFolder, path2:capituloSerie);
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+            }
             foreach (var file in files)
             {
                 if (file.Length > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads",nombreSerie, fileName);
+                    var filePath = Path.Combine(path1:uploadsFolder,path2:fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -174,7 +221,6 @@ namespace Manga.Controllers
             HttpContext.Session.SetInt32("fileUpload", 1);
             return Ok();
         }
-
         private bool CapituloExists(int id)
         {
           return _context.Capitulos.Any(e => e.Idcapitulo == id);

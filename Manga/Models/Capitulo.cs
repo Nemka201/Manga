@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Xunit.Sdk;
 
 namespace Manga.Models;
@@ -11,15 +12,17 @@ public partial class Capitulo
 
     public int Idserie { get; set; }
 
-    [Required(ErrorMessage = "Obligatorio")]
+    [Required(ErrorMessage = "El titulo del capitulo es obligatorio")]
     [StringLength(30, ErrorMessage = "No puede superar 30 caracteres")]
     public string Titulo { get; set; } = null!;
-    [Required(ErrorMessage = "Obligatorio")]
     public DateTime FechaCarga { get; set; }
-
+    public string Imagenes { get; set; }
     public bool Visto { get; set; }
-    [Required(ErrorMessage = "Obligatorio")]
-    public string Imagenes { get; set; } = null!;
 
     public int? Volumen { get; set; }
+    [Range(1,99999)]
+    [Required(ErrorMessage = "El número del capitulo es Obligatorio")]
+    public int NumeroCapitulo { get; set; }
+    [NotMapped]
+    public string[]? files { get; set; } 
 }

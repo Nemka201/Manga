@@ -5,8 +5,6 @@
 @{
     ViewData["Title"] = "Nuevo Capitulo";
     int IdSerie = 0;
-    bool cargar = true;
-    HttpContextAccessor.HttpContext.Session.SetInt32("fileUpload", 0);
 }
 
 <h2 class="align-content-center">Nuevo Capitulo</h2>
@@ -31,6 +29,9 @@ else
                 <input asp-for="Idserie" value=@IdSerie class="form-control" type="hidden" />
             </div>
             <div class="form-group">
+                <input asp-for="NumeroCapitulo" type ="hidden" value="0" class="form-control" />
+            </div>
+            <div class="form-group">
                 <label asp-for="Titulo" class="control-label"></label>
                 <input asp-for="Titulo" class="form-control" />
                 <span asp-validation-for="Titulo" class="text-danger"></span>
@@ -41,45 +42,23 @@ else
                 <input asp-for="Imagenes" class="form-control" />
                 <span asp-validation-for="Imagenes" class="text-danger"></span>
             </div>
-                        @*  VALIDA SI LOS ARCHIVOS SE SUBIERON    *@
-            @if (HttpContextAccessor.HttpContext.Session.GetInt32("fileUpload")==1)
-            {
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            }
-            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
         </form>
     </div>
-    <div class="col-md-4">
+@*    <div class="col-md-4">
         <h4>Arrastre la carpeta del capitulo</h4>
-        <form asp-action="Create" method="post" enctype="multipart/form-data" class="dropzone">
+        <form asp-action="UploadFiles" method="post" enctype="multipart/form-data" class="dropzone">
             <div id="my-dropzone" class="dropzone" data-url="@Url.Action("UploadFiles", "Capitulos")">
                 <div class="dz-message">
                     <p style="color:black">Arrastra y suelta archivos aquí</p>
                 </div>
             </div>
-            @if (cargar == true)
-            {
-                <button id="btnUpload" type="button" class="btn btn-primary" onclick=@cargar=false;>Cargar</button>
-            }
+                <button id="btnUpload" type="button" class="btn btn-primary" onclick=actualizarIf();>Cargar</button>
         </form>
     </div>
-</div>
-<div class="row">
-    <p>Para cargar el capitulo correctamente, primero arrastre la carpeta del capitulo, con las imagenes ordenadas. 
-        Luego complete los campos del capitulo, especificando la cantidad de imagenes total del capitulo. Introducir un valor incorrecto
-        podría afectar la vista del mismo.</p>
-</div>
-<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-<script>
-$(function () {
-    $("#btnUpload").click(function () {
-        var myDropzone = Dropzone.forElement("#my-dropzone");
-        myDropzone.processQueue();
-    });
-});
-</script>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,0 +1,351 @@
+﻿@model Manga.Models.Capitulo
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = Model.NumeroCapitulo +" "+ Model.Titulo;
+    PaginaSerieContext _context = new();
+    Serie serie = _context.Series.Where(e => e.Idserie == Model.Idserie).First();
+    var rutaPortada = "~/media/serie/" + serie.RutaPortada;
+    var webHostEnvironment = HttpContextAccessor.HttpContext.RequestServices.GetService(typeof(IWebHostEnvironment)) as IWebHostEnvironment;
+    serie.CatList = serie.Categoria.Split("-").ToList();
+    var rutaFolder = $"~/media/capitulos/{serie.Nombre}/{Model.NumeroCapitulo}";
+}
+<style>
+    header::before {
+        background-image: linear-gradient(180deg, #f45804 0%, #ec4c04 15%, #ff6310 15.5%, rgba(255, 88, 0, 0) 100%), url('@ViewBag.BackgroundImage');
+    }</style>
+<section class="MangaChapterDetail d-flex">
+
+    <div class="imagenTendencia">
+        <img src=@rutaPortada alt="" asp-append-version="true">
+    </div>
+
+    <div class=" d-flex flex-column justify-content-between">
+
+        <div class="w-100 d-flex justify-content-between">
+            <div class="ChapDetails">
+
+                <h3>@serie.Nombre</h3>
+
+                <p>@serie.Descripcion</p>
+
+            </div>
+
+            <div class="ChapSellsTomeIn">
+                <p>Tomo 1</p>
+                <button> Agregar a coleccíon</button>
+            </div>
+        </div>
+
+        <ul class="generos d-flex">
+            @foreach (var cat in serie.CatList)
+            {
+                Categoria c = @_context.Categorias.Where(e => e.Idcategoria == Convert.ToInt32(cat)).First();
+                <a asp-area="" asp-controller="Categorias" asp-action="Details" asp-route-id="@c.Idcategoria">
+                <li>@c.Nombre</li>
+                </a>
+            }
+        </ul>
+    </div>
+</section>
+
+
+
+<section class="paginasDeManga container">
+
+    <div class="paginasDeMangaMenu">
+
+
+        <div class="MenuSelect ">
+
+            <div class="selectBoton">
+                <div>
+                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                </div>
+                <span class="sbTexto">Capitulos</span>
+                <div>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </div>
+            </div>
+
+            <ul class="options">
+
+                <li class="option">
+                    <span class="option-text">Cap 1</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 1</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 1</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 2</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 2</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 2</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 2</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 2</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 2</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 2</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 2</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 2</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 1</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 3</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 3</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 3</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 3</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 3</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 44</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 44</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 44</span>
+                </li>
+
+                <li class="option">
+                    <span class="option-text">Cap 44</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+    <div>
+        @foreach (string archivoPath in Model.files)
+        {
+        <img class="w-100" src=@(rutaFolder+archivoPath) alt= asp-append-version="true">
+        }
+    </div>
+
+</section>
+
+<section class="TomosManga">
+
+    <h3>Tomos</h3>
+
+    <div id="carouselUltimosAgregados" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-flex">
+
+                    <div class="TomoContManga col-3">
+
+                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+
+                        <div class="infoPrinc d-flex justify-content-between">
+                            <p>Tomo 1</p>
+                            <p>$1500</p>
+                        </div>
+
+                        <p class="infoDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattissdsdsdasas. ...</p>
+
+                        <div class="botonesTomoContManga">
+                            <button>Comprar</button>
+                            <a href="">Ver</a>
+                        </div>
+
+                    </div>
+
+                    <div class="TomoContManga col-3">
+
+                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <div class="infoPrinc d-flex justify-content-between">
+                            <p>Tomo 1</p>
+                            <p>$1500</p>
+                        </div>
+
+                        <p class="infoDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattissdsdsdasas. ...</p>
+
+                        <div class="botonesTomoContManga">
+                            <button>Comprar</button>
+                            <a href="">Ver</a>
+                        </div>
+
+                    </div>
+
+                    <div class="TomoContManga col-3">
+
+                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <div class="infoPrinc d-flex justify-content-between">
+                            <p>Tomo 1</p>
+                            <p>$1500</p>
+                        </div>
+
+                        <p class="infoDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattissdsdsdasas. ...</p>
+
+                        <div class="botonesTomoContManga">
+                            <button>Comprar</button>
+                            <a href="">Ver</a>
+                        </div>
+
+                    </div>
+
+                    <div class="TomoContManga col-3">
+
+                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <div class="infoPrinc d-flex justify-content-between">
+                            <p>Tomo 1</p>
+                            <p>$1500</p>
+                        </div>
+
+                        <p class="infoDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattissdsdsdasas. ...</p>
+
+                        <div class="botonesTomoContManga">
+                            <button>Comprar</button>
+                            <a href="">Ver</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="d-flex">
+
+                    <div class="TomoContManga col-3">
+
+                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <div class="infoPrinc d-flex justify-content-between">
+                            <p>Tomo 1</p>
+                            <p>$1500</p>
+                        </div>
+
+                        <p class="infoDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattissdsdsdasas. ...</p>
+
+                        <div class="botonesTomoContManga">
+                            <button>Comprar</button>
+                            <a href="">Ver</a>
+                        </div>
+
+                    </div>
+
+                    <div class="TomoContManga col-3">
+
+                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <div class="infoPrinc d-flex justify-content-between">
+                            <p>Tomo 1</p>
+                            <p>$1500</p>
+                        </div>
+
+                        <p class="infoDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattissdsdsdasas. ...</p>
+
+                        <div class="botonesTomoContManga">
+                            <button>Comprar</button>
+                            <a href="">Ver</a>
+                        </div>
+
+                    </div>
+
+                    <div class="TomoContManga col-3">
+
+                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <div class="infoPrinc d-flex justify-content-between">
+                            <p>Tomo 1</p>
+                            <p>$1500</p>
+                        </div>
+
+                        <p class="infoDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattissdsdsdasas. ...</p>
+
+                        <div class="botonesTomoContManga">
+                            <button>Comprar</button>
+                            <a href="">Ver</a>
+                        </div>
+
+                    </div>
+
+                    <div class="TomoContManga col-3">
+
+                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <div class="infoPrinc d-flex justify-content-between">
+                            <p>Tomo 1</p>
+                            <p>$1500</p>
+                        </div>
+
+                        <p class="infoDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattissdsdsdasas. ...</p>
+
+                        <div class="botonesTomoContManga">
+                            <button>Comprar</button>
+                            <a href="">Ver</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="carouselTomosMangaButtons">
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselUltimosAgregados" data-bs-slide="prev">
+                <img src="../media/scroll/flechaDown.png" alt="">
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselUltimosAgregados" data-bs-slide="next">
+                <img src="../media/scroll/flechaUp.png" alt="">
+                <span class="visually-hidden">Next</span>
+            </button>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+<script src="../javascript/cambioDeCapitulo.js"></script>

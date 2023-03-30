@@ -56,6 +56,8 @@ public partial class PaginaSerieContext : DbContext
                 .HasColumnName("titulo");
             entity.Property(e => e.Visto).HasColumnName("visto");
             entity.Property(e => e.Volumen).HasColumnName("volumen");
+            entity.Property(e => e.NumeroCapitulo).HasColumnName("numeroCapitulo");
+
         });
 
         modelBuilder.Entity<Categoria>(entity =>
