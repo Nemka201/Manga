@@ -47,18 +47,6 @@ else
             </div>
         </form>
     </div>
-@*    <div class="col-md-4">
-        <h4>Arrastre la carpeta del capitulo</h4>
-        <form asp-action="UploadFiles" method="post" enctype="multipart/form-data" class="dropzone">
-            <div id="my-dropzone" class="dropzone" data-url="@Url.Action("UploadFiles", "Capitulos")">
-                <div class="dz-message">
-                    <p style="color:black">Arrastra y suelta archivos aquí</p>
-                </div>
-            </div>
-                <button id="btnUpload" type="button" class="btn btn-primary" onclick=actualizarIf();>Cargar</button>
-        </form>
-    </div>
-</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

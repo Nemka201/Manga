@@ -65,7 +65,11 @@ namespace Manga.Controllers
             Serie serie = _context.Series.Where(s => s.Idserie == capitulo.Idserie).First();
             string uploadsFolder = Path.Combine(path1: _webhost.WebRootPath, path2: $"media/capitulos/{serie.Nombre}/{capitulo.NumeroCapitulo}");
             capitulo.files = Directory.GetFiles(uploadsFolder);
-
+            for (int i=0;i<capitulo.files.Length;i++)
+            {
+                var nombreArchivo = capitulo.files[i].Split($"{serie.Nombre}/{capitulo.NumeroCapitulo}");
+                capitulo.files[i] = nombreArchivo[1];
+            }
             if (capitulo == null)
             {
                 return NotFound();
@@ -218,7 +222,6 @@ namespace Manga.Controllers
                     }
                 }
             }
-            HttpContext.Session.SetInt32("fileUpload", 1);
             return Ok();
         }
         private bool CapituloExists(int id)
