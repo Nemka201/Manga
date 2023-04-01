@@ -8,6 +8,7 @@
     Model.CatList = Model.Categoria.Split("-").ToList();
     HttpContextAccessor.HttpContext.Session.SetInt32("IdSerie", Model.Idserie);
     HttpContextAccessor.HttpContext.Session.SetString("nombreSerie", Model.Nombre);
+    var listaCapitulos = _context.Capitulos.Where(c => c.Idserie == Model.Idserie);
 
 }
 <style>
@@ -108,8 +109,15 @@
                         <a class="volverButton">Volver a ver</a>
                     </div>
 
-                    <div class="listaCapitulos" id="listaCap">
-                    </div>
+                    <div class="listaCapitulos"@* id="listaCap"*@>
+                    @foreach (var capitulo in listaCapitulos)
+                    {
+                        <a asp-area="" asp-controller="Capitulos" asp-action="Chapter" asp-route-id="@capitulo.Idcapitulo">
+                            <h4 style="color:white">@capitulo.NumeroCapitulo @capitulo.Titulo @capitulo.FechaCarga.Date</h4>
+                            
+                        </a>
+                    }
+                </div>
 
                     <div class="PaginationCapitulos d-flex">
                     </div>
