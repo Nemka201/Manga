@@ -63,12 +63,14 @@ namespace Manga.Controllers
             Capitulo capitulo = await _context.Capitulos
                 .FirstOrDefaultAsync(m => m.Idcapitulo == id);
             capitulo = GetRutaFiles(capitulo);
+            Serie serie = _context.Series.Where(s => s.Idserie == capitulo.Idserie).First();
+            Chapter chapter = new Chapter(capitulo,serie,_context.Categorias.ToList());
             if (capitulo == null)
             {
                 return NotFound();
             }
 
-            return View(capitulo);
+            return View(chapter);
         }
 
 
