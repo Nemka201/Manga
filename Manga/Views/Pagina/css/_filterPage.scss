@@ -1,3 +1,4 @@
+// ##################  Seccion Filtrado ##################
 .TiposDeFiltrado {
     border: 6px solid #ec4c04;
     padding: 40px;
@@ -24,6 +25,7 @@
     i {transform:  scale(1.6, 1.6);}
 }
 
+// ========== Formulario Categoria ==========
 .form-category {
     display: flex;
     flex-direction: column;
@@ -87,6 +89,8 @@
     margin-bottom: 20px;
 }
 
+
+// ========== Buscador ==========
 .contBuscador {
     border: 5px solid $color4;
     border-radius: 16px;

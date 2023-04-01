@@ -1,10 +1,8 @@
-
+// ############### Section MangaChapterDetail ###############
 .MangaChapterDetail {
     width: 69.6%;
     margin: 48px 0 48px 20%;
 }
-
-
 
 .ChapDetails {
     max-width: 40%;
@@ -30,6 +28,7 @@
     }
 }
 
+// ############### Section paginasDeManga ###############
 .paginasDeMangaMenu select{
     padding: 20px;
     background-color: black;
@@ -41,7 +40,7 @@
 .MenuSelect {
     width: fit-content;
 }
-
+// ========= Boton del Menu =========
 .selectBoton {
     width: 90px;
     text-align: center;
@@ -63,11 +62,12 @@
         transition: all 0.2s;
     }
 }
-
+// ========= Ocultar Item =========
 .displayNone {
     display: none !important;
 }
 
+// ========= Lista del Menu =========
 .options {
     border-radius: 0px 16px;
     width: 90px;
