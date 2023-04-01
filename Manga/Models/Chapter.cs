@@ -14,9 +14,11 @@
             Capitulo = c;
             Serie = s;
             Serie.CatList = Serie.Categoria.Split("-").ToList();
+            Categorias = new List<Categoria>();
             for (int i=0; i<Serie.Categoria.Split("-").Length; i++)
             {
-                Categorias.Add(catList.Where( e => e.Idcategoria == Convert.ToInt32(Serie.CatList[i])).First());
+                Categoria cat = catList.Where ( c => c.Idcategoria == Convert.ToInt32(Serie.CatList[i])).FirstOrDefault();
+                Categorias.Add(cat);
             }
         }
     }
