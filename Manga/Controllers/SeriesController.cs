@@ -38,12 +38,16 @@ namespace Manga.Controllers
 
             var serie = await _context.Series
                 .FirstOrDefaultAsync(m => m.Idserie == id);
+            var capList = _context.Capitulos.Where(e => e.Idserie == serie.Idserie).ToList();
+            var catList = _context.Categorias.ToList();
+            SeriesDetail seriesDetail = new(serie,capList,catList);
+            
             if (serie == null)
             {
                 return NotFound();
             }
             ViewBag.BackgroundImage = "../../../media/serie/" + (serie.RutaBanner ?? serie.RutaPortada);
-            return View(serie);
+            return View(seriesDetail);
         }
 
         // GET: Series/Create
