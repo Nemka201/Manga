@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Manga.Models;
+using Manga.Attributes;
 
 namespace Manga.Controllers
 {
@@ -25,7 +26,7 @@ namespace Manga.Controllers
         }
 
         // GET: Categorias/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Series(int? id)
         {
             if (id == null || _context.Categorias == null)
             {
@@ -34,15 +35,31 @@ namespace Manga.Controllers
 
             var categoria = await _context.Categorias
                 .FirstOrDefaultAsync(m => m.Idcategoria == id);
+            CategoriaDetail catDetail = new(categoria);
+            foreach (Serie serie in _context.Series.ToList()) 
+            {
+                string[] category = serie.Categoria.Split("-");
+                if (category.Length > 0)
+                {
+                    for (int i=0; i<category.Length; i++)
+                    {
+                        if (Convert.ToInt32(category[i]) == id)
+                        {
+                            catDetail.Series.Add(serie);
+                        }
+                    }
+                }
+            }            
             if (categoria == null)
             {
                 return NotFound();
             }
 
-            return View(categoria);
+            return View(catDetail);
         }
 
         // GET: Categorias/Create
+        [SessionCheckAdmin]
         public IActionResult Create()
         {
             return View();

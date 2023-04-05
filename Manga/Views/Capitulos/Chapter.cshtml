@@ -33,7 +33,7 @@
         <ul class="generos d-flex">
             @foreach (var c in Model.Categorias)
             {
-                <a asp-area="" asp-controller="Categorias" asp-action="Details" asp-route-id="@c.Idcategoria">
+                <a asp-area="" asp-controller="Categorias" asp-action="Series" asp-route-id="@c.Idcategoria">
                 <li>@c.Nombre</li>
                 </a>
             }
