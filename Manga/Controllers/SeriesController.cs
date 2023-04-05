@@ -65,7 +65,7 @@ namespace Manga.Controllers
         public async Task<IActionResult> Create([Bind("Idserie,Nombre,Descripcion,Capitulos,Volumenes,Categoria,Autor,Serializacion,Favoritos,Estado,IdUser,RutaBanner,RutaPortada")] Serie serie)
         {
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (serie.Portada != null)
                 {
