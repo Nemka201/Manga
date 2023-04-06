@@ -41,5 +41,5 @@ public partial class Serie
     [NotMapped]
     public IFormFile? Banner { get; set; } // IFormFile para cargar Banner  
     [NotMapped]
-    public List<String> CatList { get; set; } = null!; // Lista de categorias
+    public List<String>? CatList { get; set; } = null!; // Lista de categorias
 }

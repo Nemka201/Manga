@@ -8,6 +8,7 @@ namespace Manga.Models;
 
 public partial class Capitulo
 {
+
     public int Idcapitulo { get; set; }
 
     public int Idserie { get; set; }

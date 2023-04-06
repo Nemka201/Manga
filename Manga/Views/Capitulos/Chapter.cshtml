@@ -1,14 +1,7 @@
-﻿@model Manga.Models.Capitulo
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+﻿@model Manga.Models.Chapter
 
 @{
-    ViewData["Title"] = Model.NumeroCapitulo +" "+ Model.Titulo;
-    PaginaSerieContext _context = new();
-    Serie serie = _context.Series.Where(e => e.Idserie == Model.Idserie).First();
-    var rutaPortada = "~/media/serie/" + serie.RutaPortada;
-    var webHostEnvironment = HttpContextAccessor.HttpContext.RequestServices.GetService(typeof(IWebHostEnvironment)) as IWebHostEnvironment;
-    serie.CatList = serie.Categoria.Split("-").ToList();
-    var rutaFolder = $"~/media/capitulos/{serie.Nombre}/{Model.NumeroCapitulo}";
+    ViewData["Title"] = Model.Capitulo.NumeroCapitulo +" "+ Model.Capitulo.Titulo;
 }
 <style>
     header::before {
@@ -17,7 +10,7 @@
 <section class="MangaChapterDetail d-flex">
 
     <div class="imagenTendencia">
-        <img src=@rutaPortada alt="" asp-append-version="true">
+        <img src=@Model.rutaPortada alt="" asp-append-version="true">
     </div>
 
     <div class=" d-flex flex-column justify-content-between">
@@ -25,9 +18,9 @@
         <div class="w-100 d-flex justify-content-between">
             <div class="ChapDetails">
 
-                <h3>@serie.Nombre</h3>
+                <h3>@Model.Serie.Nombre</h3>
 
-                <p>@serie.Descripcion</p>
+                <p>@Model.Serie.Descripcion</p>
 
             </div>
 
@@ -38,10 +31,9 @@
         </div>
 
         <ul class="generos d-flex">
-            @foreach (var cat in serie.CatList)
+            @foreach (var c in Model.Categorias)
             {
-                Categoria c = @_context.Categorias.Where(e => e.Idcategoria == Convert.ToInt32(cat)).First();
-                <a asp-area="" asp-controller="Categorias" asp-action="Details" asp-route-id="@c.Idcategoria">
+                <a asp-area="" asp-controller="Categorias" asp-action="Series" asp-route-id="@c.Idcategoria">
                 <li>@c.Nombre</li>
                 </a>
             }
@@ -166,10 +158,10 @@
     </div>
 
     <div>
-        @foreach (string archivoPath in Model.files)
+        @foreach (string archivoPath in Model.Capitulo.files)
         {
             
-            <img class="w-100" src=@(rutaFolder+archivoPath) alt= asp-append-version="true">
+            <img class="w-100" src=@(Model.rutaFolder+archivoPath) alt= asp-append-version="true">
         }
     </div>
 
@@ -186,7 +178,7 @@
 
                     <div class="TomoContManga col-3">
 
-                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <img class="w-100" src=@Model.rutaPortada alt="" asp-append-version="true">
 
                         <div class="infoPrinc d-flex justify-content-between">
                             <p>Tomo 1</p>
@@ -204,7 +196,7 @@
 
                     <div class="TomoContManga col-3">
 
-                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <img class="w-100" src=@Model.rutaPortada alt="" asp-append-version="true">
                         <div class="infoPrinc d-flex justify-content-between">
                             <p>Tomo 1</p>
                             <p>$1500</p>
@@ -221,7 +213,7 @@
 
                     <div class="TomoContManga col-3">
 
-                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <img class="w-100" src=@Model.rutaPortada alt="" asp-append-version="true">
                         <div class="infoPrinc d-flex justify-content-between">
                             <p>Tomo 1</p>
                             <p>$1500</p>
@@ -238,7 +230,7 @@
 
                     <div class="TomoContManga col-3">
 
-                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <img class="w-100" src=@Model.rutaPortada alt="" asp-append-version="true">
                         <div class="infoPrinc d-flex justify-content-between">
                             <p>Tomo 1</p>
                             <p>$1500</p>
@@ -261,7 +253,7 @@
 
                     <div class="TomoContManga col-3">
 
-                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <img class="w-100" src=@Model.rutaPortada alt="" asp-append-version="true">
                         <div class="infoPrinc d-flex justify-content-between">
                             <p>Tomo 1</p>
                             <p>$1500</p>
@@ -278,7 +270,7 @@
 
                     <div class="TomoContManga col-3">
 
-                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <img class="w-100" src=@Model.rutaPortada alt="" asp-append-version="true">
                         <div class="infoPrinc d-flex justify-content-between">
                             <p>Tomo 1</p>
                             <p>$1500</p>
@@ -295,7 +287,7 @@
 
                     <div class="TomoContManga col-3">
 
-                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <img class="w-100" src=@Model.rutaPortada alt="" asp-append-version="true">
                         <div class="infoPrinc d-flex justify-content-between">
                             <p>Tomo 1</p>
                             <p>$1500</p>
@@ -312,7 +304,7 @@
 
                     <div class="TomoContManga col-3">
 
-                        <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                        <img class="w-100" src=@Model.rutaPortada alt="" asp-append-version="true">
                         <div class="infoPrinc d-flex justify-content-between">
                             <p>Tomo 1</p>
                             <p>$1500</p>

@@ -1,0 +1,53 @@
+﻿@model CategoriaDetail
+
+@{
+    foreach (var serie in Model.Series)
+    {
+        serie.CatList = serie.Categoria.Split("-").ToList();
+    }
+    PaginaSerieContext _context = new();
+    ViewData["Title"] = Model.Categoria.Nombre;
+
+}
+
+@foreach (var serie in Model.Series)
+{
+    var rutaFoto = "~/media/serie/" + serie.RutaPortada;
+    <div class="carousel-item">
+        <div class="contenedorTendencia d-flex flex-column">
+            <h2>Tendencia</h2>
+            <div class="imagenTendencia d-flex  ">
+                <div class="serieTendencia d-flex">
+                    <a asp-area="" asp-controller="Series" asp-action="Details" asp-route-id="@serie.Idserie">
+                        <img src="@rutaFoto" alt="" asp-append-version="true">
+                    </a>
+                </div>
+                <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
+                    <a asp-area="" asp-controller="Series" asp-action="Details" asp-route-id="@serie.Idserie">
+                        <h3> @Html.DisplayFor(modelItem => serie.Nombre)</h3>
+                    </a>
+                    <p class="descripcion">
+                        @Html.DisplayFor(modelItem => serie.Descripcion)
+                    </p>
+
+                    <p class="tipoManga">Manga</p>
+
+                    <br>
+                    <ul class="generos d-flex">
+                        @foreach (var cat in serie.CatList)
+                        {
+                            Categoria c = @_context.Categorias.Where(e => e.Idcategoria == Convert.ToInt32(cat)).First();
+                            <a asp-area="" asp-controller="Categorias" asp-action="Details" asp-route-id="@c.Idcategoria">
+                            <li>@c.Nombre</li></a>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+            </div>
+
+        </div>
+    </div>
+
+}

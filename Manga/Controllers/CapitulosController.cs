@@ -52,7 +52,7 @@ namespace Manga.Controllers
             return View();
         }
 
-        // GET: Capitulos/View
+        // GET: Capitulos/Chapter
         public async Task<IActionResult> Chapter(int? id)
         {
             if (id == null || _context.Capitulos == null)
@@ -62,20 +62,15 @@ namespace Manga.Controllers
 
             Capitulo capitulo = await _context.Capitulos
                 .FirstOrDefaultAsync(m => m.Idcapitulo == id);
+            capitulo = GetRutaFiles(capitulo);
             Serie serie = _context.Series.Where(s => s.Idserie == capitulo.Idserie).First();
-            string uploadsFolder = Path.Combine(path1: _webhost.WebRootPath, path2: $"media/capitulos/{serie.Nombre}/{capitulo.NumeroCapitulo}");
-            capitulo.files = Directory.GetFiles(uploadsFolder);
-            for (int i=0;i<capitulo.files.Length;i++)
-            {
-                var nombreArchivo = capitulo.files[i].Split($"{serie.Nombre}/{capitulo.NumeroCapitulo}");
-                capitulo.files[i] = nombreArchivo[1];
-            }
+            Chapter chapter = new Chapter(capitulo,serie,_context.Categorias.ToList());
             if (capitulo == null)
             {
                 return NotFound();
             }
 
-            return View(capitulo);
+            return View(chapter);
         }
 
 
@@ -128,8 +123,7 @@ namespace Manga.Controllers
             if (ModelState.IsValid)
             {
                 string nombreSerie = HttpContext.Session.GetString("nombreSerie");
-                string capituloSerie = HttpContext.Session.GetString("capituloSerie");
-                string uploadsFolder = Path.Combine(path1: _webhost.WebRootPath, path2: $"media/capitulos/{nombreSerie}/{capituloSerie}");
+                string uploadsFolder = Path.Combine(path1: _webhost.WebRootPath, path2: $"media/capitulos/{nombreSerie}/{capitulo.NumeroCapitulo}");
                 ViewBag.urlFolder = uploadsFolder;
                 try
                 {
@@ -227,6 +221,22 @@ namespace Manga.Controllers
         private bool CapituloExists(int id)
         {
           return _context.Capitulos.Any(e => e.Idcapitulo == id);
+        }
+        private Capitulo GetRutaFiles(Capitulo capitulo)
+        {
+            Serie serie = _context.Series.Where(s => s.Idserie == capitulo.Idserie).First();
+            string uploadsFolder = Path.Combine(path1: _webhost.WebRootPath, path2: $"media/capitulos/{serie.Nombre}/{capitulo.NumeroCapitulo}");
+            // GetFiles obtiene la direccion completa de los archivos en uploadsFolder
+            capitulo.files = Directory.GetFiles(uploadsFolder);
+            // Ciclo for para recorrer cada string de files[]
+            for (int i = 0; i < capitulo.files.Length; i++)
+            {
+                // Split de files[i] devuelve un vector[2] 
+                var nombreArchivo = capitulo.files[i].Split($"{serie.Nombre}/{capitulo.NumeroCapitulo}");
+                // El nombre del archivo esta en el indice 1
+                capitulo.files[i] = nombreArchivo[1];
+            }
+            return capitulo;
         }
     }
 }

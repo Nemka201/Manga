@@ -1,13 +1,10 @@
-﻿@model Manga.Models.Serie
+﻿@model Manga.Models.SeriesDetail
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
-    ViewData["Title"] = Model.Nombre;
-    var rutaPortada = "~/media/serie/" + Model.RutaPortada;
-    PaginaSerieContext _context = new();
-    Model.CatList = Model.Categoria.Split("-").ToList();
-    HttpContextAccessor.HttpContext.Session.SetInt32("IdSerie", Model.Idserie);
-    HttpContextAccessor.HttpContext.Session.SetString("nombreSerie", Model.Nombre);
+    ViewData["Title"] = Model.Serie.Nombre;
+    HttpContextAccessor.HttpContext.Session.SetInt32("IdSerie", Model.Serie.Idserie);
+    HttpContextAccessor.HttpContext.Session.SetString("nombreSerie", Model.Serie.Nombre);
 
 }
 <style>
@@ -40,26 +37,25 @@
                 <div class="MangaDetail d-flex">
 
                     <div class="imagenTendencia">
-                        <img src="@rutaPortada" alt="" asp-append-version="true">
+                        <img src="@Model.rutaPortada" alt="" asp-append-version="true">
                     </div>
 
                     <div class="serieTendenciaDescripcion  d-flex flex-column justify-content-between">
                         <div>
-                            <h3>@Html.DisplayFor(model => model.Nombre)</h3>
+                            <h3>@Html.DisplayFor(model => model.Serie.Nombre)</h3>
 
-                            <p class="descripcion">@Html.DisplayFor(model => model.Descripcion)</p>
+                            <p class="descripcion">@Html.DisplayFor(model => model.Serie.Descripcion)</p>
                         </div>
 
                         <ul class="generos d-flex">
-                            @foreach (var cat in Model.CatList)
-                                {
-                                    Categoria c = @_context.Categorias.Where(e => e.Idcategoria == Convert.ToInt32(cat)).First();
-                                    <a asp-area="" asp-controller="Categorias" asp-action="Details" asp-route-id="@c.Idcategoria">
-                                    <li>@c.Nombre</li>
-                                    </a>
-                                }
+                        @foreach (var c in Model.Categorias)
+                        {
+                            <a asp-area="" asp-controller="Categorias" asp-action="Details" asp-route-id="@c.Idcategoria">
+                            <li>@c.Nombre</li>
+                            </a>
+                        }
                         </ul>
-                    @if (Model.IdUser == HttpContextAccessor.HttpContext.Session.GetInt32("id") || HttpContextAccessor.HttpContext.Session.GetString("admin") !=null)
+                    @if (Model.Serie.IdUser == HttpContextAccessor.HttpContext.Session.GetInt32("id") || HttpContextAccessor.HttpContext.Session.GetString("admin") !=null)
                     {
                         <a type="button" class="btn btn btn-danger" style="height:20%; margin-top: 1.25%; margin-left: 0.3%;" asp-area="" asp-controller="Capitulos" asp-action="Create">Nuevo Capitulo</a>
 
@@ -108,8 +104,15 @@
                         <a class="volverButton">Volver a ver</a>
                     </div>
 
-                    <div class="listaCapitulos" id="listaCap">
-                    </div>
+                    <div class="listaCapitulos"@* id="listaCap"*@>
+                    @foreach (var capitulo in Model.Capitulos)
+                    {
+                        <a asp-area="" asp-controller="Capitulos" asp-action="Chapter" asp-route-id="@capitulo.Idcapitulo">
+                            <h4 style="color:white">@capitulo.NumeroCapitulo @capitulo.Titulo @capitulo.FechaCarga.Date</h4>
+                            
+                        </a>
+                    }
+                </div>
 
                     <div class="PaginationCapitulos d-flex">
                     </div>
@@ -131,7 +134,7 @@
 
                             <div class="TomoContManga col-3">
 
-                                <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                                <img class="w-100" src=@Model.rutaPortada alt="" asp-append-version="true">
 
                                 <div class="infoPrinc d-flex justify-content-between">
                                     <p>Tomo 1</p>
@@ -152,7 +155,7 @@
 
                             <div class="TomoContManga col-3">
 
-                                <img class="w-100" src=@rutaPortada alt="" asp-append-version="true">
+                                <img class="w-100" src=@Model.rutaPortada alt="" asp-append-version="true">
 
                                 <div class="infoPrinc d-flex justify-content-between">
                                     <p>Tomo 1</p>
