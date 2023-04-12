@@ -17,11 +17,10 @@ public partial class Capitulo
     [StringLength(30, ErrorMessage = "No puede superar 30 caracteres")]
     public string Titulo { get; set; } = null!;
     public DateTime FechaCarga { get; set; }
-    public string Imagenes { get; set; }
-    public bool Visto { get; set; }
+    public string? Imagenes { get; set; }
+    public bool? Visto { get; set; }
 
     public int? Volumen { get; set; }
-    [Range(1,99999)]
     [Required(ErrorMessage = "El número del capitulo es Obligatorio")]
     public int NumeroCapitulo { get; set; }
     [NotMapped]
