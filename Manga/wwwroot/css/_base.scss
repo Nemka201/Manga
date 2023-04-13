@@ -3,6 +3,7 @@
     padding: 0px;
     box-sizing: border-box;
 }
+
 // Font
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
@@ -19,6 +20,10 @@ $fontZise2: 20px;
 $fontZise3: 24px;
 $fontZise4: 32px;
 
+a {
+    text-decoration: none;
+    color: $color1;
+}
 // ############# Body #############
 body {
     background-color: $color2;

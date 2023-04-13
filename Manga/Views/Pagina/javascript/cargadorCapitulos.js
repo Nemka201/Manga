@@ -20,13 +20,7 @@ function CargadorDeCaps (indiceStart, cantidad) {
 
         let infoCap = arrayCapitulos[index].innerHTML.split('-');
 
-        listaCap.innerHTML += `
-        <a ${arrayCapitulos[index].href} class="w-100 h-100" href="">
-        <div class="d-flex">
-            <p>${infoCap[0]} - ${infoCap[1]}</p>
-            <p>${infoCap[2]}</p>
-        </div>
-        </a>`;
+        listaCap.innerHTML += `${arrayCapitulos[index].outerHTML}`;
     }
 }
 

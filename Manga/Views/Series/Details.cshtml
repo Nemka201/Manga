@@ -103,18 +103,9 @@
                         <a class="volverButton">Volver a ver</a>
                     </div>
 
-                    <div class="listaCapitulos"@* id="listaCap"*@>
-                    @foreach (var capitulo in Model.Capitulos)
-                    {
-                        <a class="w-100 h-100" asp-area="" asp-controller="Capitulos" asp-action="Chapter" asp-route-id="@capitulo.Idcapitulo">
-                            <div class="d-flex">
-                                <p>@capitulo.NumeroCapitulo - @capitulo.Titulo</p>
-                                <p>@capitulo.FechaCarga.Date</p>
-                            </div>
-                            
-                        </a>
-                    }
+                    <div class="listaCapitulos" id="listaCap">
                     </div>
+
 
                     <div class="PaginationCapitulos d-flex">
                     </div>
@@ -192,6 +183,17 @@
             </div>
         </section>
 
+        <div class="ListaDeCapitulo displayNone">
+            @foreach (var capitulo in Model.Capitulos)
+            {
+                <a class="caps w-100 h-100" asp-area="" asp-controller="Capitulos" asp-action="Chapter" asp-route-id="@capitulo.Idcapitulo">
+                    <div class="d-flex">
+                        <p>@capitulo.NumeroCapitulo - @capitulo.Titulo</p>
+                        <p>@capitulo.FechaCarga.Date</p>
+                    </div>     
+                </a>
+            }
+        </div>
 
     <script src="~/js/cargadorCapitulos.js"></script>
 </main>
