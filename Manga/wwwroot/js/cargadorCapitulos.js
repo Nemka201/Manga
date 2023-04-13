@@ -13,7 +13,7 @@ function CargadorDeCaps (indiceStart, cantidad) {
     // primero vaciamos la lista
     listaCap.innerHTML = "";
     // calculamos el final para cortar la lista con un principio y fin
-    let indiceEnd = contArrayCapitulos.length < 15? contArrayCapitulos.length : indiceStart * cantidad + cantidad;
+    let indiceEnd = arrayCapitulos.length < 15? arrayCapitulos.length : indiceStart * cantidad + cantidad;
 
     // En el bucle metemos uno por uno los capitulos al html con los datos de la lista
     for (let index = indiceStart * cantidad; index < indiceEnd; index++) {
