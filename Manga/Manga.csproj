@@ -15,8 +15,10 @@
     <Content Remove="wwwroot\css\_detailManga.scss" />
     <Content Remove="wwwroot\css\_index.scss" />
     <Content Remove="wwwroot\js\agregarCategoria.js" />
+    <Content Remove="wwwroot\js\busqueda.js" />
     <Content Remove="wwwroot\js\cambioDeCapitulo.js" />
     <Content Remove="wwwroot\js\cargadorCapitulos.js" />
+    <Content Remove="wwwroot\js\filterPage.js" />
     <Content Remove="wwwroot\js\inicio.js" />
     <Content Remove="wwwroot\media\icons\HearthOrange.png" />
     <Content Remove="wwwroot\media\icons\StarOrange.png" />
@@ -31,8 +33,10 @@
     <None Include="wwwroot\css\_detailManga.scss" />
     <None Include="wwwroot\css\_index.scss" />
     <None Include="wwwroot\js\agregarCategoria.js" />
+    <None Include="wwwroot\js\busqueda.js" />
     <None Include="wwwroot\js\cambioDeCapitulo.js" />
     <None Include="wwwroot\js\cargadorCapitulos.js" />
+    <None Include="wwwroot\js\filterPage.js" />
     <None Include="wwwroot\js\inicio.js" />
     <None Include="wwwroot\media\icons\HearthOrange.png" />
     <None Include="wwwroot\media\icons\StarOrange.png" />

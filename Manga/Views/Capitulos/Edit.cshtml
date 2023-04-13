@@ -42,8 +42,8 @@
 </div>
 <div class="col-md-4">
         <h4>Arrastre la carpeta del capitulo</h4>
-        <form asp-action="UploadFiles" method="post" enctype="multipart/form-data" class="dropzone">
-            <div id="my-dropzone" class="dropzone" data-url="@Url.Action("UploadFiles", "Capitulos")">
+        <form  asp-action="UploadFiles" method="post" enctype="multipart/form-data" class="dropzone" id="ssee">
+            <div id="myDropzone" class="dropzone" data-url="@Url.Action("UploadFiles", "Capitulos")">
                 <div class="dz-message">
                     <p style="color:black">Arrastra y suelta archivos aquí</p>
                 </div>
@@ -52,16 +52,16 @@
         </form>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <script>
+        Dropzone.options.ssee = {
+            maxFilesize: 2,
+            acceptedFiles: 'image/jpeg, image/jpg, image/png',
+            addRemoveLinks: true,
+            dictRemoveFile: 'Quitar',
+        };
         $(function () {
             $("#btnUpload").click(function () {
                 var myDropzone = Dropzone.forElement("#my-dropzone");
 
-                Dropzone.options.myDropzone = { // camelized version of the `id`
-                    maxFilesize: 2,
-                    acceptedFiles: 'image/jpeg, image/jpg, image/png',
-                    addRemoveLinks: true,
-                    dictRemoveFile: 'Quitar'
-                };
 
                 myDropzone.processQueue();
             });

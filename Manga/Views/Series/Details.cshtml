@@ -5,7 +5,6 @@
     ViewData["Title"] = Model.Serie.Nombre;
     HttpContextAccessor.HttpContext.Session.SetInt32("IdSerie", Model.Serie.Idserie);
     HttpContextAccessor.HttpContext.Session.SetString("nombreSerie", Model.Serie.Nombre);
-
 }
 <style>
     header::before {
@@ -107,12 +106,15 @@
                     <div class="listaCapitulos"@* id="listaCap"*@>
                     @foreach (var capitulo in Model.Capitulos)
                     {
-                        <a asp-area="" asp-controller="Capitulos" asp-action="Chapter" asp-route-id="@capitulo.Idcapitulo">
-                            <h4 style="color:white">@capitulo.NumeroCapitulo @capitulo.Titulo @capitulo.FechaCarga.Date</h4>
+                        <a class="w-100 h-100" asp-area="" asp-controller="Capitulos" asp-action="Chapter" asp-route-id="@capitulo.Idcapitulo">
+                            <div class="d-flex">
+                                <p>@capitulo.NumeroCapitulo - @capitulo.Titulo</p>
+                                <p>@capitulo.FechaCarga.Date</p>
+                            </div>
                             
                         </a>
                     }
-                </div>
+                    </div>
 
                     <div class="PaginationCapitulos d-flex">
                     </div>
