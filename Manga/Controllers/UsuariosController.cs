@@ -1,19 +1,10 @@
-﻿ using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Manga.Attributes;
+using Manga.Models.Context;
+using Manga.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Manga.Models;
-using System.Text;
 using System.Security.Cryptography;
-using Microsoft.AspNetCore.Authorization;
-using Newtonsoft.Json;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.AspNetCore.Http;
-using Manga.Attributes;
-using Microsoft.AspNetCore.Mvc.Filters;
+using System.Text;
 
 namespace Manga.Controllers
 {

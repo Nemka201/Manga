@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Xunit.Sdk;
 
-namespace Manga.Models;
+namespace Manga.Models.Entities;
 
 public partial class Capitulo
 {
-
+    [Key]
     public int Idcapitulo { get; set; }
-
+    [ForeignKey("Serie")]
     public int Idserie { get; set; }
 
     [Required(ErrorMessage = "El titulo del capitulo es obligatorio")]
@@ -19,10 +16,10 @@ public partial class Capitulo
     public DateTime FechaCarga { get; set; }
     public string? Imagenes { get; set; }
     public bool? Visto { get; set; }
-
+    [ForeignKey("Volumene")]
     public int? Volumen { get; set; }
     [Required(ErrorMessage = "El número del capitulo es Obligatorio")]
     public int NumeroCapitulo { get; set; }
     [NotMapped]
-    public string[]? files { get; set; } 
+    public string[]? files { get; set; }
 }

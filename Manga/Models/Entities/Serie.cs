@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Xunit.Sdk;
 
-namespace Manga.Models;
+namespace Manga.Models.Entities;
 
 public partial class Serie
 {
+    [Key]
     public int Idserie { get; set; }
     [Required(ErrorMessage = "El nombre de la serie es obligatorio")]
     [StringLength(50, ErrorMessage = "No puede superar los 50 caracteres")]
@@ -31,6 +29,7 @@ public partial class Serie
     public int? Favoritos { get; set; }
 
     public bool? Estado { get; set; }
+    [ForeignKey("Usuario")]
     public int? IdUser { get; set; }
     public string? RutaPortada { get; set; }
     public string? RutaBanner { get; set; }
@@ -41,5 +40,5 @@ public partial class Serie
     [NotMapped]
     public IFormFile? Banner { get; set; } // IFormFile para cargar Banner  
     [NotMapped]
-    public List<String>? CatList { get; set; } = null!; // Lista de categorias
+    public List<string>? CatList { get; set; } = null!; // Lista de categorias
 }

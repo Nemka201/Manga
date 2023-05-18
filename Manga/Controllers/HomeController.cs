@@ -1,16 +1,17 @@
-﻿using Manga.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Manga.Models.Context;
+using Manga.Models.DTO;
+using Manga.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Manga.Attributes;
+
 namespace Manga.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly PaginaSerieContext _context;
+        private readonly PaginaContext _context;
 
-        public HomeController(ILogger<HomeController> logger, PaginaSerieContext context)
+        public HomeController(ILogger<HomeController> logger, PaginaContext context)
         {
             _logger = logger;
             _context = context;

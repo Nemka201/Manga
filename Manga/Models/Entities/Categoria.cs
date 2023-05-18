@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Manga.Models;
+namespace Manga.Models.Entities;
 
 public partial class Categoria
 {
+    [Key]
     public int Idcategoria { get; set; }
 
     public string Nombre { get; set; } = null!;

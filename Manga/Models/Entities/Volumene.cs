@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Manga.Models;
+namespace Manga.Models.Entities;
 
 public partial class Volumene
 {
+    [Key]
     public int Idvol { get; set; }
 
     public double? Precio { get; set; }

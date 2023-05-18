@@ -1,11 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Session;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Manga.Attributes
 {
@@ -17,7 +11,7 @@ namespace Manga.Attributes
             {
                 filterContext.Result = new RedirectResult("~/Usuarios/Login");
                 // Guardamos path para el redirect
-                filterContext.HttpContext.Session.SetString("redirect",filterContext.HttpContext.Request.Path);
+                filterContext.HttpContext.Session.SetString("redirect", filterContext.HttpContext.Request.Path);
             }
             base.OnActionExecuting(filterContext);
         }

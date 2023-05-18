@@ -1,114 +1,125 @@
-﻿@model Manga.Models.IndexContent
+﻿@using Manga.Models.DTO
+@using Manga.Models.Context
+@model IndexContent
 @{
-    ViewData["Title"] = "Home";
-    var rutaFoto1 = "~/media/serie/" + Model.tend.PrimerItemS.RutaPortada;
-    Model.tend.PrimerItemS.CatList = Model.tend.PrimerItemS.Categoria.Split("-").ToList();
-    foreach(var serie in Model.tend.seriesList)
-    {
-        serie.CatList = serie.Categoria.Split("-").ToList();
+    ViewData["Title"] = "Inicio";
+    PaginaContext _context = new();
+    bool seriesCargadas = _context.Series.Any();
+    var rutaFoto1 = "";
+    if(seriesCargadas){
+        rutaFoto1 = "~/media/serie/" + Model.tend.PrimerItemS.RutaPortada;
+        Model.tend.PrimerItemS.CatList = Model.tend.PrimerItemS.Categoria.Split("-").ToList();
+        foreach (var serie in Model.tend.seriesList)
+        {
+            serie.CatList = serie.Categoria.Split("-").ToList();
+        }
     }
-    PaginaSerieContext _context = new();
 }
 <main>
-    <section class="Tendencia d-flex justify-content-center">
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="contenedorTendencia d-flex flex-column">
-                        <h2>Tendencia</h2>
-                        <div class="imagenTendencia d-flex ">
-                            <div class="serieTendencia d-flex">
-                                <a  asp-area="" asp-controller="Series" asp-action="Details" asp-route-id="@Model.tend.PrimerItemS.Idserie">
-                                <img src="@rutaFoto1" alt="" asp-append-version="true">
-                                </a>
-                            </div>
-                            <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
-                                 <a  asp-area="" asp-controller="Series" asp-action="Details" asp-route-id="@Model.tend.PrimerItemS.Idserie">
-                                <h3> @Html.DisplayFor(modelItem => Model.tend.PrimerItemS.Nombre)</h3>
-                                </a>
-                                <p class="descripcion">
-                                    @Html.DisplayFor(modelItem => Model.tend.PrimerItemS.Descripcion)
-                                </p>
-
-                                <p class="tipoManga">Manga</p>
-
-                                <br>
-                                <ul class="generos d-flex">
-                                    
-                                    @foreach (var cat in Model.tend.PrimerItemS.CatList)
-                                    {
-                                        Categoria c = @_context.Categorias.Where(e => e.Idcategoria == Convert.ToInt32(cat)).First();
-                                        <a asp-area="" asp-controller="Categorias" asp-action="Series" asp-route-id="@c.Idcategoria">
-                                        <li>@c.Nombre</li>
-                                        </a>
-                                    }
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-                    </div>
-                @foreach (var serie in Model.tend.seriesList)
-                {
-                    var rutaFoto = "~/media/serie/" + serie.RutaPortada;
-                    <div class="carousel-item">
+    @if (seriesCargadas)
+    {
+        <section class="Tendencia d-flex justify-content-center">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
                         <div class="contenedorTendencia d-flex flex-column">
                             <h2>Tendencia</h2>
-                            <div class="imagenTendencia d-flex  ">
+
+                            <div class="imagenTendencia d-flex ">
                                 <div class="serieTendencia d-flex">
-                                    <a asp-area="" asp-controller="Series" asp-action="Details" asp-route-id="@serie.Idserie">
-                                        <img src="@rutaFoto" alt="" asp-append-version="true">
+                                    <a asp-area="" asp-controller="Series" asp-action="Details" asp-route-id="@Model.tend.PrimerItemS.Idserie">
+                                        <img src="@rutaFoto1" alt="" asp-append-version="true">
                                     </a>
                                 </div>
                                 <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
-                                    <a asp-area="" asp-controller="Series" asp-action="Details" asp-route-id="@serie.Idserie">
-                                    <h3> @Html.DisplayFor(modelItem => serie.Nombre)</h3>
+                                    <a asp-area="" asp-controller="Series" asp-action="Details" asp-route-id="@Model.tend.PrimerItemS.Idserie">
+                                        <h3> @Html.DisplayFor(modelItem => Model.tend.PrimerItemS.Nombre)</h3>
                                     </a>
                                     <p class="descripcion">
-                                        @Html.DisplayFor(modelItem => serie.Descripcion)
+                                        @Html.DisplayFor(modelItem => Model.tend.PrimerItemS.Descripcion)
                                     </p>
 
                                     <p class="tipoManga">Manga</p>
 
                                     <br>
                                     <ul class="generos d-flex">
-                                        @foreach (var cat in serie.CatList)
+
+                                        @foreach (var cat in Model.tend.PrimerItemS.CatList)
                                         {
                                             Categoria c = @_context.Categorias.Where(e => e.Idcategoria == Convert.ToInt32(cat)).First();
-                                            <a asp-area="" asp-controller="Categorias" asp-action="Details" asp-route-id="@c.Idcategoria">
-                                            <li>@c.Nombre</li></a>
+                                            <a asp-area="" asp-controller="Categorias" asp-action="Series" asp-route-id="@c.Idcategoria">
+                                            <li>@c.Nombre</li>
+                                            </a>
                                         }
                                     </ul>
                                 </div>
                             </div>
 
-                            <div>
-                            </div>
-
                         </div>
                     </div>
+                    @foreach (var serie in Model.tend.seriesList)
+                    {
+                        var rutaFoto = "~/media/serie/" + serie.RutaPortada;
+                        <div class="carousel-item">
+                            <div class="contenedorTendencia d-flex flex-column">
+                                <h2>Tendencia</h2>
+                                <div class="imagenTendencia d-flex  ">
+                                    <div class="serieTendencia d-flex">
+                                        <a asp-area="" asp-controller="Series" asp-action="Details" asp-route-id="@serie.Idserie">
+                                            <img src="@rutaFoto" alt="" asp-append-version="true">
+                                        </a>
+                                    </div>
+                                    <div class="serieTendenciaDescripcion d-flex flex-column justify-content-between">
+                                        <a asp-area="" asp-controller="Series" asp-action="Details" asp-route-id="@serie.Idserie">
+                                            <h3> @Html.DisplayFor(modelItem => serie.Nombre)</h3>
+                                        </a>
+                                        <p class="descripcion">
+                                            @Html.DisplayFor(modelItem => serie.Descripcion)
+                                        </p>
 
-                }
+                                        <p class="tipoManga">Manga</p>
+
+                                        <br>
+                                        <ul class="generos d-flex">
+                                            @foreach (var cat in serie.CatList)
+                                            {
+                                                Categoria c = @_context.Categorias.Where(e => e.Idcategoria == Convert.ToInt32(cat)).First();
+                                                <a asp-area="" asp-controller="Categorias" asp-action="Details" asp-route-id="@c.Idcategoria">
+                                                <li>@c.Nombre</li></a>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    }
+                </div>
+
+                <div class="carouselTendeciaButtons">
+
+                    <button class="" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+
+                </div>
+
             </div>
 
-            <div class="carouselTendeciaButtons">
-
-                <button class="" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-
-            </div>
-
-        </div>
 
 
-
-    </section>
+        </section>
+    }
+    
     <section class="UltimosAgregados">
 
         <div id="carouselUltimosAgregados" class="carousel slide" data-bs-ride="carousel">

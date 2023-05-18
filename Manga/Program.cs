@@ -1,21 +1,17 @@
-using Manga.Models;
+using Manga.Models.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-    builder.Services.AddControllersWithViews();
-    builder.Services.AddDbContext<PaginaContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
-    builder.Services.AddDbContext<PaginaSerieContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
-    builder.Services.AddScoped<CascadingAuthenticationState>();
-    builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<PaginaContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
+builder.Services.AddScoped<CascadingAuthenticationState>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSession(options =>
 {

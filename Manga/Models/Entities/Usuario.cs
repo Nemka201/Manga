@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace Manga.Models;
+namespace Manga.Models.Entities;
 
 public partial class Usuario
 {
+    [Key]
     public int Id { get; set; }
     [Required(ErrorMessage = "Obligatorio")]
     [EmailAddress]
@@ -16,7 +14,7 @@ public partial class Usuario
 
     public string Usuario1 { get; set; } = null!;
     [Required(ErrorMessage = "Obligatorio")]
-    public string Clave { get; set; } = null!;  
+    public string Clave { get; set; } = null!;
 
     [Required(ErrorMessage = "Obligatorio")]
 

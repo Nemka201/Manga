@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Manga.Models.Context;
+using Manga.Models.DTO;
+using Manga.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Manga.Models;
-using System.Net;
 
 namespace Manga.Controllers
 {
     public class CapitulosController : Controller
     {
-        private readonly PaginaSerieContext _context;
+        private readonly PaginaContext _context;
         private readonly IWebHostEnvironment _webhost; // Obtener wwwroot
 
 
-        public CapitulosController(PaginaSerieContext context, IWebHostEnvironment webhost)
+        public CapitulosController(PaginaContext context, IWebHostEnvironment webhost)
         {
             _context = context;
             _webhost = webhost;
@@ -25,7 +21,7 @@ namespace Manga.Controllers
         // GET: Capitulos
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Capitulos.ToListAsync());
+            return View(await _context.Capitulos.ToListAsync());
         }
 
         // GET: Capitulos/Details/5
@@ -64,7 +60,7 @@ namespace Manga.Controllers
                 .FirstOrDefaultAsync(m => m.Idcapitulo == id);
             capitulo = GetRutaFiles(capitulo);
             Serie serie = _context.Series.Where(s => s.Idserie == capitulo.Idserie).First();
-            Chapter chapter = new Chapter(capitulo,serie,_context.Categorias.ToList());
+            CapituloDTO chapter = new CapituloDTO(capitulo, serie, _context.Categorias.ToList());
             if (capitulo == null)
             {
                 return NotFound();
@@ -127,7 +123,7 @@ namespace Manga.Controllers
                 ViewBag.urlFolder = uploadsFolder;
                 try
                 {
-                    foreach(string archivoPath in Directory.GetFiles(uploadsFolder))
+                    foreach (string archivoPath in Directory.GetFiles(uploadsFolder))
                     {
                         capitulo.NumeroCapitulo++;
                     }
@@ -182,7 +178,7 @@ namespace Manga.Controllers
             {
                 _context.Capitulos.Remove(capitulo);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -197,7 +193,7 @@ namespace Manga.Controllers
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
-                uploadsFolder = Path.Combine(path1:uploadsFolder, path2:capituloSerie);
+                uploadsFolder = Path.Combine(path1: uploadsFolder, path2: capituloSerie);
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
@@ -208,7 +204,7 @@ namespace Manga.Controllers
                 if (file.Length > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
-                    var filePath = Path.Combine(path1:uploadsFolder,path2:fileName);
+                    var filePath = Path.Combine(path1: uploadsFolder, path2: fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -220,7 +216,7 @@ namespace Manga.Controllers
         }
         private bool CapituloExists(int id)
         {
-          return _context.Capitulos.Any(e => e.Idcapitulo == id);
+            return _context.Capitulos.Any(e => e.Idcapitulo == id);
         }
         private Capitulo GetRutaFiles(Capitulo capitulo)
         {

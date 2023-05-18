@@ -1,8 +1,10 @@
-﻿@model Manga.Models.Serie;
+﻿@using Manga.Models.Entities
+@using Manga.Models.Context
+@model Serie;
 
 @{
-    var db = new PaginaSerieContext();
-    var categorias = db.Categorias.ToList();
+    var _context = new PaginaContext();
+    var categorias = _context.Categorias.ToList();
     ViewData["Title"] = " Nueva Serie";
     
 

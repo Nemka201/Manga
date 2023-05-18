@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Manga.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Text;
 
-namespace Manga.Models;
+namespace Manga.Models.Context;
 
-public partial class PaginaSerieContext : DbContext
+public partial class PaginaContext : DbContext
 {
-    public PaginaSerieContext()
+    public PaginaContext()
     {
     }
 
-    public PaginaSerieContext(DbContextOptions<PaginaSerieContext> options) : base(options)
+    public PaginaContext(DbContextOptions<PaginaContext> options) : base(options)
     {
     }
 
@@ -20,9 +20,9 @@ public partial class PaginaSerieContext : DbContext
 
     public virtual DbSet<Compra> Compras { get; set; }
 
-    public virtual DbSet<Imagene> Imagenes { get; set; }
-
     public virtual DbSet<Serie> Series { get; set; }
+
+    public virtual DbSet<Usuario> Usuarios { get; set; }
 
     public virtual DbSet<Volumene> Volumenes { get; set; }
 
@@ -30,9 +30,15 @@ public partial class PaginaSerieContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("server=B450-R31-2060; database=Pagina; Integrated Security=True; TrustServerCertificate=True;");
-            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer("Server=tcp:nemka201.database.windows.net,1433;Initial Catalog=Manga;Persist Security Info=False;User ID=Wonster;Password=Manga1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
+    }
+    private static DbContextOptions<PaginaContext> GetDefaultOptions()
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<PaginaContext>();
+        optionsBuilder.UseSqlServer("Server=tcp:nemka201.database.windows.net,1433;Initial Catalog=Manga;Persist Security Info=False;User ID=Wonster;Password=Manga1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+
+        return optionsBuilder.Options;
     }
 
 
@@ -88,15 +94,6 @@ public partial class PaginaSerieContext : DbContext
             entity.Property(e => e.Volumen).HasColumnName("volumen");
         });
 
-        modelBuilder.Entity<Imagene>(entity =>
-        {
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Idcap).HasColumnName("IDcap");
-            entity.Property(e => e.Imagen)
-                .HasColumnType("image")
-                .HasColumnName("imagen");
-        });
-
         modelBuilder.Entity<Serie>(entity =>
         {
             entity.HasKey(e => e.Idserie);
@@ -129,10 +126,44 @@ public partial class PaginaSerieContext : DbContext
             entity.Property(e => e.Volumenes).HasColumnName("volumenes");
             entity.Property(e => e.RutaPortada).HasColumnName("portada");
             entity.Property(e => e.IdUser).HasColumnName("IDUser");
-            entity.Property(e => e.RutaBanner)
-                .HasColumnName("banner");
+            entity.Property(e => e.RutaBanner).HasColumnName("banner");
 
         });
+
+        modelBuilder.Entity((Action<Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Usuario>>)(entity =>
+        {
+            entity.ToTable("Usuario");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property<string>(e => e.Apellido)
+                .HasMaxLength(50)
+                .HasColumnName("apellido");
+            entity.Property<string>(e => e.Carrito)
+                .IsUnicode(false)
+                .HasColumnName("carrito");
+            entity.Property(e => e.Clave)
+                .HasMaxLength(150)
+                .IsUnicode(false)
+                .HasColumnName("clave");
+            entity.Property(e => e.Email)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("email");
+            entity.Property<string>(e => e.Favoritos)
+                .IsUnicode(false)
+                .HasColumnName("favoritos");
+            entity.Property<string>(e => e.RutaFoto)
+            .IsUnicode(false)
+            .HasColumnName("rutaFoto");
+            entity.Property<string>(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("nombre");
+            entity.Property(e => e.Usuario1)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("usuario");
+        }));
 
         modelBuilder.Entity<Volumene>(entity =>
         {

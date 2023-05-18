@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Manga.Attributes;
+using Manga.Models.Context;
+using Manga.Models.DTO;
+using Manga.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Manga.Models;
-using Manga.Attributes;
-using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Manga.Controllers
 {
     public class SeriesController : Controller
     {
-        private readonly PaginaSerieContext _context;
+        private readonly PaginaContext _context;
         private readonly IWebHostEnvironment _webhost; // Obtener wwwroot
 
-        public SeriesController(PaginaSerieContext context, IWebHostEnvironment webhost)
+        public SeriesController(PaginaContext context, IWebHostEnvironment webhost)
         {
             _context = context;
             _webhost = webhost;
@@ -40,8 +36,8 @@ namespace Manga.Controllers
                 .FirstOrDefaultAsync(m => m.Idserie == id);
             var capList = _context.Capitulos.Where(e => e.Idserie == serie.Idserie).ToList();
             var catList = _context.Categorias.ToList();
-            SeriesDetail seriesDetail = new(serie,capList,catList);
-            
+            SeriesDTO seriesDetail = new(serie, capList, catList);
+
             if (serie == null)
             {
                 return NotFound();

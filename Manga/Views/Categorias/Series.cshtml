@@ -1,11 +1,13 @@
-﻿@model CategoriaDetail
+﻿@using Manga.Models.DTO
+@using Manga.Models.Context
+@model CategoriaDTO
 
 @{
     foreach (var serie in Model.Series)
     {
         serie.CatList = serie.Categoria.Split("-").ToList();
     }
-    PaginaSerieContext _context = new();
+    PaginaContext _context = new();
     ViewData["Title"] = Model.Categoria.Nombre;
 
 }

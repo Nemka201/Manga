@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Manga.Attributes;
+using Manga.Models.Context;
+using Manga.Models.DTO;
+using Manga.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Manga.Models;
-using Manga.Attributes;
 
 namespace Manga.Controllers
 {
     public class CategoriasController : Controller
     {
-        private readonly PaginaSerieContext _context;
+        private readonly PaginaContext _context;
 
-        public CategoriasController(PaginaSerieContext context)
+        public CategoriasController(PaginaContext context)
         {
             _context = context;
         }
@@ -22,7 +19,7 @@ namespace Manga.Controllers
         // GET: Categorias
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Categorias.ToListAsync());
+            return View(await _context.Categorias.ToListAsync());
         }
 
         // GET: Categorias/Details/5
@@ -35,13 +32,13 @@ namespace Manga.Controllers
 
             var categoria = await _context.Categorias
                 .FirstOrDefaultAsync(m => m.Idcategoria == id);
-            CategoriaDetail catDetail = new(categoria);
-            foreach (Serie serie in _context.Series.ToList()) 
+            CategoriaDTO catDetail = new(categoria);
+            foreach (Serie serie in _context.Series.ToList())
             {
                 string[] category = serie.Categoria.Split("-");
                 if (category.Length > 0)
                 {
-                    for (int i=0; i<category.Length; i++)
+                    for (int i = 0; i < category.Length; i++)
                     {
                         if (Convert.ToInt32(category[i]) == id)
                         {
@@ -49,7 +46,7 @@ namespace Manga.Controllers
                         }
                     }
                 }
-            }            
+            }
             if (categoria == null)
             {
                 return NotFound();
@@ -164,14 +161,14 @@ namespace Manga.Controllers
             {
                 _context.Categorias.Remove(categoria);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoriaExists(int id)
         {
-          return _context.Categorias.Any(e => e.Idcategoria == id);
+            return _context.Categorias.Any(e => e.Idcategoria == id);
         }
     }
 }
