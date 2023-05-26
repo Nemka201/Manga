@@ -72,12 +72,7 @@ namespace Manga.Controllers
                     }
                     serie = SetRutaImagen(serie);
                 }
-                serie.Capitulos = 0;
-                serie.Volumenes = 0;
-                serie.Estado = true;
-                serie.Categoria = "4";
-                serie.Favoritos = 0;
-                serie.IdUser = (int)HttpContext.Session.GetInt32("id");
+                serie = SerieDefaultValues(serie);
                 _context.Add(serie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -203,6 +198,15 @@ namespace Manga.Controllers
                   || serie.Banner.FileName.Contains("jpg")
                   || serie.Banner.FileName.Contains("png")
                   || serie.Banner.FileName.Contains("jpeg"));
+        }
+        private Serie SerieDefaultValues(Serie serie)
+        {
+            serie.Capitulos = 0;
+            serie.Volumenes = 0;
+            serie.Estado = true;
+            serie.Favoritos = 0;
+            serie.IdUser = (int)HttpContext.Session.GetInt32("id");
+            return serie;
         }
     }
 }

@@ -82,6 +82,7 @@ namespace Manga.Controllers
             {
                 capitulo.FechaCarga = DateTime.Now;
                 capitulo.NumeroCapitulo = 0;
+                SerieCounter(capitulo);
                 _context.Add(capitulo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Edit", new { id = capitulo.Idcapitulo });
@@ -214,6 +215,9 @@ namespace Manga.Controllers
             }
             return Ok();
         }
+        /// <summary>
+        /// Metodos
+        /// </summary>
         private bool CapituloExists(int id)
         {
             return _context.Capitulos.Any(e => e.Idcapitulo == id);
@@ -233,6 +237,12 @@ namespace Manga.Controllers
                 capitulo.files[i] = nombreArchivo[1];
             }
             return capitulo;
+        }
+        private void SerieCounter(Capitulo capitulo)
+        {
+            Serie serie = _context.Series.Where(s => s.Idserie == capitulo.Idserie).First();
+            serie.Capitulos += 1;
+            _context.Update(serie);
         }
     }
 }

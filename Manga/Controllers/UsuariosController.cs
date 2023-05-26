@@ -79,10 +79,10 @@ namespace Manga.Controllers
                         } // ############### Modificancion Isaias #########
                         GetRutaFoto(usuario);
                     }
-                    usuario.Clave = ConvertSha256(usuario.Clave); // Encripta password
+                    usuario.Clave = ConvertSha256(usuario.Clave);
                     _context.Add(usuario);
-                    SetSession(usuario);
                     await _context.SaveChangesAsync();
+                    SetSession(usuario);
                     return RedirectToAction(nameof(Index));
                 }
                 ModelState.AddModelError("Usuario1", "El correo electronico o usuario esta en uso");
@@ -101,10 +101,9 @@ namespace Manga.Controllers
             {
                 usuario = (Usuario)_context.Usuarios.Where(d => d.Usuario1 == usuario.Usuario1).First();
                 SetSession(usuario);
-                // Verifica si el usuario hizo login desde un path distinto al home
-                if (_httpContextAccessor.HttpContext.Session.GetString("redirect") != null)
+                if (PageBefore())
                 {
-                    return Redirect(_httpContextAccessor.HttpContext.Session.GetString("redirect"));
+                    RedirectToPreviusPage();
                 }
                 return RedirectToAction(nameof(Index), "Home");
             }
@@ -115,12 +114,8 @@ namespace Manga.Controllers
             }
         }
         public IActionResult Logout()
-        {   // ELIMINO DATOS DEL SESSION
-            _httpContextAccessor.HttpContext.Session.Remove("username");
-            _httpContextAccessor.HttpContext.Session.Remove("rutaFoto");
-            _httpContextAccessor.HttpContext.Session.Remove("redirect");
-            _httpContextAccessor.HttpContext.Session.Remove("id");
-            _httpContextAccessor.HttpContext.Session.Clear();
+        {
+            ClearSession();
             return RedirectToAction(nameof(Index), "Home");
         }
         //GET: Usuarios/Edit/5
@@ -240,10 +235,7 @@ namespace Manga.Controllers
             // Create a SHA256   
             using (SHA256 sha256Hash = SHA256.Create())
             {
-                // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
-
-                // Convert byte array to a string   
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));  
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < bytes.Length; i++)
                 {
@@ -259,6 +251,7 @@ namespace Manga.Controllers
         private bool LoginValidate(string userOrEmail, string password) // Comprueba contraseña del usuario
         {
             Usuario u = null;
+
             if (!string.IsNullOrEmpty(userOrEmail))
             {
                 if (_context.Usuarios.Any(e => e.Usuario1 == userOrEmail))
@@ -269,12 +262,19 @@ namespace Manga.Controllers
                 {
                     u = _context.Usuarios.Where(e => e.Email == userOrEmail).First(); // Si encuentra el email en la DB
                 }
-                return (u.Clave == ConvertSha256(password));
+                if (u != null) 
+                {
+                    return (u.Clave == ConvertSha256(password));
+                }
             }
             return false;
         }
         private void GetRutaFoto(Usuario usuario)
         {
+            if (usuario.Foto == null)
+            {
+                usuario.RutaFoto = Path.Combine(path1: _webhost.WebRootPath, path2: "media/perfil/default.jpeg");
+            }
             string guidImagen = null;
             string ficherosImagenes = Path.Combine(path1: _webhost.WebRootPath, path2: "media/perfil");
             guidImagen = Guid.NewGuid().ToString() + usuario.Foto.FileName;
@@ -287,6 +287,22 @@ namespace Manga.Controllers
             _httpContextAccessor.HttpContext.Session.SetString("username", usuario.Usuario1);
             _httpContextAccessor.HttpContext.Session.SetString("rutaFoto", usuario.RutaFoto);
             _httpContextAccessor.HttpContext.Session.SetInt32("id", usuario.Id);
+        }
+        private void ClearSession()
+        {
+            _httpContextAccessor.HttpContext.Session.Remove("username");
+            _httpContextAccessor.HttpContext.Session.Remove("rutaFoto");
+            _httpContextAccessor.HttpContext.Session.Remove("redirect");
+            _httpContextAccessor.HttpContext.Session.Remove("id");
+            _httpContextAccessor.HttpContext.Session.Clear();
+        }
+        private RedirectResult RedirectToPreviusPage()
+        {
+            return Redirect(_httpContextAccessor.HttpContext.Session.GetString("redirect"));
+        }
+        private bool PageBefore()
+        {
+            return _httpContextAccessor.HttpContext.Session.GetString("redirect") != null;
         }
     }
 }
